@@ -11,7 +11,7 @@ namespace Project.Repository.Configurations
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Id).UseIdentityColumn();
 
-            // Bu metodu ef core otomatik gerçekleştirir.
+            // Bu metodları ef core otomatik gerçekleştirir.
 
             builder.Property(c=> c.FullName).IsRequired().HasMaxLength(50);
             builder.Property(c=> c.IdentityNo).HasMaxLength(20);
@@ -25,7 +25,7 @@ namespace Project.Repository.Configurations
             builder.Property(c => c.CreatedDate).IsRequired().HasColumnType("date");
 
 
-            builder.ToTable("categories");
+            builder.ToTable("Customers");
         }
     }
 }

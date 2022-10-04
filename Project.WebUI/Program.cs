@@ -1,11 +1,34 @@
+using System.Reflection;
+using Microsoft.EntityFrameworkCore;
+using Project.Core.Repositories;
+using Project.Core.UnitOfWorks;
+using Project.Repository.Context;
+using Project.Repository.Repositories;
+using Project.Repository.UnitOfWork;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+// builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+
+builder.Services.AddDbContext<YurtDbContext>( x =>
+{
+    x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), options =>
+    {
+        options.MigrationsAssembly(Assembly.GetAssembly(typeof(YurtDbContext)).GetName().Name);
+    });
+}
+);
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
