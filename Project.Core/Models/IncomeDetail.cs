@@ -10,7 +10,7 @@ namespace Project.Core.Models
     {
         public string RoomName { get; set; }
         public string IncomeName { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public string Exchange { get; set; }
         public double MoneyOfTheDay { get; set; }
         public string PaymentMethod { get; set; }
