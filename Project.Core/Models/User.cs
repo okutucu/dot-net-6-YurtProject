@@ -8,8 +8,8 @@ namespace Project.Core.Models
 {
     public class User : BaseEntity
     {
-        public string NameSurname { get; set; }
-        public string Username { get; set; }
+        public string FullName { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
         public string Identity { get; set; }
