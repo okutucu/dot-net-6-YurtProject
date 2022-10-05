@@ -18,14 +18,23 @@ namespace Project.Service.Services
             _roomRepository = roomRepository;
         }
 
-        public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomer()
+        public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync()
         {
-            List<Room> rooms = await _roomRepository.GetRoomWithCustomer();
+            List<Room> rooms = await _roomRepository.GetRoomWithCustomerAsync();
 
             List<RoomWithCustomerDto> roomDto = _mapper.Map<List<RoomWithCustomerDto>>(rooms);
 
             return roomDto;
 
+        }
+
+        public async Task<RoomWithCustomerDto> GetSingleRoomByIdWithCustomerAsync(int customerId)
+        {
+            Room room = await _roomRepository.GetSingleRoomByIdWithCustomerAsync(customerId);
+
+            RoomWithCustomerDto roomDto = _mapper.Map<RoomWithCustomerDto>(room);
+
+            return roomDto;
         }
     }
 }

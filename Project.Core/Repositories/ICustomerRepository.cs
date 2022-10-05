@@ -7,9 +7,7 @@ using Project.Core.Models;
 
 namespace Project.Core.Repositories
 {
-    public interface IRoomRepository : IGenericRepository<Room>
+    public interface ICustomerRepository : IGenericRepository<Customer>
     {
-        Task<List<Room>> GetRoomWithCustomerAsync();
-        Task<Room> GetSingleRoomByIdWithCustomerAsync(int customerId);
     }
 }
