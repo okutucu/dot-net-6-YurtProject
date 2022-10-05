@@ -1,6 +1,6 @@
 ﻿namespace Project.Core.DTOs
 {
-    public class CustomerListDto
+    public class CustomerDto
     {
         public string FullName { get; set; }
         public string Email { get; set; }

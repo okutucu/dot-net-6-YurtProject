@@ -19,6 +19,10 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IRoomService, RoomService>();
+
+
 // builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 
 builder.Services.AddDbContext<YurtDbContext>( x =>
