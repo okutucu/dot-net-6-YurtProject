@@ -1,0 +1,36 @@
+﻿@model List<RoomDto>
+@{
+	ViewData["Title"] = "Index";
+}
+
+<a> New Room</a>
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<td>RoomName</td>
+		<td>Capacity</td>
+		<td>Price</td>
+		<td>Room State </td>
+		<td>Room Type</td>
+		<td>Dept</td>
+		<td>Lack</td>
+		<td>Payment Status</td>
+	</tr>
+	</thead>
+	<tbody>
+		@foreach (RoomDto room in Model)
+		{
+		<tr>
+				<th>@room.RoomName</th>
+				<th>@room.Capacity</th>
+				<th>@room.Price</th>
+				<th>@room.CurrentCapacity</th>
+				<th>@room.RoomType</th>
+				<th>@room.Debt</th>
+				<th>@room.Lack</th>
+				<th>PAID</th>
+				
+		</tr>
+		}
+	</tbody>
+</table>
