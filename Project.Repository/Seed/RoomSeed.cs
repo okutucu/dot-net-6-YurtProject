@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Project.Core.Models;
 
@@ -15,11 +10,12 @@ namespace Project.Repository.Seed
         {
 
             builder.HasData(
-                new Room { 
-                    Id=1,
-                    RoomName="1000",
+                new Room
+                {
+                    Id = 1,
+                    RoomName = "1000",
                     Capacity = 2,
-                    CurrentCapacity=0,
+                    CurrentCapacity = 0,
                     Price = 1300,
                     Debt = 0,
                     RoomType = "Economy",

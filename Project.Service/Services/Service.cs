@@ -47,13 +47,13 @@ namespace Project.Service.Services
 
         public async Task UpdateAsync(T entity)
         {
-             _repository.Update(entity);
+            _repository.Update(entity);
             await _unitOfWok.CommitAsync();
         }
 
         public IQueryable<T> Where(Expression<Func<T, bool>> exp)
         {
-             return _repository.Where(exp);
+            return _repository.Where(exp);
         }
     }
 }

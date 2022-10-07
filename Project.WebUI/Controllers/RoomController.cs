@@ -15,7 +15,7 @@ namespace Project.WebUI.Controllers
             _roomService = roomService;
             _mapper = mapper;
         }
-        public async  Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             List<Room> rooms = _roomService.GetAll().ToList();
             List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
@@ -29,9 +29,15 @@ namespace Project.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(RoomCreateDto roomCreateDto)
+        public async Task<IActionResult> Create(RoomCreateDto roomCreateDto)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                await _roomService.AddAsync(_mapper.Map<Room>(roomCreateDto));
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(roomCreateDto);
         }
     }
 }

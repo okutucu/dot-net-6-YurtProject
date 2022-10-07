@@ -7,7 +7,7 @@ namespace Project.Core.Repositories
     {
         Task<T> GetByIdAsync(int id);
         IQueryable<T> GetAll();
-        IQueryable<T> Where(Expression<Func<T,bool>> exp);
+        IQueryable<T> Where(Expression<Func<T, bool>> exp);
         Task<bool> AnyAsync(Expression<Func<T, bool>> exp);
         Task AddAsync(T entity);
         void Update(T entity);

@@ -3,14 +3,8 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Project.Core.Repositories;
-using Project.Core.Services;
-using Project.Core.UnitOfWorks;
 using Project.Repository.Context;
-using Project.Repository.Repositories;
-using Project.Repository.UnitOfWork;
 using Project.Service.Mapping;
-using Project.Service.Services;
 using Project.Service.Validations;
 using Project.WebUI.Modules;
 
@@ -28,7 +22,7 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerB
 
 // builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
 
-builder.Services.AddDbContext<YurtDbContext>( x =>
+builder.Services.AddDbContext<YurtDbContext>(x =>
 {
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), options =>
     {

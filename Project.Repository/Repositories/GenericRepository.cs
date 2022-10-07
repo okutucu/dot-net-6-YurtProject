@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.Models;
 using Project.Core.Repositories;
@@ -32,7 +27,7 @@ namespace Project.Repository.Repositories
             return await _dbSet.AnyAsync(exp);
         }
 
-        public  IQueryable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
             return _dbSet.AsNoTracking().AsQueryable();
         }

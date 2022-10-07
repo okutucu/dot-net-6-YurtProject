@@ -13,10 +13,10 @@ namespace Project.Repository.Configurations
 
             // Bu metodları ef core otomatik gerçekleştirir.
 
-            builder.Property(c=> c.FullName).IsRequired().HasMaxLength(50);
-            builder.Property(c=> c.IdentityNo).HasMaxLength(20);
-            builder.Property(c=> c.Phone).HasMaxLength(20);
-            builder.Property(c=> c.Email).HasMaxLength(50);
+            builder.Property(c => c.FullName).IsRequired().HasMaxLength(50);
+            builder.Property(c => c.IdentityNo).HasMaxLength(20);
+            builder.Property(c => c.Phone).HasMaxLength(20);
+            builder.Property(c => c.Email).HasMaxLength(50);
             builder.Property(c => c.EntryDate).IsRequired().HasColumnType("date");
             builder.Property(c => c.Depart).HasColumnType("date");
             builder.Property(c => c.RelativeNameSurname).HasMaxLength(50);

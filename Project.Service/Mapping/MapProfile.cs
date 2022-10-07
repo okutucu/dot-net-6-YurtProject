@@ -8,11 +8,11 @@ namespace Project.Service.Mapping
     {
         public MapProfile()
         {
-            CreateMap<Customer , CustomerDto>().ReverseMap();
+            CreateMap<Customer, CustomerDto>().ReverseMap();
 
 
             CreateMap<Room, RoomWithCustomerDto>();
-            CreateMap<Room,RoomDto>().ReverseMap();
+            CreateMap<Room, RoomDto>().ReverseMap();
             CreateMap<RoomCreateDto, Room>().ReverseMap();
         }
     }
