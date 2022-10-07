@@ -1,4 +1,5 @@
 using System.Reflection;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.Repositories;
 using Project.Core.Services;
@@ -8,10 +9,11 @@ using Project.Repository.Repositories;
 using Project.Repository.UnitOfWork;
 using Project.Service.Mapping;
 using Project.Service.Services;
+using Project.Service.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<RoomDtoValidator>());
 
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
