@@ -44,6 +44,22 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            let lackDetail = $('#lackDetailId');
+
+            $("#checkId").on('change', function () {
+                if ($(this).is(':checked')) {
+                    lackDetail.addClass('d-block').removeClass('d-none');
+                } else {
+                    lackDetail.addClass('d-none').removeClass('d-block');
+                }
+            });
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

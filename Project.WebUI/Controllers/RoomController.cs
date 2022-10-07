@@ -10,7 +10,7 @@ namespace Project.WebUI.Controllers
     {
         private readonly IRoomService _roomService;
         private readonly IMapper _mapper;
-        public RoomController(IRoomService roomService, IMapper mapper, IService<Room> service)
+        public RoomController(IRoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
             _mapper = mapper;
@@ -23,7 +23,13 @@ namespace Project.WebUI.Controllers
             return View(roomsDto);
         }
 
-        public IActionResult Save()
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(RoomCreateDto roomCreateDto)
         {
             return View();
         }
