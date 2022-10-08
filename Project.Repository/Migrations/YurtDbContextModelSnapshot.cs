@@ -142,7 +142,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExchangeRates");
+                    b.ToTable("ExchangeRates", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.IncomeDetail", b =>
@@ -191,7 +191,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IncomeDetails");
+                    b.ToTable("IncomeDetails", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.PaymentDetail", b =>
@@ -235,7 +235,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentDetails");
+                    b.ToTable("PaymentDetails", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Record", b =>
@@ -278,7 +278,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Records");
+                    b.ToTable("Records", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Room", b =>
@@ -326,7 +326,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
 
                     b.HasData(
                         new
@@ -397,7 +397,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomIncomes");
+                    b.ToTable("RoomIncomes", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.User", b =>
@@ -456,7 +456,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Customer", b =>

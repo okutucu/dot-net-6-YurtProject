@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Project.Core.DTOs;
 
-namespace Project.Service.Validations
+namespace Project.Service.Validations.RoomValidator
 {
     public class RoomDtoValidator : AbstractValidator<RoomDto>
     {

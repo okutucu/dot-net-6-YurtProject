@@ -1,4 +1,4 @@
-﻿@model Project.Core.DTOs.RoomCreateDto
+﻿@model RoomCreateDto
 
 @{
     ViewData["Title"] = "Create";
@@ -12,22 +12,22 @@
         <form asp-action="Create" method="post" asp-controller="Room">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="RoomName" class="control-label"></label>
+                <label asp-for="RoomName"></label>
                 <input asp-for="RoomName" class="form-control" />
                 <span asp-validation-for="RoomName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Capacity" class="control-label"></label>
+                <label asp-for="Capacity"></label>
                 <input asp-for="Capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
+                <label asp-for="Price"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RoomType" class="control-label"></label>
+                <label asp-for="RoomType"></label>
                 <select asp-for="RoomType" class="form-control">
                     <option value=""> -- Choose</option>
                     <option value="Economy">Economy</option>
@@ -41,12 +41,10 @@
                     <input class="form-check-input"   id="checkId" asp-for="Lack" /> @Html.DisplayNameFor(model => model.Lack)
                 </label>
             </div>
-            <div id="checkbox-value"></div>
 
             <div class="form-group d-none" id="lackDetailId">
-                <label asp-for="LackDetail" class="control-label"></label>
+                <label asp-for="LackDetail"></label>
                 <input asp-for="LackDetail" class="form-control" />
-                <span asp-validation-for="LackDetail" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

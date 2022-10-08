@@ -23,6 +23,7 @@ namespace Project.WebUI.Modules
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
 
+
             Assembly webAssembly = Assembly.GetExecutingAssembly();
             Assembly repoAssembly = Assembly.GetAssembly(typeof(YurtDbContext));
             Assembly serviceAssembly = Assembly.GetAssembly(typeof(MapProfile));
