@@ -34,7 +34,7 @@ namespace Project.Repository.Repositories
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(x=> x.Id == id);
         }
 
         public void Remove(T entity)

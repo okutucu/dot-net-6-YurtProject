@@ -25,6 +25,7 @@ builder.Services.AddDbContext<YurtDbContext>(x =>
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), options =>
     {
         options.MigrationsAssembly(Assembly.GetAssembly(typeof(YurtDbContext)).GetName().Name);
+
     });
 });
 
