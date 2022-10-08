@@ -9,6 +9,7 @@ namespace Project.Service.Mapping
         public MapProfile()
         {
             CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<Customer, CustomerListDto>();
 
 
             CreateMap<Room, RoomWithCustomerDto>();

@@ -1,0 +1,48 @@
+﻿@model List<CustomerListDto>
+@{
+	ViewData["Title"] = "Index";
+}
+
+<a asp-controller="Customer" asp-action="Create"> New Customer</a>
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<td>Room Name</td>
+		<td>Customer Name</td>
+		<td>IdentityNo</td>
+		<td>Phone  </td>
+		<td> Email</td>
+		<td>Description</td>
+		<td>EntryDate</td>
+		<td> Depart</td>
+		<td>RelativeNameSurname</td>
+		<td>RelativePhone</td>
+		<td>Action</td>
+		
+	</tr>
+	</thead>
+	<tbody>
+		@foreach (CustomerListDto customer in Model)
+		{
+		<tr>
+			<th> @customer.Room.RoomName</th>
+			<th> @customer.FullName</th>
+			<th> @customer.IdentityNo</th>
+			<th> @customer.Phone</th>
+			<th> @customer.Email</th>
+			<th> @customer.Description</th>
+			<th> @customer.EntryDate</th>
+			<th> @customer.Depart</th>
+			<th> @customer.RelativeNameSurname</th>
+			<th> @customer.RelativePhone</th>
+				<th>
+					<a class="btn btn-info" asp-controller="Customer" asp-action="Detail" asp-route-id="@customer.Id">Detail</a>
+
+					<a class="btn btn-warning" asp-controller="Customer" asp-action="Update" asp-route-id="@customer.Id">Update	</a>
+					<a class="btn btn-danger" asp-controller="Customer" asp-action="Remove" asp-route-id="@customer.Id">Delete	</a>
+				</th>
+				
+		</tr>
+		}
+	</tbody>
+</table>

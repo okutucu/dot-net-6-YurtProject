@@ -1,8 +1,9 @@
 ﻿namespace Project.Core.DTOs
 {
-    public class CustomerDto
+    public class CustomerDto : BaseDto
     {
         public string FullName { get; set; }
+        public string IdentityNo { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public DateTime EntryDate { get; set; }
