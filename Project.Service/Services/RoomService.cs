@@ -28,9 +28,9 @@ namespace Project.Service.Services
 
         }
 
-        public async Task<RoomWithCustomerDto> GetSingleRoomByIdWithCustomerAsync(int customerId)
+        public async Task<RoomWithCustomerDto> GetSingleRoomByIdWithCustomerAsync(int roomId)
         {
-            Room room = await _roomRepository.GetSingleRoomByIdWithCustomerAsync(customerId);
+            Room room = await _roomRepository.GetSingleRoomByIdWithCustomerAsync(roomId);
 
             RoomWithCustomerDto roomDto = _mapper.Map<RoomWithCustomerDto>(room);
 

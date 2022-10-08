@@ -17,9 +17,9 @@ namespace Project.Repository.Repositories
             return await _context.Rooms.Include(x => x.Customers).ToListAsync();
         }
 
-        public async Task<Room> GetSingleRoomByIdWithCustomerAsync(int customerId)
+        public async Task<Room> GetSingleRoomByIdWithCustomerAsync(int roomId)
         {
-            return await _context.Rooms.Include(x => x.Customers).Where(x => x.Id == customerId).SingleOrDefaultAsync();
+            return await _context.Rooms.Include(x => x.Customers).Where(x => x.Id == roomId).SingleOrDefaultAsync();
         }
     }
 }

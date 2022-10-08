@@ -69,6 +69,16 @@ namespace Project.WebUI.ControllersR
 
         }
 
+
+        [ServiceFilter(typeof(NotFoundFilter<Room>))]
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            RoomWithCustomerDto roomAndCustomerDto = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
+
+            return View(roomAndCustomerDto);
+        }
+
         public async Task<IActionResult> Remove(int id)
         {
             Room room = await _roomService.GetByIdAsync(id);

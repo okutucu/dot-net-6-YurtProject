@@ -1,7 +1,8 @@
 ﻿namespace Project.Core.DTOs
 {
-    public class RoomWithCustomerDto : RoomDto
+    public class RoomWithCustomerDto  : RoomDto
     {
-        public CustomerDto Customer { get; set; }
+        public List<CustomerDto> Customers { get; set; }
+   
     }
 }

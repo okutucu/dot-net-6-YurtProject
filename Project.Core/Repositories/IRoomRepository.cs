@@ -5,6 +5,6 @@ namespace Project.Core.Repositories
     public interface IRoomRepository : IGenericRepository<Room>
     {
         Task<List<Room>> GetRoomWithCustomerAsync();
-        Task<Room> GetSingleRoomByIdWithCustomerAsync(int customerId);
+        Task<Room> GetSingleRoomByIdWithCustomerAsync(int roomId);
     }
 }

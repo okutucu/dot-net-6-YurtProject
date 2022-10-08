@@ -1,0 +1,38 @@
+﻿@model Project.Core.DTOs.RoomWithCustomerDto
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Detail</h1>
+
+<ul>
+    <li>Room Name : @Model.RoomName</li>
+    <li>Room Type : @Model.RoomType</li>
+    <li>Room Dept : @Model.Debt</li>
+    <li>Room Capacity : @Model.Capacity</li>
+    <li>Room Current Capacity  : @Model.CurrentCapacity</li>
+    <li>Room Price :  @Model.Price</li>
+    <li>Room Lack :  @Model.Lack</li>
+    <li>Room LackDetail :  @Model.LackDetail</li>
+</ul>
+
+
+<div class="container">
+    <div class="row">
+        @foreach (CustomerDto customer in Model.Customers)
+        {
+            <div class="col-md-6">
+                <p> FullName :  @customer.FullName </p>
+                <p> Phone :  @customer.Phone </p>
+                <p> Email :  @customer.Email </p>
+                <p> Entry Date :  @customer.EntryDate </p>
+                <p> Depart Date :  @customer.Depart </p>
+                <p> Description :  @customer.Description </p>
+                <p> RelativeNameSurname :  @customer.RelativeNameSurname </p>
+                <p> RelativePhone :  @customer.RelativePhone </p>
+            </div>
+        }
+    </div>
+    
+</div>
