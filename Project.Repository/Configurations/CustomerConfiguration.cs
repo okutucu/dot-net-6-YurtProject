@@ -26,6 +26,8 @@ namespace Project.Repository.Configurations
 
 
             builder.ToTable("Customers");
+
+            builder.HasOne(x => x.Room).WithMany(x => x.Customers).HasForeignKey(x => x.RoomId);
         }
     }
 }
