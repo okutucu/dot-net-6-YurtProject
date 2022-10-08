@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Project.Repository.Context;
 using Project.Service.Mapping;
 using Project.Service.Validations.RoomValidator;
+using Project.WebUI;
 using Project.WebUI.Modules;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,9 +18,7 @@ builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterVa
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
 
-builder.Host.UseServiceProviderFactory
-    (new AutofacServiceProviderFactory());
-builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
+
 
 builder.Services.AddDbContext<YurtDbContext>(x =>
 {
@@ -29,10 +28,16 @@ builder.Services.AddDbContext<YurtDbContext>(x =>
     });
 });
 
+builder.Services.AddScoped(typeof(NotFoundFilter<>));
+
+builder.Host.UseServiceProviderFactory
+    (new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
+
 
 var app = builder.Build();
 
-
+app.UseExceptionHandler("/Home/Error");
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

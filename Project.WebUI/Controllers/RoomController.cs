@@ -42,6 +42,8 @@ namespace Project.WebUI.ControllersR
             return View(roomCreateDto);
         }
 
+
+        [ServiceFilter(typeof(NotFoundFilter<Room>))]
         public async Task<IActionResult> Update(int id)
         {
             Room room = await _roomService.GetByIdAsync(id);
@@ -55,8 +57,8 @@ namespace Project.WebUI.ControllersR
             if (ModelState.IsValid)
             {
                 Room room = await _roomService.GetByIdAsync(roomUpdateDto.Id);
-                roomUpdateDto.CurrentCapacity = room.CurrentCapacity;
 
+                roomUpdateDto.CurrentCapacity = room.CurrentCapacity;
                 await _roomService.UpdateAsync(_mapper.Map<Room>(roomUpdateDto));
                 return RedirectToAction(nameof(Index));
                  
