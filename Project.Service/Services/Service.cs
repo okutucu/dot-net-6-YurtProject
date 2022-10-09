@@ -10,7 +10,7 @@ namespace Project.Service.Services
     public class Service<T> : IService<T> where T : BaseEntity
     {
         private readonly IGenericRepository<T> _repository;
-        private readonly IUnitOfWork _unitOfWok;
+        protected readonly IUnitOfWork _unitOfWok;
 
         public Service(IUnitOfWork unitOfWok, IGenericRepository<T> repository)
         {

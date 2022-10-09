@@ -12,7 +12,6 @@
         public string RelativePhone { get; set; }
         public string UniversityName { get; set; }
         public string Description { get; set; }
-
         public int RoomId { get; set; }
 
     }

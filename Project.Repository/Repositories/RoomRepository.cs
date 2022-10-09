@@ -21,5 +21,10 @@ namespace Project.Repository.Repositories
         {
             return await _context.Rooms.Include(x => x.Customers).Where(x => x.Id == roomId).SingleOrDefaultAsync();
         }
+
+        public async Task<Room> ReducingRoomCapacity(int roomId)
+        {
+             return await _context.Rooms.Where(x => x.Id == roomId).SingleOrDefaultAsync();
+        }
     }
 }

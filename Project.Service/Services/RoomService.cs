@@ -4,6 +4,7 @@ using Project.Core.Models;
 using Project.Core.Repositories;
 using Project.Core.Services;
 using Project.Core.UnitOfWorks;
+using Project.Repository.UnitOfWork;
 
 namespace Project.Service.Services
 {
@@ -35,6 +36,19 @@ namespace Project.Service.Services
             RoomWithCustomerDto roomDto = _mapper.Map<RoomWithCustomerDto>(room);
 
             return roomDto;
+        }
+
+        public async Task ReducingRoomCapacity(int roomId)
+        {
+            RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
+
+            int customerCount = roomAndCustomerDto.Customers.Count();
+
+
+            Room room = await _roomRepository.ReducingRoomCapacity(roomId);
+            room.CurrentCapacity--;
+            await _unitOfWok.CommitAsync();
+
         }
     }
 }

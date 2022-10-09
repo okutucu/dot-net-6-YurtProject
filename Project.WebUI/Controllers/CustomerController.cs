@@ -42,6 +42,8 @@ namespace Project.WebUI.Controllers
         {
             if(ModelState.IsValid)
             {
+                await _roomService.ReducingRoomCapacity(customerDto.RoomId);
+
                 await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
                 return RedirectToAction(nameof(Index));
             }
