@@ -24,7 +24,9 @@ namespace Project.Repository.Repositories
 
         public async Task<Room> ReducingRoomCapacity(int roomId)
         {
-             return await _context.Rooms.Where(x => x.Id == roomId).SingleOrDefaultAsync();
+            return await _context.Rooms.Where(x => x.Id == roomId).SingleOrDefaultAsync();
         }
+
+
     }
 }

@@ -41,13 +41,29 @@ namespace Project.Service.Services
         public async Task ReducingRoomCapacity(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
+            Room room = await _roomRepository.ReducingRoomCapacity(roomId);
 
             int customerCount = roomAndCustomerDto.Customers.Count();
 
+            if(customerCount == 0)
+            {
+                room.Debt  = roomAndCustomerDto.Price;
+                room.CurrentCapacity--;
+                await _unitOfWok.CommitAsync();
+                return;
+            }
+            else if(customerCount > 0)
+            {
+                room.Debt += 400;
+                room.CurrentCapacity--;
+                await _unitOfWok.CommitAsync();
+                return;
+            }
 
-            Room room = await _roomRepository.ReducingRoomCapacity(roomId);
-            room.CurrentCapacity--;
-            await _unitOfWok.CommitAsync();
+
+            
+
+
 
         }
     }
