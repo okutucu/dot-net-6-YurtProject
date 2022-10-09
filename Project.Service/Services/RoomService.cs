@@ -42,7 +42,6 @@ namespace Project.Service.Services
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
             Room room = await _roomRepository.ReducingRoomCapacity(roomId);
-
             int customerCount = roomAndCustomerDto.Customers.Count();
 
             if(customerCount == 0)
@@ -54,6 +53,7 @@ namespace Project.Service.Services
             }
             else if(customerCount > 0)
             {
+                room.Price += 400;
                 room.Debt += 400;
                 room.CurrentCapacity--;
                 await _unitOfWok.CommitAsync();
