@@ -8,7 +8,6 @@ namespace Project.Core.DTOs
 {
     public class CustomerListDto : CustomerDto
     {
-        public int RoomId { get; set; }
         public RoomDto Room { get; set; }
     }
 }

@@ -1,13 +1,11 @@
-using System.Globalization;
 using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Project.Repository.Context;
 using Project.Service.Mapping;
-using Project.Service.Validations.RoomValidator;
+using Project.Service.Validations.RoomValidators;
 using Project.WebUI;
 using Project.WebUI.Modules;
 
