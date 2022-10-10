@@ -27,6 +27,10 @@ namespace Project.Repository.Repositories
             return await _context.Rooms.Where(x => x.Id == roomId).SingleOrDefaultAsync();
         }
 
+        public async Task<Room> RoomCapacityAccuracyAndDebt(int roomId)
+        {
+            return await _context.Rooms.Where(x => x.Id == roomId).SingleOrDefaultAsync();
 
+        }
     }
 }

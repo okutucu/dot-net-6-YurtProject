@@ -7,6 +7,8 @@ namespace Project.Core.Repositories
         Task<List<Room>> GetRoomWithCustomerAsync();
         Task<Room> GetSingleRoomByIdWithCustomerAsync(int roomId);
         Task<Room> ReducingRoomCapacity(int roomId);
-   
+        Task<Room> RoomCapacityAccuracyAndDebt(int roomId);
+
+
     }
 }

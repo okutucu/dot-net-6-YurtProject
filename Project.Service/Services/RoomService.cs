@@ -59,12 +59,11 @@ namespace Project.Service.Services
                 await _unitOfWok.CommitAsync();
                 return;
             }
+        }
 
-
-            
-
-
-
+        public Task RoomCapacityAccuracyAndDebt(int roomId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

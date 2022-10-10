@@ -61,3 +61,21 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
+
+    @section ExtraScripts{
+    <script>
+        $(document).ready(function () {
+
+            let lackDetail = $('#lackDetailId');
+
+            $("#checkId").on('change', function () {
+                if ($(this).is(':checked')) {
+                    lackDetail.addClass('d-block').removeClass('d-none');
+                } else {
+                    lackDetail.addClass('d-none').removeClass('d-block');
+                }
+            });
+        });
+    </script>
+}
+
