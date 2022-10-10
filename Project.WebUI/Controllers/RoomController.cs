@@ -56,18 +56,18 @@ namespace Project.WebUI.ControllersR
         {
             if (ModelState.IsValid)
             {
-                Room room = await _roomService.GetByIdAsync(roomUpdateDto.Id);
-                roomUpdateDto.CurrentCapacity = roomUpdateDto.Capacity - room.Capacity;
-                roomUpdateDto.Debt = room.Debt;
+                 await _roomService.RoomCapacityAccuracy(roomUpdateDto.Id, roomUpdateDto.Capacity);
+                
+                //todo
+
+                //roomUpdateDto.Debt = room.Debt;
           
 
                 await _roomService.UpdateAsync(_mapper.Map<Room>(roomUpdateDto));
                 return RedirectToAction(nameof(Index));
                  
             }
-
             return View(roomUpdateDto);
-
         }
 
 

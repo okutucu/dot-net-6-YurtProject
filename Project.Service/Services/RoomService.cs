@@ -61,9 +61,31 @@ namespace Project.Service.Services
             }
         }
 
-        public Task RoomCapacityAccuracyAndDebt(int roomId)
+        public async Task RoomCapacityAccuracy(int roomId, int Capacity)
         {
-            throw new NotImplementedException();
+
+            RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
+
+            //Room room = await _roomRepository.GetByIdAsync(roomId);
+            //Room room = await _roomRepository.ReducingRoomCapacity(roomId);
+
+            int customerCount = roomAndCustomerDto.Customers.Count();
+
+            //todo tracking
+
+            if (Capacity >= customerCount)
+            {
+                roomAndCustomerDto.Capacity = Capacity;
+                roomAndCustomerDto.CurrentCapacity = Capacity - roomAndCustomerDto.Capacity;
+                await _unitOfWok.CommitAsync();
+                return;
+            }
+            else
+            {
+                throw new Exception("Room capacity cannot be less than the number of customers in the room.");
+            }
+
+
         }
     }
 }
