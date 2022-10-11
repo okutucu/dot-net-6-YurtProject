@@ -56,5 +56,40 @@ namespace Project.WebUI.Controllers
 
             return View();
         }
+
+
+        public async Task<IActionResult> Update(int id)
+        {
+            List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
+            Customer customer = await _customerService.GetByIdAsync(id);
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName",customer.RoomId);
+
+            return View(_mapper.Map<CustomerDto>(customer));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CustomerDto customerDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var a = await _customerService.GetByIdAsync(customerDto.Id);
+                await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
+                return RedirectToAction(nameof(Index));
+            }
+
+            List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customerDto.RoomId);
+
+
+            return View(customerDto);
+
+        }
     }
+
 }
