@@ -75,9 +75,7 @@ namespace Project.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Customer customer = await _customerService.GetByIdAsync(customerDto.Id);
-                
-
+                Customer customer = await _customerService.GetByIdAsync(customerDto.Id);  
                 if (customerDto.RoomId == customer.RoomId)
                 {
                     await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
@@ -85,20 +83,25 @@ namespace Project.WebUI.Controllers
                 }
                 else
                 {
-                    await _roomService.GetCustomerWithRoomForRoomChange(customer.RoomId, customerDto.RoomId);
+                    await _roomService.GetCustomerWithRoomForRoomChange(customer.RoomId, customerDto.RoomId);  
                     await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
-                    return RedirectToAction(nameof(Index));
+                     return RedirectToAction(nameof(Index));
                 }
             }
 
             List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
-
             List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
-
             ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customerDto.RoomId);
-
-
             return View(customerDto);
+
+        }
+
+         public async Task<IActionResult> Remove(int id)
+        {
+            Customer customer = await _customerService.GetByIdAsync(id);
+            await _roomService.IncreaseCapacityWhenDeletingCustomers(customer.RoomId);
+            await _customerService.RemoveAsync(customer);
+            return RedirectToAction(nameof(Index));
 
         }
     }

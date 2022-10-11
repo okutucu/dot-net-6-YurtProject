@@ -19,23 +19,35 @@ namespace Project.Service.Services
             _roomRepository = roomRepository;
         }
 
-        public async Task<bool> GetCustomerWithRoomForRoomChange(int oldRoomId, int newRoomId)
+        public async Task GetCustomerWithRoomForRoomChange(int oldRoomId, int newRoomId)
         {
+            RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
+
             Room newRoom = await _roomRepository.GetByIdAsync(newRoomId);
-
-            if (newRoom.CurrentCapacity== 0 )
-            {
-                return false;
-            }
-            //todo true false
-
             Room oldRoom = await _roomRepository.GetByIdAsync(oldRoomId);
 
-            oldRoom.CurrentCapacity++;
-            newRoom.CurrentCapacity--;
+
+            int customerCount = roomAndCustomerDto.Customers.Count();
+
+
+            if (customerCount == 0)
+            {
+                newRoom.Debt = roomAndCustomerDto.Price;
+                oldRoom.CurrentCapacity++;
+                newRoom.CurrentCapacity--;
+                oldRoom.Price -= 400;
+            }
+
+            //todo remove and update dept price kontrol edilecek
+            else
+            {
+                newRoom.Debt += 400;
+                newRoom.Price += 400;
+                oldRoom.CurrentCapacity++;
+                newRoom.CurrentCapacity--;
+            }          
             _roomRepository.Update(oldRoom);
             _roomRepository.Update(newRoom);
-            return true;
         }
 
         public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync()
@@ -55,6 +67,26 @@ namespace Project.Service.Services
             RoomWithCustomerDto roomDto = _mapper.Map<RoomWithCustomerDto>(room);
 
             return roomDto;
+        }
+
+        public async Task IncreaseCapacityWhenDeletingCustomers(int roomId)
+        {
+            RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
+            int customerCount = roomAndCustomerDto.Customers.Count();
+
+            Room room = await _roomRepository.GetByIdAsync(roomId);
+
+
+            if (customerCount >= 1)
+            {
+                room.Price -= 400;
+                room.Debt -= 400;
+                room.CurrentCapacity++;
+            }
+
+
+
+            _roomRepository.Update(room);
         }
 
         public async Task ReducingRoomCapacity(int roomId)
