@@ -11,11 +11,6 @@ namespace Project.Repository.Repositories
         {
         }
 
-        public async Task<Customer> GetCustomerWithRoomForRoomChange(int customerId)
-        {
-            return await _context.Customers.Include(c => c.Room).Where(c => c.Id == customerId).AsNoTracking().SingleOrDefaultAsync();
-        }
-
         public async Task<List<Customer>> GetCustomerWithRoomAsync()
         {
             return await _context.Customers.Include(c => c.Room).ToListAsync();

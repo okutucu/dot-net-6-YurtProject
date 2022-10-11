@@ -9,6 +9,7 @@ namespace Project.Core.Services
         Task<RoomWithCustomerDto> GetSingleRoomByIdWithCustomerAsync(int roomId);
         Task ReducingRoomCapacity(int roomId);
         Task<RoomDto> RoomCapacityAccuracy(int roomId, int Capacity);
+        Task<bool> GetCustomerWithRoomForRoomChange(int oldRoomId, int newRoomId);
 
 
     }

@@ -6,7 +6,6 @@ namespace Project.Core.Repositories
     {
             Task<List<Customer>> GetCustomerWithRoomAsync();
 
-          Task<Customer> GetCustomerWithRoomForRoomChange(int customerId);
 
 
     }

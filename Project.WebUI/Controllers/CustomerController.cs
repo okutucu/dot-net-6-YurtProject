@@ -75,9 +75,20 @@ namespace Project.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var a = await _customerService.GetByIdAsync(customerDto.Id);
-                await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
-                return RedirectToAction(nameof(Index));
+                Customer customer = await _customerService.GetByIdAsync(customerDto.Id);
+                
+
+                if (customerDto.RoomId == customer.RoomId)
+                {
+                    await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    await _roomService.GetCustomerWithRoomForRoomChange(customer.RoomId, customerDto.RoomId);
+                    await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();

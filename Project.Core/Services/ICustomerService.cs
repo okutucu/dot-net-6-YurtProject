@@ -7,5 +7,6 @@ namespace Project.Core.Services
     {
         Task<List<CustomerListDto>> GetCustomerWithRoomAsync();
 
+
     }
 }

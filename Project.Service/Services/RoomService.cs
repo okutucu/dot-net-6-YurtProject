@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Repositories;
 using Project.Core.Services;
 using Project.Core.UnitOfWorks;
-using Project.Repository.UnitOfWork;
 
 namespace Project.Service.Services
 {
@@ -17,6 +17,25 @@ namespace Project.Service.Services
         {
             _mapper = mapper;
             _roomRepository = roomRepository;
+        }
+
+        public async Task<bool> GetCustomerWithRoomForRoomChange(int oldRoomId, int newRoomId)
+        {
+            Room newRoom = await _roomRepository.GetByIdAsync(newRoomId);
+
+            if (newRoom.CurrentCapacity== 0 )
+            {
+                return false;
+            }
+            //todo true false
+
+            Room oldRoom = await _roomRepository.GetByIdAsync(oldRoomId);
+
+            oldRoom.CurrentCapacity++;
+            newRoom.CurrentCapacity--;
+            _roomRepository.Update(oldRoom);
+            _roomRepository.Update(newRoom);
+            return true;
         }
 
         public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync()

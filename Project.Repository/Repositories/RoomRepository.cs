@@ -14,7 +14,7 @@ namespace Project.Repository.Repositories
         public async Task<List<Room>> GetRoomWithCustomerAsync()
         {
             // Eager Loading
-            return await _context.Rooms.Include(x => x.Customers).ToListAsync();
+              return await _context.Rooms.Include(x => x.Customers).ToListAsync();
         }
 
         public async Task<Room> GetSingleRoomByIdWithCustomerAsync(int roomId)
