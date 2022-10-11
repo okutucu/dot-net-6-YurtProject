@@ -65,9 +65,7 @@ namespace Project.Service.Services
         {
 
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
-
-            //Room room = await _roomRepository.GetByIdAsync(roomId);
-            //Room room = await _roomRepository.ReducingRoomCapacity(roomId);
+            Room room = await _roomRepository.GetByIdAsync(roomId);
 
             int customerCount = roomAndCustomerDto.Customers.Count();
 
@@ -75,10 +73,20 @@ namespace Project.Service.Services
 
             if (Capacity >= customerCount)
             {
-                roomAndCustomerDto.Capacity = Capacity;
-                roomAndCustomerDto.CurrentCapacity = Capacity - roomAndCustomerDto.Capacity;
-                await _unitOfWok.CommitAsync();
-                return;
+                if (room.CurrentCapacity == room.Capacity)
+                {
+                    room.Capacity = Capacity;
+                    room.CurrentCapacity = Capacity;
+                    await _unitOfWok.CommitAsync();
+                    return;
+                }
+                else
+                {
+                    room.CurrentCapacity = Capacity - room.Capacity;
+                    room.Capacity = Capacity;
+                    await _unitOfWok.CommitAsync();
+                    return;
+                }
             }
             else
             {

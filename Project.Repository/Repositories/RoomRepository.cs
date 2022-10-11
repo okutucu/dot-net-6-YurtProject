@@ -29,7 +29,7 @@ namespace Project.Repository.Repositories
 
         public async Task<Room> RoomCapacityAccuracy(int roomId)
         {
-            return await _context.Rooms.AsNoTracking().FirstOrDefaultAsync(x => x.Id == roomId);
+            return await GetByIdAsync(roomId);
 
         }
     }
