@@ -61,11 +61,13 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task RoomCapacityAccuracy(int roomId, int Capacity)
+        public async Task<RoomDto> RoomCapacityAccuracy(int roomId, int Capacity)
         {
 
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
-            Room room = await _roomRepository.GetByIdAsync(roomId);
+            Room room = await _roomRepository.RoomCapacityAccuracy(roomId);
+
+            RoomDto roomDto = _mapper.Map<RoomDto>(room);
 
             int customerCount = roomAndCustomerDto.Customers.Count();
 
@@ -73,19 +75,17 @@ namespace Project.Service.Services
 
             if (Capacity >= customerCount)
             {
-                if (room.CurrentCapacity == room.Capacity)
+                if (roomDto.CurrentCapacity == roomDto.Capacity)
                 {
-                    room.Capacity = Capacity;
-                    room.CurrentCapacity = Capacity;
-                    await _unitOfWok.CommitAsync();
-                    return;
+                    roomDto.Capacity = Capacity;
+                    roomDto.CurrentCapacity = Capacity;
+                    return roomDto;
                 }
                 else
                 {
-                    room.CurrentCapacity = Capacity - room.Capacity;
-                    room.Capacity = Capacity;
-                    await _unitOfWok.CommitAsync();
-                    return;
+                    roomDto.CurrentCapacity += (Capacity - room.Capacity);
+                    roomDto.Capacity = Capacity;
+                    return roomDto;
                 }
             }
             else

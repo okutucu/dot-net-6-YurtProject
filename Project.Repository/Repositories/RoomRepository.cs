@@ -19,7 +19,7 @@ namespace Project.Repository.Repositories
 
         public async Task<Room> GetSingleRoomByIdWithCustomerAsync(int roomId)
         {
-            return await _context.Rooms.Include(x => x.Customers).Where(x => x.Id == roomId).SingleOrDefaultAsync();
+            return await _context.Rooms.Include(x => x.Customers).Where(x => x.Id == roomId).AsNoTracking().SingleOrDefaultAsync();
         }
 
         public async Task<Room> ReducingRoomCapacity(int roomId)
