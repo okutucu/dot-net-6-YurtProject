@@ -21,33 +21,34 @@ namespace Project.Service.Services
 
         public async Task GetCustomerWithRoomForRoomChange(int oldRoomId, int newRoomId)
         {
-            RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
+            RoomWithCustomerDto newRoom = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
+            RoomWithCustomerDto oldRoom = await GetSingleRoomByIdWithCustomerAsync(oldRoomId);
 
-            Room newRoom = await _roomRepository.GetByIdAsync(newRoomId);
-            Room oldRoom = await _roomRepository.GetByIdAsync(oldRoomId);
+            //Room newRoom = await _roomRepository.GetByIdAsync(newRoomId);
+            //Room oldRoom = await _roomRepository.GetByIdAsync(oldRoomId);
 
+            int newRoomCustomerCount = newRoom.Customers.Count();
+            int oldRoomCustomerCount = oldRoom.Customers.Count();
 
-            int customerCount = roomAndCustomerDto.Customers.Count();
-
-
-            if (customerCount == 0)
+            if (newRoomCustomerCount == 0)
             {
-                newRoom.Debt = roomAndCustomerDto.Price;
-                oldRoom.CurrentCapacity++;
-                newRoom.CurrentCapacity--;
-                oldRoom.Price -= 400;
+                if(oldRoomCustomerCount > 1)
+                {
+                    oldRoom.Price -= 400;
+                }
+                newRoom.Debt = newRoom.Price;
             }
-
-            //todo remove and update dept price kontrol edilecek
             else
             {
                 newRoom.Debt += 400;
                 newRoom.Price += 400;
-                oldRoom.CurrentCapacity++;
-                newRoom.CurrentCapacity--;
-            }          
-            _roomRepository.Update(oldRoom);
-            _roomRepository.Update(newRoom);
+            }
+
+            oldRoom.CurrentCapacity++;
+            newRoom.CurrentCapacity--;
+
+            _roomRepository.Update(_mapper.Map<Room>(oldRoom));
+            _roomRepository.Update(_mapper.Map<Room>(newRoom));
         }
 
         public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync()
