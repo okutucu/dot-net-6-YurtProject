@@ -36,10 +36,15 @@ namespace Project.Service.Services
                 {
                     oldRoom.Price -= 400;
                 }
+
                 newRoom.Debt = newRoom.Price;
             }
             else
             {
+                if (oldRoomCustomerCount > 1)
+                {
+                    oldRoom.Price -= 400;
+                }
                 newRoom.Debt += 400;
                 newRoom.Price += 400;
             }
@@ -75,19 +80,15 @@ namespace Project.Service.Services
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
             int customerCount = roomAndCustomerDto.Customers.Count();
 
-            Room room = await _roomRepository.GetByIdAsync(roomId);
-
-
-            if (customerCount >= 1)
+            if (customerCount > 1)
             {
-                room.Price -= 400;
-                room.Debt -= 400;
-                room.CurrentCapacity++;
+                roomAndCustomerDto.Price -= 400;
             }
 
+            roomAndCustomerDto.CurrentCapacity++;
 
 
-            _roomRepository.Update(room);
+            _roomRepository.Update(_mapper.Map<Room>(roomAndCustomerDto));
         }
 
         public async Task ReducingRoomCapacity(int roomId)
