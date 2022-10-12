@@ -9,8 +9,8 @@ namespace Project.Core.Enums
     public  enum Exchange
     {
         Tl = 0,
-        Dollar = 2,
-        Euro = 3,
-        Sterling =4 
+        Dollar = 1,
+        Euro = 2,
+        Sterling =3 
     }
 }

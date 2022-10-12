@@ -4,7 +4,7 @@ namespace Project.Core.Models
 {
     public class PaymentDetail : BaseEntity
     {
-        public string PaymentName { get; set; }
+        public PaymentName PaymentName { get; set; }
         public decimal Price { get; set; }
         public Exchange Exchange { get; set; }
         public double MoneyOfTheDay { get; set; }

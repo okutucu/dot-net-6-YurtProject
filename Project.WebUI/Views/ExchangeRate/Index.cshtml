@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+@model List<ExchangeRateDto>
+
+    <ul>
+    @foreach (ExchangeRateDto exchangeRate in Model)
+    {
+            <li>@exchangeRate.ExchangeName</li>
+            <li>@exchangeRate.Price</li>      
+      }
+    </ul>
+
+
+
+   <h3>
+    Change Exchange Rate
+</h3>  
+
+<form asp-action="Update" asp-controller="ExchangeRate" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @foreach (ExchangeRateDto exchangeRate in @Model)
+    {
+
+        <div>@exchangeRate.ExchangeName </div>
+        <div class="form-group">
+            <input name="@exchangeRate.ExchangeName" value="@exchangeRate.Price" class="form-control" />
+        </div>
+    }
+
+    
+  
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+</form>
