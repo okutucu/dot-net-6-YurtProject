@@ -27,6 +27,13 @@ namespace Project.WebUI.Controllers
             return View(_mapper.Map<List<PaymentDetailDto>>(paymentDetails));
         }
 
+        public IActionResult GetBySelected(int year ,int month)
+        {
+
+            return View();
+
+        }
+
         public IActionResult Create()
         {
             return View();
