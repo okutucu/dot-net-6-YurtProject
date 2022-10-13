@@ -29,5 +29,15 @@ namespace Project.Service.Services
 
             
         }
+
+        public async Task UpdateByCurrency(PaymentDetailDto paymentDetailDto, decimal currency)
+        {
+            paymentDetailDto.MoneyOfTheDay = currency * paymentDetailDto.Price;
+            paymentDetailDto.PaymentDate = DateTime.Now;
+           
+
+             _paymentDetailRepository.Update(_mapper.Map<PaymentDetail>(paymentDetailDto));
+            await _unitOfWok.CommitAsync();
+        }
     }
 }

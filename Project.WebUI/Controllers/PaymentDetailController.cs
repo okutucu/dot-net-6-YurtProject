@@ -43,5 +43,26 @@ namespace Project.WebUI.Controllers
             }
             return View(paymentDetailDto);
         }
+
+        [ServiceFilter(typeof(NotFoundFilter<PaymentDetail>))]
+        public async Task<IActionResult> Update(int id)
+        {
+            PaymentDetail paymentDetail = await _paymentDetailService.GetByIdAsync(id); 
+            return View(_mapper.Map<PaymentDetailDto>(paymentDetail));
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(PaymentDetailDto paymentDetailDto)
+        {
+            if (ModelState.IsValid)
+            {
+                ExchangeRate currency = await _exchangeRateService.GetByName(paymentDetailDto.Exchange.ToString());
+                await _paymentDetailService.UpdateByCurrency(paymentDetailDto, currency.Price);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            return View(paymentDetailDto);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Project.Core.Services
     public interface IPaymentDetailService : IService<PaymentDetail>
     {
         Task AddByCurrency(PaymentDetailDto paymentDetailDto, decimal currency);
+        Task UpdateByCurrency(PaymentDetailDto paymentDetailDto, decimal currency);
     }
 }

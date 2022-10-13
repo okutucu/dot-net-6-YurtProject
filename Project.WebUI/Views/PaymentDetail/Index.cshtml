@@ -8,14 +8,37 @@
     <a asp-action="Create" asp-controller="PaymentDetail">New Payments</a>
 </div>
 
-@foreach (PaymentDetailDto payment in Model)
-{
-    <ul>
-        <li>PaymentName : @payment.PaymentName</li>
-        <li>PaymentMethod : @payment.PaymentMethod</li>
-        <li>Price : @payment.Price</li>
-        <li>MoneyOfTheDay : @payment.MoneyOfTheDay</li>
-        <li>Date : @payment.PaymentDate</li>
-        <li>Currency : @payment.Exchange</li>
-    </ul>
-}
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<td>Payment Name</td>
+		<td>Payment Method</td>
+		<td>Price</td>
+		<td>Currency </td>
+		<td>Money Of The Day</td>
+		<td>Payment Date</td>
+		<td>Desctiption</td>
+		<td>Action</td>
+		
+	</tr>
+	</thead>
+	<tbody>
+		@foreach (PaymentDetailDto payment in Model)
+		{
+			<tr>
+				<th> @payment.PaymentName</th>
+				<th> @payment.PaymentMethod</th>
+				<th> @payment.Price</th>
+				<th> @payment.Exchange</th>
+				<th class="text-danger"> @payment.MoneyOfTheDay ₺</th>
+				<th> @payment.PaymentDate</th>
+				<th> @payment.Description</th>
+				<th>
+					<a class="btn btn-warning" asp-controller="PaymentDetail" asp-action="Update" asp-route-id="@payment.Id">Update</a>
+					<a class="btn btn-danger" asp-controller="PaymentDetail" asp-action="Remove" asp-route-id="@payment.Id">Delete	</a>
+				</th>
+			</tr>
+		}
+	</tbody>
+</table>
+
