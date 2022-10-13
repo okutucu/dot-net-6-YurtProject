@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Repository.Context;
 
@@ -11,9 +12,10 @@ using Project.Repository.Context;
 namespace Project.Repository.Migrations
 {
     [DbContext(typeof(YurtDbContext))]
-    partial class YurtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221013133610_mig_AddedTLCurrency")]
+    partial class mig_AddedTLCurrency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,34 +89,34 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 496, DateTimeKind.Local).AddTicks(114),
+                            CreatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 862, DateTimeKind.Local).AddTicks(836),
                             Depart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "UK",
                             Email = "o@kutucu.com",
-                            EntryDate = new DateTime(2022, 10, 13, 17, 13, 47, 496, DateTimeKind.Local).AddTicks(108),
+                            EntryDate = new DateTime(2022, 10, 13, 16, 36, 9, 862, DateTimeKind.Local).AddTicks(830),
                             FullName = "Oğuzhan Kutucu",
                             IdentityNo = "1234567",
                             Phone = "05353073235",
                             RelativeNameSurname = "Kaan Kutucu",
                             RelativePhone = "5555555",
                             RoomId = 1,
-                            UpdatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 496, DateTimeKind.Local).AddTicks(115)
+                            UpdatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 862, DateTimeKind.Local).AddTicks(837)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 496, DateTimeKind.Local).AddTicks(125),
+                            CreatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 862, DateTimeKind.Local).AddTicks(848),
                             Depart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "UK",
                             Email = "k@kutucu.com",
-                            EntryDate = new DateTime(2022, 10, 13, 17, 13, 47, 496, DateTimeKind.Local).AddTicks(124),
+                            EntryDate = new DateTime(2022, 10, 13, 16, 36, 9, 862, DateTimeKind.Local).AddTicks(847),
                             FullName = "Kaan Kutucu",
                             IdentityNo = "12345267",
                             Phone = "5555555",
                             RelativeNameSurname = "Oğuzhan Kutucu",
                             RelativePhone = "05353073235",
                             RoomId = 1,
-                            UpdatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 496, DateTimeKind.Local).AddTicks(126)
+                            UpdatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 862, DateTimeKind.Local).AddTicks(849)
                         });
                 });
 
@@ -148,28 +150,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 495, DateTimeKind.Local).AddTicks(508),
+                            CreatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 861, DateTimeKind.Local).AddTicks(4338),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 495, DateTimeKind.Local).AddTicks(518),
+                            CreatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 861, DateTimeKind.Local).AddTicks(4350),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 495, DateTimeKind.Local).AddTicks(519),
+                            CreatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 861, DateTimeKind.Local).AddTicks(4351),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 10, 13, 17, 13, 47, 495, DateTimeKind.Local).AddTicks(522),
+                            CreatedDate = new DateTime(2022, 10, 13, 16, 36, 9, 861, DateTimeKind.Local).AddTicks(4354),
                             ExchangeName = "Tl",
                             Price = 1m
                         });
@@ -185,9 +187,6 @@ namespace Project.Repository.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CurrencyName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)
@@ -237,9 +236,6 @@ namespace Project.Repository.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CurrencyName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)
@@ -402,9 +398,6 @@ namespace Project.Repository.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CurrencyName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)

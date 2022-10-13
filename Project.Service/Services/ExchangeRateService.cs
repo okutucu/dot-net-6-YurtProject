@@ -21,9 +21,9 @@ namespace Project.Service.Services
 
         public async Task CurrencyUpdate(decimal dollar, decimal euro, decimal sterling)
         {
-            var newDollar = await _exchangeRateRepository.GetByIdAsync((int)Exchange.Dollar);
-            var newEuro = await _exchangeRateRepository.GetByIdAsync((int)Exchange.Euro);
-            var newSterling = await _exchangeRateRepository.GetByIdAsync((int)Exchange.Sterling);
+            ExchangeRate newDollar = await _exchangeRateRepository.GetByIdAsync((int)Exchange.Dollar);
+            ExchangeRate newEuro = await _exchangeRateRepository.GetByIdAsync((int)Exchange.Euro);
+            ExchangeRate newSterling = await _exchangeRateRepository.GetByIdAsync((int)Exchange.Sterling);
 
             newDollar.Price = dollar;
             newEuro.Price = euro;

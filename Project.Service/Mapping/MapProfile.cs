@@ -20,6 +20,9 @@ namespace Project.Service.Mapping
 
 
             CreateMap<ExchangeRate, ExchangeRateDto>().ReverseMap();
+
+
+            CreateMap<PaymentDetail,PaymentDetailDto>().ReverseMap();
         }
     }
 }

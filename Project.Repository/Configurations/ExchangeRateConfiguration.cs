@@ -33,7 +33,15 @@ namespace Project.Repository.Configurations
                         ExchangeName = "Sterling",
                         Price = 10,
                         CreatedDate = DateTime.Now
+                    },
+                    new ExchangeRate
+                    {
+                        Id = 4,
+                        ExchangeName = "Tl",
+                        Price = 1,
+                        CreatedDate = DateTime.Now
                     }
+                    //todo tl currency hide and show
                 );
         }
     }
