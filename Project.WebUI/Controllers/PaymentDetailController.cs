@@ -13,7 +13,6 @@ namespace Project.WebUI.Controllers
         private readonly IExchangeRateService _exchangeRateService;
         private readonly IMapper _mapper;
 
-
         public PaymentDetailController(IPaymentDetailService paymentDetailService, IMapper mapper, IExchangeRateService exchangeRateService)
         {
             _paymentDetailService = paymentDetailService;

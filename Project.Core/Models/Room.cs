@@ -14,6 +14,7 @@
         // Relational Properties
         public IList<Customer> Customers { get; set; }
         public IList<RoomIncome> RoomIncomes { get; set; }
+        public IList<IncomeDetail> IncomeDetails { get; set; }
 
     }
 }

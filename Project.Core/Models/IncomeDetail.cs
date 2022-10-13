@@ -14,5 +14,11 @@ namespace Project.Core.Models
         public decimal MoneyOfTheDay { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string Description { get; set; }
+
+        public int? RoomId { get; set; }
+
+        // Relational Properties
+
+        public virtual Room Room { get; set; }
     }
 }
