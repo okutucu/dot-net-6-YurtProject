@@ -64,5 +64,15 @@ namespace Project.WebUI.Controllers
 
             return View(paymentDetailDto);
         }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+           PaymentDetail paymentDetail = await _paymentDetailService.GetByIdAsync(id);
+            await _paymentDetailService.RemoveAsync(paymentDetail);
+            return RedirectToAction(nameof(Index));
+
+
+
+        }
     }
 }
