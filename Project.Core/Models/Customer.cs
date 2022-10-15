@@ -19,7 +19,5 @@
         //Relational Properties
         public virtual Room Room { get; set; }
 
-
-
     }
 }

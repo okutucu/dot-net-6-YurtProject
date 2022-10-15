@@ -124,6 +124,7 @@ namespace Project.Service.Services
             int customerCount = roomAndCustomerDto.Customers.Count();
 
             //todo tracking
+            //todo update room properties
 
             if (Capacity >= customerCount)
             {
