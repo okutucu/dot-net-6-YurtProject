@@ -113,32 +113,31 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task<RoomDto> RoomCapacityAccuracy(int roomId, int Capacity)
+        public async Task<RoomUpdateDto> RoomCapacityAccuracy(RoomUpdateDto roomUpdateDto)
         {
 
-            RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
-            Room room = await _roomRepository.RoomCapacityAccuracy(roomId);
-
-            RoomDto roomDto = _mapper.Map<RoomDto>(room);
+            RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomUpdateDto.Id);
+            Room room = await _roomRepository.RoomCapacityAccuracy(roomUpdateDto.Id);
+            roomUpdateDto.Debt = room.Debt;
 
             int customerCount = roomAndCustomerDto.Customers.Count();
 
             //todo tracking
             //todo update room properties
-
-            if (Capacity >= customerCount)
+            //todo sero
+            
+            if (roomUpdateDto.Capacity >= customerCount)
             {
-                if (roomDto.CurrentCapacity == roomDto.Capacity)
+                if (room.CurrentCapacity == room.Capacity)
                 {
-                    roomDto.Capacity = Capacity;
-                    roomDto.CurrentCapacity = Capacity;
-                    return roomDto;
+                    roomUpdateDto.CurrentCapacity = roomUpdateDto.Capacity;
+                    return roomUpdateDto;
                 }
                 else
                 {
-                    roomDto.CurrentCapacity += (Capacity - room.Capacity);
-                    roomDto.Capacity = Capacity;
-                    return roomDto;
+                    room.CurrentCapacity += (roomUpdateDto.Capacity - room.Capacity);
+                    roomUpdateDto.CurrentCapacity = room.CurrentCapacity;
+                    return roomUpdateDto;
                 }
             }
             else
