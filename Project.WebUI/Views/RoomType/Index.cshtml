@@ -1,0 +1,35 @@
+﻿@model List<RoomTypeDto>
+
+<div class="text-center">
+    <h1 class="display-4">Room Type  Page</h1>
+    <a class="btn btn-primary mr-2" asp-action="Create" asp-controller="RoomType">New Payments</a>
+</div>
+
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<td>Room Type</td>
+		<td>Price</td>
+		<td>Increased Price</td>
+		<td>Action</td>
+		
+	</tr>
+	</thead>
+	<tbody>
+		@foreach (RoomTypeDto roomType in Model)
+		{
+		<tr>
+				<th>@roomType.RoomName</th>
+				<th>@roomType.Price</th>
+				<th>@roomType.IncreasedPrice</th>
+
+				<th>
+					
+					<a class="btn btn-warning" asp-controller="RoomType" asp-action="Update" asp-route-id="@roomType.Id">Update	</a>
+				<a class="btn btn-danger" asp-controller="RoomType" asp-action="Remove" asp-route-id="@roomType.Id">Delete	</a>	
+				</th>
+				
+		</tr>
+		}
+	</tbody>
+</table>

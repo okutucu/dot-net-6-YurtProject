@@ -30,6 +30,7 @@ namespace Project.WebUI.Controllers
         public IActionResult GetBySelected(int year, int month, string monthName,string day)
          {
 
+            //todo GetBySelected 
             return View();
 
         }
