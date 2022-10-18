@@ -18,7 +18,6 @@ namespace Project.Repository.Seed
                     CurrentCapacity = 0,
                     Price = 1300,
                     Debt = 0,
-                    RoomType = "Economy",
                     Lack = true,
                     LackDetail = "TV is broken"
                 },
@@ -30,7 +29,6 @@ namespace Project.Repository.Seed
                        CurrentCapacity = 2,
                        Price = 1500,
                        Debt = 0,
-                       RoomType = "Luxery",
                        Lack = false,
                        LackDetail = null,
                    }

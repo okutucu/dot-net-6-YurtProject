@@ -11,22 +11,10 @@
 
 <form asp-controller="PaymentDetail" asp-action="GetBySelected" method="get">
 
-    <div class="form-group">
-        <div class='input-group date' id='datetimepicker9'>
-            <input type='text' name="date" class="form-control" />
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar">
-                </span>
-            </span>
-        </div>
-    </div>
-
-
-
-
-    @*<div class="form-group" id="visibilityDays">
-        <label> Month </label>S
+    <div class="form-group" id="visibilityDays">
+        <label> Days </label>
         <select name="day">
+            <option value="0">-- Select Day</option>
             <option value="1"> 1</option>
             <option value="2"> 2</option>
             <option value="3"> 3</option>
@@ -63,8 +51,10 @@
     </div>
 
         <div class="form-group">
+        <input id="monthName" name="monthName" type="hidden" />
+
             <label> Month </label>
-            <select name="month">
+            <select name="month" id="month">
                 <option value="1"> January</option>
                 <option value="2"> February</option>
                 <option value="3"> March</option>
@@ -93,34 +83,33 @@
             <option value="2029"> 2029</option>
             <option value="2030"> 2030</option>
         </select>
-    </div>*@
+    </div>
 
 
     <div class="form-group">
-        <input type="submit" value="Submit" class="btn btn-primary" />
+        <input  type="submit" value="Submit" class="btn btn-primary" />
     </div>
 
 </form>
 
      @section ExtraScripts{
-    <script>
-        $(document).ready(function () {
-            $(function () {
-                $('#datetimepicker10').datetimepicker({
-                    viewMode: 'years',
-                    format: 'MM/YYYY'
-                });
-            });
+       <script>
+             $(document).ready(function () {
+            $('#visibilityDays').hide();
 
             $("#daysButton").click(function () {
-                $(function () {
-                    $('#datetimepicker10').datetimepicker({
-                        viewMode: 'years'
-                    });
-                });
+                $('#visibilityDays').show();
+            });
 
+          
+            $('#month').change(function () {
+                $(this).find(":selected").each(function () {
+                    selectElement = $('#monthName');
+                    selectElement.value = $(this).text();
+                    console.log($(this).text());
+                });
             });
         });
+       </script>
 
-    </script>
      }
