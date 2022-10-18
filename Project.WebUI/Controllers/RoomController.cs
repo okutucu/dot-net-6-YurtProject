@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
@@ -10,6 +11,7 @@ namespace Project.WebUI.ControllersR
     {
         private readonly IRoomService _roomService;
         private readonly IMapper _mapper;
+        private readonly IService<RoomType> _roomTypeService;
         public RoomController(IRoomService roomService, IMapper mapper)
         {
             _roomService = roomService;
@@ -25,6 +27,12 @@ namespace Project.WebUI.ControllersR
 
         public IActionResult Create()
         {
+            List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
+            List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
+            // Todo changed roomtype operations
+
+            ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName");
+
             return View();
         }
 
@@ -80,7 +88,6 @@ namespace Project.WebUI.ControllersR
             Room room = await _roomService.GetByIdAsync(id);
             await _roomService.RemoveAsync(room);
             return RedirectToAction(nameof(Index));
-
         }
     }
 }
