@@ -9,7 +9,5 @@ namespace Project.Core.Repositories
 {
     public interface IRoomTypeRepository : IGenericRepository<RoomType>
     {
-        Task<List<RoomType>> GetRoomTypeWithRoomAsync();
-
     }
 }

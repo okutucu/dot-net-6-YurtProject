@@ -1,4 +1,4 @@
-﻿@model List<RoomDto>
+﻿@model List<RoomTypeWithRoomDto>
 @{
 	ViewData["Title"] = "Index";
 }
@@ -21,13 +21,14 @@
 	</tr>
 	</thead>
 	<tbody>
-		@foreach (RoomDto room in Model)
+		@foreach (RoomTypeWithRoomDto room in Model)
 		{
 		<tr>
 				<th>@room.RoomName</th>
 				<th>@room.Capacity</th>
+				<th>@room.RoomType.Price</th>
 				<th>@room.CurrentCapacity</th>
-				<th>LÜKS</th>
+				<th>@room.RoomType.RoomName</th>
 				<th>@room.Debt</th>
 				<th>@room.Lack</th>
 				<th>@room.LackDetail</th>

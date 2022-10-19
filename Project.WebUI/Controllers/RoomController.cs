@@ -20,17 +20,14 @@ namespace Project.WebUI.ControllersR
         }
         public async Task<IActionResult> Index()
         {
-            List<Room> rooms = _roomService.GetAll().ToList();
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-            return View(roomsDto);
+            return View(await _roomService.GetRoomWithRoomTypeAsync());
         }
 
         public IActionResult Create()
         {
             List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
             List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
-            // Todo changed roomtype operations
 
             ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName");
 
@@ -55,9 +52,15 @@ namespace Project.WebUI.ControllersR
         [ServiceFilter(typeof(NotFoundFilter<Room>))]
         public async Task<IActionResult> Update(int id)
         {
+
             Room room = await _roomService.GetByIdAsync(id);
-            RoomUpdateDto roomDto = _mapper.Map<RoomUpdateDto>(room);
-            return View(roomDto);
+
+            List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
+            List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
+            ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName",room.RoomTypeId);
+
+
+            return View(_mapper.Map<RoomUpdateDto>(room));
         }
 
         [HttpPost]
@@ -71,6 +74,10 @@ namespace Project.WebUI.ControllersR
                 return RedirectToAction(nameof(Index));
                  
             }
+
+            List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
+            List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
+            ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName", roomUpdateDto.RoomTypeId);
             return View(roomUpdateDto);
         }
 

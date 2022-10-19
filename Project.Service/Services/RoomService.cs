@@ -65,6 +65,15 @@ namespace Project.Service.Services
 
         }
 
+        public async Task<List<RoomTypeWithRoomDto>> GetRoomWithRoomTypeAsync()
+        {
+            List<Room> rooms = await _roomRepository.GetRoomWithRoomTypeAsync();
+
+            List<RoomTypeWithRoomDto> roomTypeWithRoomDto = _mapper.Map<List<RoomTypeWithRoomDto>>(rooms);
+
+            return roomTypeWithRoomDto;
+        }
+
         public async Task<RoomWithCustomerDto> GetSingleRoomByIdWithCustomerAsync(int roomId)
         {
             Room room = await _roomRepository.GetSingleRoomByIdWithCustomerAsync(roomId);
@@ -72,6 +81,15 @@ namespace Project.Service.Services
             RoomWithCustomerDto roomDto = _mapper.Map<RoomWithCustomerDto>(room);
 
             return roomDto;
+        }
+
+        public async Task<RoomTypeWithRoomDto> GetSingleRoomByIdWithRoomTypeAsync(int roomId)
+        {
+            Room room = await _roomRepository.GetSingleRoomByIdWithRoomTypeAsync(roomId);
+
+            RoomTypeWithRoomDto roomTypeDto = _mapper.Map<RoomTypeWithRoomDto>(room);
+
+            return roomTypeDto;
         }
 
         public async Task IncreaseCapacityWhenDeletingCustomers(int roomId)
@@ -93,20 +111,24 @@ namespace Project.Service.Services
         public async Task ReducingRoomCapacity(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
+
+            RoomTypeWithRoomDto roomTypeWithRoom = await GetSingleRoomByIdWithRoomTypeAsync(roomId);
+
+
             Room room = await _roomRepository.ReducingRoomCapacity(roomId);
             int customerCount = roomAndCustomerDto.Customers.Count();
 
             if(customerCount == 0)
             {
-                //room.Debt  = roomAndCustomerDto.Price;
+                room.Debt = roomTypeWithRoom.RoomType.Price;
                 room.CurrentCapacity--;
                 await _unitOfWok.CommitAsync();
                 return;
             }
             else if(customerCount > 0)
             {
-                //room.Price += 400;
-                room.Debt += 400;
+                room.Debt = roomTypeWithRoom.RoomType.Price;
+                room.Debt += roomTypeWithRoom.RoomType.IncreasedPrice;
                 room.CurrentCapacity--;
                 await _unitOfWok.CommitAsync();
                 return;

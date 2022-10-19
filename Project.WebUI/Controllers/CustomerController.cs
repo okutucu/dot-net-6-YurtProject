@@ -54,7 +54,7 @@ namespace Project.WebUI.Controllers
 
             ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
 
-            return View();
+            return View(customerDto);
         }
 
 

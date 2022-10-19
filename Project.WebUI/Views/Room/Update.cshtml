@@ -22,6 +22,11 @@
                 <input asp-for="Capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="RoomTypeId"></label>
+                <select asp-for="RoomTypeId" asp-items="ViewBag.roomTypes" class="form-control"> </select>
+                <span asp-validation-for="RoomTypeId" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" id="checkId" asp-for="Lack" /> @Html.DisplayNameFor(model => model.Lack)

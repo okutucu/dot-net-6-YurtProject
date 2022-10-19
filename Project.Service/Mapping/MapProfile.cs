@@ -14,9 +14,9 @@ namespace Project.Service.Mapping
 
 
             CreateMap<RoomType, RoomTypeDto>().ReverseMap();
-            CreateMap<RoomType, RoomTypeWithRoomDto>();
 
 
+            CreateMap<Room, RoomTypeWithRoomDto>();
             CreateMap<Room, RoomWithCustomerDto>();
             CreateMap<Room, RoomDto>().ReverseMap();
             CreateMap<RoomCreateDto, Room>().ReverseMap();

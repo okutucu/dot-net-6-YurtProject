@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Project.Core.DTOs
 {
-    public class RoomTypeWithRoomDto : RoomTypeDto
+    public class RoomTypeWithRoomDto : RoomDto
     {
-        public List<RoomDto> Rooms { get; set; }
+        public RoomTypeDto RoomType { get; set; }
 
     }
 }
