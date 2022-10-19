@@ -12,10 +12,11 @@ namespace Project.WebUI.ControllersR
         private readonly IRoomService _roomService;
         private readonly IMapper _mapper;
         private readonly IService<RoomType> _roomTypeService;
-        public RoomController(IRoomService roomService, IMapper mapper)
+        public RoomController(IRoomService roomService, IMapper mapper, IService<RoomType> roomTypeService)
         {
             _roomService = roomService;
             _mapper = mapper;
+            _roomTypeService = roomTypeService;
         }
         public async Task<IActionResult> Index()
         {

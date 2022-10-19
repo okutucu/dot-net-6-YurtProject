@@ -33,19 +33,19 @@ namespace Project.Service.Services
             {
                 if(oldRoomCustomerCount > 1)
                 {
-                    oldRoom.Price -= 400;
+                    //oldRoom.Price -= 400;
                 }
 
-                newRoom.Debt = newRoom.Price;
+                //newRoom.Debt = newRoom.Price;
             }
             else
             {
                 if (oldRoomCustomerCount > 1)
                 {
-                    oldRoom.Price -= 400;
+                    //oldRoom.Price -= 400;
                 }
-                newRoom.Debt += 400;
-                newRoom.Price += 400;
+                //newRoom.Debt += 400;
+                //newRoom.Price += 400;
             }
 
             oldRoom.CurrentCapacity++;
@@ -81,7 +81,7 @@ namespace Project.Service.Services
 
             if (customerCount > 1)
             {
-                roomAndCustomerDto.Price -= 400;
+                //roomAndCustomerDto.Price -= 400;
             }
 
             roomAndCustomerDto.CurrentCapacity++;
@@ -98,14 +98,14 @@ namespace Project.Service.Services
 
             if(customerCount == 0)
             {
-                room.Debt  = roomAndCustomerDto.Price;
+                //room.Debt  = roomAndCustomerDto.Price;
                 room.CurrentCapacity--;
                 await _unitOfWok.CommitAsync();
                 return;
             }
             else if(customerCount > 0)
             {
-                room.Price += 400;
+                //room.Price += 400;
                 room.Debt += 400;
                 room.CurrentCapacity--;
                 await _unitOfWok.CommitAsync();
@@ -124,7 +124,6 @@ namespace Project.Service.Services
 
             //todo tracking
             //todo update room properties
-            //todo sero
             
             if (roomUpdateDto.Capacity >= customerCount)
             {
