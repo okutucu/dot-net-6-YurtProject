@@ -8,5 +8,7 @@
         public decimal Debt { get; set; }
         public bool Lack { get; set; }
         public string LackDetail { get; set; }
+        public int? RoomTypeId { get; set; }
+
     }
 }

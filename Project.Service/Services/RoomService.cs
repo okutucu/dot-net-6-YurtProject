@@ -96,12 +96,6 @@ namespace Project.Service.Services
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
             int customerCount = roomAndCustomerDto.Customers.Count();
-
-            if (customerCount > 1)
-            {
-                //roomAndCustomerDto.Price -= 400;
-            }
-
             roomAndCustomerDto.CurrentCapacity++;
 
 
