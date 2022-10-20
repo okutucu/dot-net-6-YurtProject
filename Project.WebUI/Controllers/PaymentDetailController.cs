@@ -27,9 +27,9 @@ namespace Project.WebUI.Controllers
             return View(_mapper.Map<List<PaymentDetailDto>>(paymentDetails));
         }
 
-        public IActionResult GetBySelected(DateTime selectedDate)
-         {
-
+        public IActionResult GetBySelected(string selectedDate)
+        {
+            var a = selectedDate;
             //todo GetBySelected 
             return View();
 
