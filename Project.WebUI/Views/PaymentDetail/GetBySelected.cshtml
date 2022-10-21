@@ -1,0 +1,65 @@
+﻿@using System.Globalization
+@model List<PaymentDetailDto>
+
+@{
+	ViewData["Title"] = "Get By Selected";
+
+}
+
+@if(Model.Count ==0)
+{
+
+	<div class="alert alert-danger" role="alert">
+		No data found for the date you entered !  <br>
+		<a asp-action="Index" class="alert-link">Click</a>  to go back.
+	</div>
+}
+else
+{
+	
+	DateTime date = Model[0].PaymentDate;
+	string fullMonthName = date.ToString("MMMM", CultureInfo.CreateSpecificCulture("en"));
+	string year = date.Year.ToString();
+	
+
+	<h1>@fullMonthName @year </h1>
+
+
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<td>PaymentName</td>
+				<td>PaymentMethod</td>
+				<td>Price</td>
+				<td>CurrencyName </td>
+				<td>MoneyOfTheDay</td>
+				<td>Description</td>
+				<td>PaymentDate</td>
+				<td>Action</td>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (PaymentDetailDto paymentDetail in Model)
+			{
+				<tr>
+					<th>@paymentDetail.PaymentName</th>
+					<th>@paymentDetail.PaymentMethod</th>
+					<th>@paymentDetail.Price</th>
+					<th>@paymentDetail.Exchange</th>
+					<th>@paymentDetail.MoneyOfTheDay</th>
+					<th>@paymentDetail.Description</th>
+					<th>@paymentDetail.PaymentDate</th>
+
+					<th>
+
+						<a class="btn btn-warning" asp-controller="PaymentDetail" asp-action="Update" asp-route-id="@paymentDetail.Id">Update	</a>
+						<a class="btn btn-danger" asp-controller="PaymentDetail" asp-action="Remove" asp-route-id="@paymentDetail.Id">Delete	</a>
+					</th>
+
+				</tr>
+			}
+		</tbody>
+	</table>
+}

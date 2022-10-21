@@ -27,11 +27,13 @@ namespace Project.WebUI.Controllers
             return View(_mapper.Map<List<PaymentDetailDto>>(paymentDetails));
         }
 
-        public IActionResult GetBySelected(string selectedDate)
+        public async Task<IActionResult> GetBySelected(string selectedDate)
         {
-            var a = selectedDate;
-            //todo GetBySelected 
-            return View();
+
+           List<PaymentDetailDto> paymentDetailDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
+
+           
+            return View(paymentDetailDtos);
 
         }
 
