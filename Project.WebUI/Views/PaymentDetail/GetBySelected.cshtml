@@ -20,10 +20,9 @@ else
 	DateTime date = Model[0].PaymentDate;
 	string fullMonthName = date.ToString("MMMM", CultureInfo.CreateSpecificCulture("en"));
 	string year = date.Year.ToString();
-	
+
 
 	<h1>@fullMonthName @year </h1>
-
 
 
 	<table class="table table-striped">
