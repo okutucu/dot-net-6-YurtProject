@@ -4,6 +4,8 @@
 @{
 	ViewData["Title"] = "Get By Selected";
 
+	string color = "";
+
 }
 
 @if(Model.Count ==0)
@@ -23,6 +25,136 @@ else
 
 
 	<h1>@fullMonthName @year </h1>
+
+	<h3>All Payments</h3>
+
+	var allPaymentsDatas = Model.GroupBy(p => p.Exchange).Select(group => new
+	{
+		Exchange = group.Key,
+		Sum = group.Sum( s => s.Price)
+		
+	});
+				<div class="row mt-5">
+							@foreach (var item in allPaymentsDatas)
+							{
+									switch (item.Exchange.ToString())
+									{
+										case "Tl":
+										color = "red";
+										break;
+
+										case "Dollar":
+											color = "purple";
+											break;
+
+										case "Euro":
+										color = "blue";
+										break;
+
+										case "Sterling":
+										color = "yellow";
+										break;
+									}
+
+								<ul style="background-color:@color">
+									<li>Exchange = @item.Exchange</li>
+									<li>Total Price = @item.Sum</li>
+								</ul>
+						
+							}
+
+					</div>
+
+
+	var detailPaymentsDatas = (from t in Model
+					group t by new { t.PaymentName, t.Exchange }
+				into grp
+					select new
+					{
+						grp.Key.PaymentName,
+						grp.Key.Exchange,
+						Quantity = grp.Sum(t => t.Price)
+					}).ToList();
+	//todo daha tecrübeli birine sor !! --> Group By
+
+
+	<div class="row">
+		<h3>Detailed Payments Table</h3>
+
+
+
+		<div class="col-md-3" >
+			<h4>Electricity </h4>
+			           <p class="info-box-number">Total amount : ₺</p>
+                                    <p class="info-box-number">Total amount :  $</p>
+                                    <p class="info-box-number">Total amount : £</p>
+                                    <p class="info-box-number">Total amount : €</p>
+
+		</div>
+		
+@*		<div>
+			@foreach (var item in detailPaymentsDatas)
+			{
+
+				switch (item.PaymentName)
+				{
+					case 0:
+
+						switch ((int)item.Exchange)
+						{
+							case 1:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> $</p>
+								break;
+							case 2:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> €</p>
+								break;
+							case 3:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> £</p>
+								break;
+							case 4:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> ₺</p>
+								break;
+							default:
+								break;
+						}
+						break;
+
+				}
+			}
+			@foreach (var item in detailPaymentsDatas)
+			{
+
+				switch (item.PaymentName)
+				{
+					case 0:
+
+						switch ((int)item.Exchange)
+						{
+							case 1:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> $</p>
+								break;
+							case 2:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> €</p>
+								break;
+							case 3:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> £</p>
+								break;
+							case 4:
+								<p>Total amount : <span style="font-size:18px">@item.Quantity</span> ₺</p>
+								break;
+							default:
+								break;
+						}
+						break;
+
+				}
+			}
+
+		</div>*@
+		
+	</div>
+	
+
 
 
 	<table class="table table-striped">
@@ -62,3 +194,5 @@ else
 		</tbody>
 	</table>
 }
+
+
