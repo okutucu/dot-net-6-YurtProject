@@ -12,7 +12,6 @@ namespace Project.Core.Services
         Task ReducingRoomCapacity(int roomId);
         Task<RoomUpdateDto> RoomCapacityAccuracy(RoomUpdateDto roomUpdateDto);
         Task GetCustomerWithRoomForRoomChange(int oldRoomId, int newRoomId);
-
         Task IncreaseCapacityWhenDeletingCustomers(int roomId);
 
 

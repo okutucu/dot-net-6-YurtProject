@@ -22,9 +22,7 @@ namespace Project.WebUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<PaymentDetail> paymentDetails = _paymentDetailService.GetAll().ToList();
-
-            return View(_mapper.Map<List<PaymentDetailDto>>(paymentDetails));
+            return View();
         }
 
         public async Task<IActionResult> GetBySelected(string selectedDate)

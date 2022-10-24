@@ -1,0 +1,154 @@
+﻿@using System.Globalization
+@model List<IncomeWithRoomDto>
+
+@{
+	ViewData["Title"] = "Get By Selected";
+
+	string color = "";
+
+}
+
+
+@if (Model.Count == 0)
+{
+
+	<div class="alert alert-danger" role="alert">
+		No data found for the date you entered !  <br>
+		<a asp-action="Index" class="alert-link">Click</a>  to go back.
+	</div>
+}
+else
+{
+
+	DateTime date = Model[0].PaymentDate;
+	string fullMonthName = date.ToString("MMMM", CultureInfo.CreateSpecificCulture("en"));
+	string year = date.Year.ToString();
+
+
+	<h1>@fullMonthName @year </h1>
+
+	<h3>All Payments</h3>
+
+	var allPaymentsDatas = Model.GroupBy(p => p.Exchange).Select(group => new
+	{
+		Exchange = group.Key,
+		Sum = group.Sum(s => s.Price)
+
+	});
+	<div class="row mt-5">
+		@foreach (var item in allPaymentsDatas)
+		{
+			switch (item.Exchange.ToString())
+			{
+				case "Tl":
+					color = "red";
+					break;
+
+				case "Dollar":
+					color = "purple";
+					break;
+
+				case "Euro":
+					color = "blue";
+					break;
+
+				case "Sterling":
+					color = "yellow";
+					break;
+			}
+
+			<ul style="background-color:@color">
+				<li>Exchange = @item.Exchange</li>
+				<li>Total Price = @item.Sum</li>
+			</ul>
+
+		}
+
+	</div>
+
+
+	var detailPaymentsDatas = from payment in Model
+									group payment by payment.PaymentName into payments
+									select new
+									{
+										PaymentName = payments.Key,
+										PaymentDetail = from paymentDetail in payments
+														group paymentDetail by paymentDetail.Exchange into paymentDetailGroup
+														select new
+														{
+															Exchange = paymentDetailGroup.Key,
+															Sum = paymentDetailGroup.Sum(x => x.Price),
+														}
+									};
+	//todo daha tecrübeli birine sor !! --> Group By
+
+
+
+	<div class="row">
+		<h3>Detailed Payments Table</h3>
+
+		@foreach (var item in detailPaymentsDatas)
+		{
+			<div class="col-md-3">
+				<h4>@item.PaymentName </h4>
+				@foreach (var paymentDetail in @item.PaymentDetail)
+				{
+					<p class="info-box-number">Total amount : <span style="font-size:20px"> @paymentDetail.Sum  </span>  <span style="font-size:14px"> @paymentDetail.Exchange.ToString()</span>  </p>
+				}
+
+
+			</div>
+
+		}
+
+
+
+
+
+
+	</div>
+
+
+
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<td>Room Name</td>
+				<td>PaymentName</td>
+				<td>PaymentMethod</td>
+				<td>Price</td>
+				<td>CurrencyName </td>
+				<td>MoneyOfTheDay</td>
+				<td>Description</td>
+				<td>PaymentDate</td>
+				<td>Action</td>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (IncomeWithRoomDto incomeDetail in Model)
+			{
+				<tr>
+					<th>@incomeDetail.Room.RoomName</th>
+					<th>@incomeDetail.PaymentName</th>
+					<th>@incomeDetail.PaymentMethod</th>
+					<th>@incomeDetail.Price</th>
+					<th>@incomeDetail.Exchange</th>
+					<th>@incomeDetail.MoneyOfTheDay</th>
+					<th>@incomeDetail.Description</th>
+					<th>@incomeDetail.PaymentDate</th>
+
+					<th>
+
+						<a class="btn btn-warning" asp-controller="PaymentDetail" asp-action="Update" asp-route-id="@incomeDetail.Id">Update	</a>
+						<a class="btn btn-danger" asp-controller="PaymentDetail" asp-action="Remove" asp-route-id="@incomeDetail.Id">Delete	</a>
+					</th>
+
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+
+

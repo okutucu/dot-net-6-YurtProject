@@ -10,12 +10,12 @@ namespace Project.Core.Services
 {
 	public interface IIncomeDetailService : IService<IncomeDetail>
 	{
-        Task<List<IncomeDetailDto>> GetIncomeWithRoomAsync();
+        Task<List<IncomeWithRoomDto>> GetIncomeWithRoomAsync();
         Task AddByCurrency(IncomeDetailDto incomeDetailDto, decimal currency);
         Task UpdateByCurrency(IncomeDetailDto incomeDetailDto, decimal currency);
-        Task<List<IncomeDetailDto>> DailyOrMonthly(string selectedDate);
-        Task<List<IncomeDetailDto>> GetByMonth(int year, int month);
-        Task<List<IncomeDetailDto>> GetByDay(int year, int month, int day);
+        Task<List<IncomeWithRoomDto>> DailyOrMonthly(string selectedDate);
+        Task<List<IncomeWithRoomDto>> GetByMonth(int year, int month);
+        Task<List<IncomeWithRoomDto>> GetByDay(int year, int month, int day);
 
     }
 }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Project.Core.DTOs
 {
-    internal class IncomeDeta
+    public class IncomeWithRoomDto : IncomeDetailDto
     {
+        public RoomDto Room { get; set; }
     }
 }
