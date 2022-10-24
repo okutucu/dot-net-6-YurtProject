@@ -60,6 +60,13 @@ namespace Project.WebUI.Controllers
                 await _incomeDetailService.AddByCurrency(incomeDetailDto, currency.Price);
                 return RedirectToAction(nameof(Index));
             }
+
+            List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+
             return View(incomeDetailDto);
         }
     }
