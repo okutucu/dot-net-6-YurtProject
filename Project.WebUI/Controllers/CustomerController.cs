@@ -57,7 +57,7 @@ namespace Project.WebUI.Controllers
             return View(customerDto);
         }
 
-
+        [ServiceFilter(typeof(NotFoundFilter<Customer>))]
         public async Task<IActionResult> Update(int id)
         {
             List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
@@ -96,7 +96,8 @@ namespace Project.WebUI.Controllers
 
         }
 
-         public async Task<IActionResult> Remove(int id)
+        [ServiceFilter(typeof(NotFoundFilter<Customer>))]
+        public async Task<IActionResult> Remove(int id)
         {
             Customer customer = await _customerService.GetByIdAsync(id);
             await _roomService.IncreaseCapacityWhenDeletingCustomers(customer.RoomId);

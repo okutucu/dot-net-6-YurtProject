@@ -27,7 +27,7 @@ else
 
 	<h1>@fullMonthName @year </h1>
 
-	<h3>All Payments</h3>
+	<h3>All Incomes</h3>
 
 	var allPaymentsDatas = Model.GroupBy(p => p.Exchange).Select(group => new
 	{
@@ -141,8 +141,8 @@ else
 
 					<th>
 
-						<a class="btn btn-warning" asp-controller="PaymentDetail" asp-action="Update" asp-route-id="@incomeDetail.Id">Update	</a>
-						<a class="btn btn-danger" asp-controller="PaymentDetail" asp-action="Remove" asp-route-id="@incomeDetail.Id">Delete	</a>
+						<a class="btn btn-warning" asp-controller="IncomeDetail" asp-action="Update" asp-route-id="@incomeDetail.Id">Update	</a>
+						<a class="btn btn-danger" asp-controller="IncomeDetail" asp-action="Remove" asp-route-id="@incomeDetail.Id">Delete	</a>
 					</th>
 
 				</tr>
