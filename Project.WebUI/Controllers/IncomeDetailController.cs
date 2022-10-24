@@ -104,5 +104,14 @@ namespace Project.WebUI.Controllers
             return View(incomeDetailDto);
         }
 
+        [ServiceFilter(typeof(NotFoundFilter<IncomeDetail>))]
+        public async Task<IActionResult> Remove(int id)
+        {
+            IncomeDetail incomeDetail = await _incomeDetailService.GetByIdAsync(id);
+            await _incomeDetailService.RemoveAsync(incomeDetail);
+            return RedirectToAction(nameof(Index));
+
+        }
+
     }
 }

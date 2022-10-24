@@ -72,6 +72,7 @@ namespace Project.WebUI.Controllers
             return View(paymentDetailDto);
         }
 
+        [ServiceFilter(typeof(NotFoundFilter<PaymentDetail>))]
         public async Task<IActionResult> Remove(int id)
         {
            PaymentDetail paymentDetail = await _paymentDetailService.GetByIdAsync(id);
