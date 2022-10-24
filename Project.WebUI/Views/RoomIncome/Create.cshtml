@@ -1,0 +1,109 @@
+﻿@using Project.Core.Enums
+@model Project.Core.DTOs.RoomIncomeDto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Create Room Rent</h4>
+<hr />
+
+<h3> Dept : <span style="font-size:20px;color:red" id="debt"></span></h3>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" asp-controller="RoomIncome">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoomId"></label>
+                <select asp-for="RoomId" id="roomId" asp-items="ViewBag.rooms" class="form-control"> </select>
+                <span asp-validation-for="RoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Exchange" class="control-label"></label>
+                <select asp-for="Exchange" asp-items="Html.GetEnumSelectList<Exchange>()" class="form-control"></select>
+
+                <span asp-validation-for="Exchange" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PaymentMethod" class="control-label"></label>
+                <select asp-for="PaymentMethod" asp-items="Html.GetEnumSelectList<PaymentMethod>()" class="form-control"></select>
+
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+
+@section ExtraScripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+        $(document).ready(function () {
+
+            let id = $("#roomId").val();
+            let url = "/RoomIncome/GetByDept";
+
+            $.post(url , id);
+            
+
+            
+            //$.ajax({
+            //    url: '/RoomIncome/GetByDept/',
+            //    type: 'POST',
+            //    contentType: "application/json",
+            //    data: { id: id },
+            //    success: function (data) {
+            //        $("#debt").html(data);
+            //        console.log(data);
+            //    },
+            //    error: function () {
+            //        console.log("Beklenmeyen bir hata meydana geldi.")
+            //    }
+            //});
+            //$("#roomId").change(function () {
+            //     let id = $("#roomId").val();
+            //     console.log("değişti");
+            //     console.log(id);
+            //    $.ajax({
+            //        url: '/RoomIncome/GetRoomDept/',
+            //        type: 'POST',
+            //        contentType: "application/json"
+            //        data: { id: id },
+            //        success: function (data) {
+            //            console.log(data)
+            //            $("#debt").html(data);
+            //        },
+            //        error: function () {
+            //             console.log("Beklenmeyen bir hata meydana geldi.")
+            //        }
+            //    });
+            //});
+        });
+        </script>
+}
