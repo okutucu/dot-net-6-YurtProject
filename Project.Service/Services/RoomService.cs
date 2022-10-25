@@ -18,7 +18,7 @@ namespace Project.Service.Services
             _roomRepository = roomRepository;
         }
 
-        public async Task GetCustomerWithRoomForRoomChange(int oldRoomId, int newRoomId)
+        public async Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId)
         {
             RoomWithCustomerDto newRoom = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
             RoomWithCustomerDto oldRoom = await GetSingleRoomByIdWithCustomerAsync(oldRoomId);
@@ -33,19 +33,16 @@ namespace Project.Service.Services
             {
                 if(oldRoomCustomerCount > 1)
                 {
-                    //oldRoom.Price -= 400;
+                  // todo update customer
                 }
 
-                //newRoom.Debt = newRoom.Price;
             }
             else
             {
                 if (oldRoomCustomerCount > 1)
                 {
-                    //oldRoom.Price -= 400;
                 }
-                //newRoom.Debt += 400;
-                //newRoom.Price += 400;
+
             }
 
             oldRoom.CurrentCapacity++;
@@ -92,7 +89,7 @@ namespace Project.Service.Services
             return roomTypeDto;
         }
 
-        public async Task IncreaseCapacityWhenDeletingCustomers(int roomId)
+        public async Task IncreaseCapacityWhenDeletingCustomersAsync(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
             int customerCount = roomAndCustomerDto.Customers.Count();
@@ -102,7 +99,16 @@ namespace Project.Service.Services
             _roomRepository.Update(_mapper.Map<Room>(roomAndCustomerDto));
         }
 
-        public async Task ReducingRoomCapacity(int roomId)
+        public async Task ReduceDeptAsync(int roomId, decimal price, decimal currency)
+        {
+            Room room = await _roomRepository.GetByIdAsync(roomId);
+            room.Debt -= (price * currency);
+
+            _roomRepository.Update(_mapper.Map<Room>(room));
+
+        }
+
+        public async Task ReducingRoomCapacityAsync(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
 
@@ -129,7 +135,7 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task<RoomUpdateDto> RoomCapacityAccuracy(RoomUpdateDto roomUpdateDto)
+        public async Task<RoomUpdateDto> RoomCapacityAccuracyAsync(RoomUpdateDto roomUpdateDto)
         {
 
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomUpdateDto.Id);

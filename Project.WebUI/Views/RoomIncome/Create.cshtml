@@ -75,9 +75,9 @@
             $("#roomId").change(function () {
                 
                  id = $("#roomId").val();
-               $.post(url , {id : id}, function(data) {
-                $("#debt").html(data);
-            })
+                 $.post(url , {id : id}, function(data) {
+                    $("#debt").html(data);
+                })
              
             });
         });

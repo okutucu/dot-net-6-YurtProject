@@ -15,6 +15,6 @@ namespace Project.Core.DTOs
         public decimal MoneyOfTheDay { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string Description { get; set; }
-        public int? RoomId { get; set; }
+        public int RoomId { get; set; }
     }
 }

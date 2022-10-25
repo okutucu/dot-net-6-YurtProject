@@ -42,7 +42,7 @@ namespace Project.WebUI.Controllers
         {
             if(ModelState.IsValid)
             {
-                await _roomService.ReducingRoomCapacity(customerDto.RoomId);
+                await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
                 await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
                 return RedirectToAction(nameof(Index));
@@ -83,7 +83,7 @@ namespace Project.WebUI.Controllers
                 }
                 else
                 {
-                    await _roomService.GetCustomerWithRoomForRoomChange(customer.RoomId, customerDto.RoomId);  
+                    await _roomService.GetCustomerWithRoomForRoomChangeAsync(customer.RoomId, customerDto.RoomId);  
                     await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
                      return RedirectToAction(nameof(Index));
                 }
@@ -100,7 +100,7 @@ namespace Project.WebUI.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             Customer customer = await _customerService.GetByIdAsync(id);
-            await _roomService.IncreaseCapacityWhenDeletingCustomers(customer.RoomId);
+            await _roomService.IncreaseCapacityWhenDeletingCustomersAsync(customer.RoomId);
             await _customerService.RemoveAsync(customer);
             return RedirectToAction(nameof(Index));
 

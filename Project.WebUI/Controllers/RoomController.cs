@@ -69,7 +69,7 @@ namespace Project.WebUI.ControllersR
             if (ModelState.IsValid)
             {
 
-                RoomUpdateDto roomDto = await _roomService.RoomCapacityAccuracy(roomUpdateDto);
+                RoomUpdateDto roomDto = await _roomService.RoomCapacityAccuracyAsync(roomUpdateDto);
                 await _roomService.UpdateAsync(_mapper.Map<Room>(roomDto));
                 return RedirectToAction(nameof(Index));
                  
