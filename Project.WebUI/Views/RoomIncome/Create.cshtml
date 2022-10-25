@@ -62,48 +62,33 @@
 
 
 @section ExtraScripts{
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script>
-        $(document).ready(function () {
+        //$(document).ready(function () {
 
-            let id = $("#roomId").val();
-            let url = "/RoomIncome/GetByDept";
+        //    let id = $("#roomId").val();
+        //    let url = "/RoomIncome/GetByDept";
 
-            $.post(url , id);
-            
+        //    $.post(url , {id : id})
+        //        .done(function(data){
+        //        $("#debt").html(data);
+        //        })
+        //        .error(function(){
+        //            console.log("Beklenmeyen bir hata meydana geldi");
+        //        });
+        //    //$("#roomId").change(function () {
 
-            
-            //$.ajax({
-            //    url: '/RoomIncome/GetByDept/',
-            //    type: 'POST',
-            //    contentType: "application/json",
-            //    data: { id: id },
-            //    success: function (data) {
-            //        $("#debt").html(data);
-            //        console.log(data);
-            //    },
-            //    error: function () {
-            //        console.log("Beklenmeyen bir hata meydana geldi.")
-            //    }
-            //});
-            //$("#roomId").change(function () {
-            //     let id = $("#roomId").val();
-            //     console.log("değişti");
-            //     console.log(id);
-            //    $.ajax({
-            //        url: '/RoomIncome/GetRoomDept/',
-            //        type: 'POST',
-            //        contentType: "application/json"
-            //        data: { id: id },
-            //        success: function (data) {
-            //            console.log(data)
-            //            $("#debt").html(data);
-            //        },
-            //        error: function () {
-            //             console.log("Beklenmeyen bir hata meydana geldi.")
-            //        }
-            //    });
-            //});
-        });
+        //    //     id = $("#roomId").val();
+        //    //     console.log(url);
+        //    //     console.log(id);
+        //    //    $.post(url, { id: id })
+        //    //        .done(function (data) {
+        //    //            $("#debt").html(data);
+        //    //        })
+        //    //        .error(function () {
+        //    //            console.log("Beklenmeyen bir hata meydana geldi");
+        //    //        });
+             
+        //    //});
+        //});
         </script>
 }
