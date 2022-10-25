@@ -12,7 +12,7 @@
     },
     {
       "library": "jQuery-slimScroll@1.3.8",
-      "destination": "wwwroot/lib/jQuery-slimScroll/"
+      "destination": "wwwroot/jQuery-slimScroll/"
     }
   ]
 }

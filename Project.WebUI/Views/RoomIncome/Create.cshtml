@@ -63,32 +63,23 @@
 
 @section ExtraScripts{
         <script>
-        //$(document).ready(function () {
+        $(document).ready(function () {
 
-        //    let id = $("#roomId").val();
-        //    let url = "/RoomIncome/GetByDept";
+            let id = $("#roomId").val();
+            let url = "/RoomIncome/GetByDebt";
 
-        //    $.post(url , {id : id})
-        //        .done(function(data){
-        //        $("#debt").html(data);
-        //        })
-        //        .error(function(){
-        //            console.log("Beklenmeyen bir hata meydana geldi");
-        //        });
-        //    //$("#roomId").change(function () {
+            $.post(url , {id : id}, function(data) {
+                $("#debt").html(data);
+            })
 
-        //    //     id = $("#roomId").val();
-        //    //     console.log(url);
-        //    //     console.log(id);
-        //    //    $.post(url, { id: id })
-        //    //        .done(function (data) {
-        //    //            $("#debt").html(data);
-        //    //        })
-        //    //        .error(function () {
-        //    //            console.log("Beklenmeyen bir hata meydana geldi");
-        //    //        });
+            $("#roomId").change(function () {
+                
+                 id = $("#roomId").val();
+               $.post(url , {id : id}, function(data) {
+                $("#debt").html(data);
+            })
              
-        //    //});
-        //});
+            });
+        });
         </script>
 }
