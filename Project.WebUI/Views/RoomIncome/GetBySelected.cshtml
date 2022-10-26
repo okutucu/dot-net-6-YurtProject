@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model List<RoomIncomeDto>
+@model List<RoomIncomeWithRoomDto>
 
 @{
     ViewData["Title"] = "GetBySelected";
@@ -41,10 +41,10 @@ else
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (RoomIncomeDto roomDetail in Model)
+			@foreach (RoomIncomeWithRoomDto roomDetail in Model)
 			{
 				<tr>
-					<th>@roomDetail.RoomId</th>
+					<th>@roomDetail.Room.RoomName</th>
 					<th>@roomDetail.PaymentMethod</th>
 					<th>@roomDetail.Price</th>
 					<th>@roomDetail.Exchange</th>

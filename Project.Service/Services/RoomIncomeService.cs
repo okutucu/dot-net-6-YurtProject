@@ -33,18 +33,22 @@ namespace Project.Service.Services
             await _unitOfWok.CommitAsync();
         }
 
-        public async Task<List<RoomIncomeDto>> GetByMonth(DateTime selectedDate)
+        public async Task<List<RoomIncomeWithRoomDto>> GetByMonth(DateTime selectedDate)
         {
 
             int month = selectedDate.Month;
             int year = selectedDate.Year;
 
-            List<RoomIncome> roomDetails = _roomIncomeRepository.Where(r => r.PaymentDate.Year == year && r.PaymentDate.Month == month).ToList();
+             List<RoomIncome> roomIncomes = await _roomIncomeRepository.GetIncomeWithRoomAsync();
 
-            List<RoomIncomeDto> roomDetailsDto = _mapper.Map<List<RoomIncomeDto>>(roomDetails);
+            List<RoomIncome> roomDetails = roomIncomes.Where(r => r.PaymentDate.Year == year && r.PaymentDate.Month == month).ToList();
+
+            List<RoomIncomeWithRoomDto> roomDetailsDto = _mapper.Map<List<RoomIncomeWithRoomDto>>(roomDetails);
 
             return roomDetailsDto;
         }
+
+
 
         public async Task UpdateByCurrency(RoomIncomeDto roomIncomeDto, decimal currency)
         {

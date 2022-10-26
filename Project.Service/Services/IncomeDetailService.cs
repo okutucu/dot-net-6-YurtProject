@@ -72,7 +72,6 @@ namespace Project.Service.Services
 		{
             List<IncomeDetail> incomeDetails = await _incomeDetailRepository.GetIncomeWithRoomAsync();
             List<IncomeDetail> filterIncome = incomeDetails.Where(p => p.PaymentDate.Year == year && p.PaymentDate.Month == month).ToList();
-            //_incomeDetailRepository.Where(p => p.PaymentDate.Year == year && p.PaymentDate.Month == month).ToList();
             List<IncomeWithRoomDto> incomeDetailDto = _mapper.Map<List<IncomeWithRoomDto>>(filterIncome);
 
             return incomeDetailDto;

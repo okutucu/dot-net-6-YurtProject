@@ -43,7 +43,7 @@ namespace Project.WebUI.Controllers
 
         public async Task<IActionResult> GetBySelected(DateTime selectedDate)
         {
-			List<RoomIncomeDto> roomDetailsDto = await _roomIncomeService.GetByMonth(selectedDate);
+			List<RoomIncomeWithRoomDto> roomDetailsDto = await _roomIncomeService.GetByMonth(selectedDate);
             return View(roomDetailsDto);
 
         }

@@ -9,5 +9,7 @@ namespace Project.Core.Repositories
 {
     public interface IRoomIncomeRepository : IGenericRepository<RoomIncome>
     {
+        Task<List<RoomIncome>> GetIncomeWithRoomAsync();
+
     }
 }
