@@ -10,7 +10,7 @@ namespace Project.Core.Models
         public DateTime PaymentDate { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string Description { get; set; }
-        public int? RoomId { get; set; }
+        public int RoomId { get; set; }
 
         // Relational Properties
         public virtual Room Room { get; set; }

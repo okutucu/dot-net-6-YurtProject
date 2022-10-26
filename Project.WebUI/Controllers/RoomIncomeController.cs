@@ -71,8 +71,39 @@ namespace Project.WebUI.Controllers
                 await _roomIncomeService.AddByCurrency(roomIncomeDto, currency.Price);
                 return RedirectToAction(nameof(Index));
             }
-
             return View();
+		}
+
+        [ServiceFilter(typeof(NotFoundFilter<RoomIncome>))]
+        public async Task<IActionResult> Update(int id)
+		{
+			RoomIncome roomIncome = await _roomIncomeService.GetByIdAsync(id);
+
+            List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName",roomIncome.RoomId);
+
+            return View(_mapper.Map<RoomIncomeDto>(roomIncome));
+		}
+
+		[HttpPost]
+		 public async Task<IActionResult> Update(RoomIncomeDto roomIncomeDto)
+		{
+			if (ModelState.IsValid)
+			{
+				RoomIncome roomIncome = await _roomIncomeService.GetByIdAsync(roomIncomeDto.Id);
+                ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
+
+
+                await _roomService.ChangeRoomIncomesByRoomIncomesAsync(roomIncome.RoomId, roomIncomeDto.RoomId,currency.Price, roomIncomeDto.Price);
+
+
+
+            }
+
+			return View(roomIncomeDto);
 		}
 
 
