@@ -22,15 +22,27 @@ namespace Project.Service.Services
         // newRoomId = 1110
         // currency = 12
         // price = 33
-        public async Task ChangeRoomIncomesByRoomIncomesAsync(int oldRoomId, int newRoomId,decimal currency, decimal price)
+        public async Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, ExchangeRate currency, decimal price)
         {
-            Room oldRoom = await _roomRepository.GetByIdAsync(oldRoomId);
+
+            Room oldRoom = await _roomRepository.GetByIdAsync(roomIncomeWithRoomDto.RoomId);
             Room newRoom = await _roomRepository.GetByIdAsync(newRoomId);
 
-            if (oldRoomId == newRoomId)
+            if (oldRoom.Id == newRoom.Id)
             {
-                oldRoom.Debt -= currency * price;
+                oldRoom.Debt +=  roomIncomeWithRoomDto.MoneyOfTheDay;
+                oldRoom.Debt -= currency.Price * price;
+                _roomRepository.Update(_mapper.Map<Room>(oldRoom));
             }
+            else
+            {
+                //todo update RoomIncome
+                oldRoom.Debt += roomIncomeWithRoomDto.MoneyOfTheDay;
+                newRoom.Debt += roomIncomeWithRoomDto.MoneyOfTheDay;
+                _roomRepository.Update(_mapper.Map<Room>(oldRoom));
+                _roomRepository.Update(_mapper.Map<Room>(newRoom));
+            }
+
 
         }
 
@@ -94,11 +106,11 @@ namespace Project.Service.Services
             return roomDto;
         }
 
-        public async Task<RoomTypeWithRoomDto> GetSingleRoomByIdWithRoomIncomesAsync(int roomId)
+        public async Task<RoomIncomeWithRoomDto> GetSingleRoomByIdWithRoomIncomesAsync(int roomId)
         {
             Room room = await _roomRepository.GetSingleRoomByIdWithRoomIncomesAsync(roomId);
 
-            RoomTypeWithRoomDto roomDto = _mapper.Map<RoomTypeWithRoomDto>(room);
+            RoomIncomeWithRoomDto roomDto = _mapper.Map<RoomIncomeWithRoomDto>(room);
 
             return roomDto;
         }

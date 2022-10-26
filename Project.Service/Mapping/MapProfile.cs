@@ -33,7 +33,7 @@ namespace Project.Service.Mapping
 
             CreateMap<IncomeDetail,IncomeWithRoomDto>();
             CreateMap<RoomIncome, RoomIncomeDto>().ReverseMap();
-            CreateMap<RoomIncome, RoomIncomeWithRoomDto>();
+            CreateMap<RoomIncome, RoomIncomeWithRoomDto>().ReverseMap();
 
         }
     }

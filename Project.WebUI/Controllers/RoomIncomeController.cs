@@ -93,17 +93,24 @@ namespace Project.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				RoomIncome roomIncome = await _roomIncomeService.GetByIdAsync(roomIncomeDto.Id);
+				RoomIncomeWithRoomDto roomIncomeWithRoomDto = await _roomIncomeService.GetIncomeWithSingleRoomAsync(roomIncomeDto.Id);
                 ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
 
 
-                await _roomService.ChangeRoomIncomesByRoomIncomesAsync(roomIncome.RoomId, roomIncomeDto.RoomId,currency.Price, roomIncomeDto.Price);
+                await _roomService.ChangeRoomIncomesByRoomIncomesAsync(roomIncomeWithRoomDto, roomIncomeDto.RoomId,currency, roomIncomeDto.Price);
+                await _roomIncomeService.UpdateByCurrency(roomIncomeDto, currency.Price);
 
-
+                return RedirectToAction(nameof(Index));
 
             }
 
-			return View(roomIncomeDto);
+            List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", roomIncomeDto.RoomId);
+
+            return View(roomIncomeDto);
 		}
 
 

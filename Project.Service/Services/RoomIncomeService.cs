@@ -48,7 +48,14 @@ namespace Project.Service.Services
             return roomDetailsDto;
         }
 
+        public async Task<RoomIncomeWithRoomDto> GetIncomeWithSingleRoomAsync(int roomIncomeId)
+        {
+            RoomIncome roomIncome = await _roomIncomeRepository.GetIncomeWithSingleRoomAsync(roomIncomeId);
 
+            RoomIncomeWithRoomDto roomIncomeWithRoomDto = _mapper.Map<RoomIncomeWithRoomDto>(roomIncome);
+
+            return roomIncomeWithRoomDto;
+        }
 
         public async Task UpdateByCurrency(RoomIncomeDto roomIncomeDto, decimal currency)
         {

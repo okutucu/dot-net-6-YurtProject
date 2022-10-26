@@ -29,7 +29,7 @@ namespace Project.Repository.Repositories
 
         public async Task<Room> GetSingleRoomByIdWithRoomIncomesAsync(int roomId)
         {
-            return await _context.Rooms.Include(x => x.IncomeDetails).Where(x => x.Id == roomId).AsNoTracking().SingleOrDefaultAsync();
+            return await _context.Rooms.Include(x => x.RoomIncomes).Where(x => x.Id == roomId).AsNoTracking().SingleOrDefaultAsync();
         }
 
         public async Task<Room> GetSingleRoomByIdWithRoomTypeAsync(int roomId)
