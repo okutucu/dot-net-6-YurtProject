@@ -12,5 +12,7 @@ namespace Project.Core.Services
     {
         Task AddByCurrency(RoomIncomeDto roomIncomeDto, decimal currency);
         Task UpdateByCurrency(RoomIncomeDto roomIncomeDto, decimal currency);
+        Task<List<RoomIncomeDto>> GetByMonth(DateTime selectedDate);
+
     }
 }

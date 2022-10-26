@@ -6,18 +6,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
+using Project.Service.Services;
 
 namespace Project.WebUI.Controllers
 {
 	public class RoomIncomeController : Controller
 	{
         private readonly IRoomService _roomService;
-        private readonly IService<RoomIncome> _roomIncomeService;
+        private readonly IRoomIncomeService _roomIncomeService;
         private readonly IMapper _mapper;
 		private readonly IExchangeRateService _exchangeRateService;
 
 
-		public RoomIncomeController(IRoomService roomService, IMapper mapper, IService<RoomIncome> roomIncomeService, IExchangeRateService exchangeRateService)
+		public RoomIncomeController(IRoomService roomService, IMapper mapper, IRoomIncomeService roomIncomeService, IExchangeRateService exchangeRateService)
 		{
 			_roomService = roomService;
 			_mapper = mapper;
@@ -40,7 +41,14 @@ namespace Project.WebUI.Controllers
             return result;
         }
 
-		public IActionResult Create()
+        public async Task<IActionResult> GetBySelected(DateTime selectedDate)
+        {
+			List<RoomIncomeDto> roomDetailsDto = await _roomIncomeService.GetByMonth(selectedDate);
+            return View(roomDetailsDto);
+
+        }
+
+        public IActionResult Create()
 		{
             List<Room> rooms = _roomService.GetAll().ToList();
 
@@ -57,9 +65,10 @@ namespace Project.WebUI.Controllers
 			if (ModelState.IsValid)
 			{
                 ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
-                await _roomService.ReduceDeptAsync(roomIncomeDto.RoomId, roomIncomeDto.Price,currency.Price);
-				await _roomIncomeService.AddAsync(_mapper.Map<RoomIncome>(roomIncomeDto));
 
+                await _roomService.ReduceDeptAsync(roomIncomeDto.RoomId, roomIncomeDto.Price,currency.Price);
+
+                await _roomIncomeService.AddByCurrency(roomIncomeDto, currency.Price);
                 return RedirectToAction(nameof(Index));
             }
 

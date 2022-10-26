@@ -79,8 +79,6 @@ namespace Project.WebUI.Controllers
             await _paymentDetailService.RemoveAsync(paymentDetail);
             return RedirectToAction(nameof(Index));
 
-
-
         }
     }
 }

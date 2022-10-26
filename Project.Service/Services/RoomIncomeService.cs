@@ -3,28 +3,56 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Repositories;
 using Project.Core.Services;
 using Project.Core.UnitOfWorks;
+using Project.Repository.Repositories;
 
 namespace Project.Service.Services
 {
     public class RoomIncomeService : Service<RoomIncome>, IRoomIncomeService
     {
-        public RoomIncomeService(IUnitOfWork unitOfWok, IGenericRepository<RoomIncome> repository) : base(unitOfWok, repository)
+        private readonly IRoomIncomeRepository _roomIncomeRepository;
+        private readonly IMapper _mapper;
+        public RoomIncomeService(IUnitOfWork unitOfWok, IGenericRepository<RoomIncome> repository, IRoomIncomeRepository roomIncomeRepository, IMapper mapper = null) : base(unitOfWok, repository)
         {
+           _roomIncomeRepository = roomIncomeRepository;
+            _mapper = mapper;
         }
 
-        public Task AddByCurrency(RoomIncomeDto roomIncomeDto, decimal currency)
+        public async Task AddByCurrency(RoomIncomeDto roomIncomeDto, decimal currency)
         {
-            throw new NotImplementedException();
+            roomIncomeDto.MoneyOfTheDay = currency * roomIncomeDto.Price;
+            roomIncomeDto.PaymentDate = DateTime.Now;
+
+
+            await _roomIncomeRepository.AddAsync(_mapper.Map<RoomIncome>(roomIncomeDto));
+            await _unitOfWok.CommitAsync();
         }
 
-        public Task UpdateByCurrency(RoomIncomeDto roomIncomeDto, decimal currency)
+        public async Task<List<RoomIncomeDto>> GetByMonth(DateTime selectedDate)
         {
-            throw new NotImplementedException();
+
+            int month = selectedDate.Month;
+            int year = selectedDate.Year;
+
+            List<RoomIncome> roomDetails = _roomIncomeRepository.Where(r => r.PaymentDate.Year == year && r.PaymentDate.Month == month).ToList();
+
+            List<RoomIncomeDto> roomDetailsDto = _mapper.Map<List<RoomIncomeDto>>(roomDetails);
+
+            return roomDetailsDto;
+        }
+
+        public async Task UpdateByCurrency(RoomIncomeDto roomIncomeDto, decimal currency)
+        {
+            roomIncomeDto.MoneyOfTheDay = currency * roomIncomeDto.Price;
+            roomIncomeDto.PaymentDate = DateTime.Now;
+
+             _roomIncomeRepository.Update(_mapper.Map<RoomIncome>(roomIncomeDto));
+            await _unitOfWok.CommitAsync();
         }
     }
 }
