@@ -12,8 +12,16 @@ namespace Project.Service.Services
 {
     public class RecordService : Service<Record>, IRecordService
     {
-        public RecordService(IUnitOfWork unitOfWok, IGenericRepository<Record> repository) : base(unitOfWok, repository)
+        private readonly IRecordRepository _recordRepository;
+
+        public RecordService(IUnitOfWork unitOfWok, IGenericRepository<Record> repository, IRecordRepository recordRepository) : base(unitOfWok, repository)
         {
+            _recordRepository = recordRepository;
+        }
+
+        public Task AddByDeletingCustomer(string roomName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

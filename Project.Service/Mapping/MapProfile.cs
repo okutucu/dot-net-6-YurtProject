@@ -36,6 +36,10 @@ namespace Project.Service.Mapping
             CreateMap<RoomIncome, RoomIncomeDto>().ReverseMap();
             CreateMap<RoomIncome, RoomIncomeWithRoomDto>().ReverseMap();
 
+
+            CreateMap<Customer, Record>();
+
+
         }
     }
 }

@@ -103,6 +103,12 @@ namespace Project.WebUI.Controllers
         {
             Customer customer = await _customerService.GetByIdAsync(id);
             RoomWithCustomerDto roomWithCustomerDto =  await _roomService.IncreaseCapacityWhenDeletingCustomersAsync(customer.RoomId);
+
+            Record record = _mapper.Map<Record>(customer);
+            record.Id = 0;
+            record.RoomName = roomWithCustomerDto.RoomName;
+             await _recordService.AddAsync(record);
+
             await _customerService.RemoveAsync(customer);
             return RedirectToAction(nameof(Index));
 

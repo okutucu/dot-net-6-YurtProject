@@ -8,8 +8,8 @@ namespace Project.Repository.Configurations
     {
         public void Configure(EntityTypeBuilder<Record> builder)
         {
-            builder.Property(rc => rc.RoomName).IsRequired().HasMaxLength(10);
-            builder.Property(rc => rc.FullName).IsRequired().HasMaxLength(50);
+            builder.Property(rc => rc.RoomName).HasMaxLength(10);
+            builder.Property(rc => rc.FullName).HasMaxLength(50);
             builder.Property(rc => rc.IdentityNo).HasMaxLength(20);
             builder.Property(rc => rc.Phone).HasMaxLength(20);
             builder.Property(rc => rc.EntryDate).HasColumnType("date");
