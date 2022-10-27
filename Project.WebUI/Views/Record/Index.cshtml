@@ -1,0 +1,39 @@
+﻿@model  List<RecordDto>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4>All Records</h4>
+
+
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<td>Customer Name</td>
+		<td>Room Name</td>
+			<td>EntryDate</td>
+			<td> Depart</td>
+		<td>Phone  </td>
+		<td> Email</td>
+		<td>Action</td>
+		
+	</tr>
+	</thead>
+	<tbody>
+		@foreach (RecordDto record in Model)
+		{
+		<tr>
+			<th> @record.FullName</th>
+			<th> @record.RoomName</th>
+			<th> @record.EntryDate</th>
+			<th> @record.Depart</th>
+			<th> @record.Phone</th>
+			<th>@record.Email</th>
+				<th>
+					<a class="btn btn-info" asp-controller="Customer" asp-action="Detail" asp-route-id="@record.Id">Detail</a>
+					<a class="btn btn-danger" asp-controller="Customer" asp-action="Remove" asp-route-id="@record.Id">Delete	</a>
+				</th>
+		</tr>
+		}
+	</tbody>
+</table>

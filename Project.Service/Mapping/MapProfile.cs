@@ -38,6 +38,7 @@ namespace Project.Service.Mapping
 
 
             CreateMap<Customer, Record>();
+            CreateMap<Record, RecordDto>();
 
 
         }
