@@ -24,5 +24,23 @@ namespace Project.WebUI.Controllers
             List<RecordDto> recordsDto = _mapper.Map<List<RecordDto>>(records);
             return View(recordsDto);
         }
+
+        [ServiceFilter(typeof(NotFoundFilter<Record>))]
+        public  async Task<IActionResult> Detail(int id)
+        {
+            Record record = await _recordService.GetByIdAsync(id);
+            RecordDto recordDto = _mapper.Map<RecordDto>(record);
+            return View(recordDto);
+        }
+
+
+
+        [ServiceFilter(typeof(NotFoundFilter<Record>))]
+        public async Task<IActionResult> Remove(int id)
+        {
+            Record record = await _recordService.GetByIdAsync(id);
+            await _recordService.RemoveAsync(record);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

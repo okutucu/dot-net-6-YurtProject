@@ -40,24 +40,13 @@ namespace Project.Service.Services
             RoomWithCustomerDto newRoom = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
             RoomWithCustomerDto oldRoom = await GetSingleRoomByIdWithCustomerAsync(oldRoomId);
 
+            RoomTypeWithRoomDto newRoomTypeWithRoom = await GetSingleRoomByIdWithRoomTypeAsync(newRoomId);
 
             int newRoomCustomerCount = newRoom.Customers.Count();
-            int oldRoomCustomerCount = oldRoom.Customers.Count();
 
-            if (newRoomCustomerCount == 0)
+            if (newRoomCustomerCount> 0)
             {
-                if(oldRoomCustomerCount > 1)
-                {
-                  // todo update customer
-                }
-
-            }
-            else
-            {
-                if (oldRoomCustomerCount > 1)
-                {
-                }
-
+                newRoom.Debt += newRoomTypeWithRoom.RoomType.IncreasedPrice;
             }
 
             oldRoom.CurrentCapacity++;
@@ -102,10 +91,7 @@ namespace Project.Service.Services
         public async Task<RoomWithCustomerDto> IncreaseCapacityWhenDeletingCustomersAsync(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
-            int customerCount = roomAndCustomerDto.Customers.Count();
-            // incele
             roomAndCustomerDto.CurrentCapacity++;
-
             _roomRepository.Update(_mapper.Map<Room>(roomAndCustomerDto));
 
             return roomAndCustomerDto;
