@@ -15,7 +15,7 @@ namespace Project.Core.Services
         Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId);
         Task IncreaseCapacityWhenDeletingCustomersAsync(int roomId);
         Task ReduceDeptAsync(int roomId, decimal price, decimal currency);
-        Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, ExchangeRate currency, decimal price);
+        Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, decimal currency, decimal price);
 
 
 

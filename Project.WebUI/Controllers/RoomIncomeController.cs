@@ -97,7 +97,7 @@ namespace Project.WebUI.Controllers
                 ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
 
 
-                await _roomService.ChangeRoomIncomesByRoomIncomesAsync(roomIncomeWithRoomDto, roomIncomeDto.RoomId,currency, roomIncomeDto.Price);
+                await _roomService.ChangeRoomIncomesByRoomIncomesAsync(roomIncomeWithRoomDto, roomIncomeDto.RoomId,currency.Price, roomIncomeDto.Price);
                 await _roomIncomeService.UpdateByCurrency(roomIncomeDto, currency.Price);
 
                 return RedirectToAction(nameof(Index));

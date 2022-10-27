@@ -18,11 +18,7 @@ namespace Project.Service.Services
             _roomRepository = roomRepository;
         }
 
-        // oldRoomId = 1096
-        // newRoomId = 1110
-        // currency = 12
-        // price = 33
-        public async Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, ExchangeRate currency, decimal price)
+        public async Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, decimal currency, decimal price)
         {
 
             Room oldRoom = await _roomRepository.GetByIdAsync(roomIncomeWithRoomDto.RoomId);
@@ -31,19 +27,16 @@ namespace Project.Service.Services
             if (oldRoom.Id == newRoom.Id)
             {
                 oldRoom.Debt +=  roomIncomeWithRoomDto.MoneyOfTheDay;
-                oldRoom.Debt -= currency.Price * price;
+                oldRoom.Debt -= currency * price;
                 _roomRepository.Update(_mapper.Map<Room>(oldRoom));
             }
             else
             {
-                //todo update RoomIncome
                 oldRoom.Debt += roomIncomeWithRoomDto.MoneyOfTheDay;
-                newRoom.Debt += roomIncomeWithRoomDto.MoneyOfTheDay;
+                newRoom.Debt -= currency * price;
                 _roomRepository.Update(_mapper.Map<Room>(oldRoom));
                 _roomRepository.Update(_mapper.Map<Room>(newRoom));
             }
-
-
         }
 
         public async Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId)
