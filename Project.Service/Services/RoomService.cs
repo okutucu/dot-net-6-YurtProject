@@ -17,13 +17,10 @@ namespace Project.Service.Services
             _mapper = mapper;
             _roomRepository = roomRepository;
         }
-
         public async Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, decimal currency, decimal price)
         {
-
             Room oldRoom = await _roomRepository.GetByIdAsync(roomIncomeWithRoomDto.RoomId);
             Room newRoom = await _roomRepository.GetByIdAsync(newRoomId);
-
             if (oldRoom.Id == newRoom.Id)
             {
                 oldRoom.Debt +=  roomIncomeWithRoomDto.MoneyOfTheDay;
@@ -38,7 +35,6 @@ namespace Project.Service.Services
                 _roomRepository.Update(_mapper.Map<Room>(newRoom));
             }
         }
-
         public async Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId)
         {
             RoomWithCustomerDto newRoom = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
@@ -70,7 +66,6 @@ namespace Project.Service.Services
             _roomRepository.Update(_mapper.Map<Room>(oldRoom));
             _roomRepository.Update(_mapper.Map<Room>(newRoom));
         }
-
         public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync()
         {
             List<Room> rooms = await _roomRepository.GetRoomWithCustomerAsync();
@@ -80,7 +75,6 @@ namespace Project.Service.Services
             return roomDto;
 
         }
-
         public async Task<List<RoomTypeWithRoomDto>> GetRoomWithRoomTypeAsync()
         {
             List<Room> rooms = await _roomRepository.GetRoomWithRoomTypeAsync();
@@ -89,7 +83,6 @@ namespace Project.Service.Services
 
             return roomTypeWithRoomDto;
         }
-
         public async Task<RoomWithCustomerDto> GetSingleRoomByIdWithCustomerAsync(int roomId)
         {
             Room room = await _roomRepository.GetSingleRoomByIdWithCustomerAsync(roomId);
@@ -98,9 +91,6 @@ namespace Project.Service.Services
 
             return roomDto;
         }
-
-
-
         public async Task<RoomTypeWithRoomDto> GetSingleRoomByIdWithRoomTypeAsync(int roomId)
         {
             Room room = await _roomRepository.GetSingleRoomByIdWithRoomTypeAsync(roomId);
@@ -109,7 +99,6 @@ namespace Project.Service.Services
 
             return roomTypeDto;
         }
-
         public async Task IncreaseCapacityWhenDeletingCustomersAsync(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
@@ -120,7 +109,6 @@ namespace Project.Service.Services
 
             _roomRepository.Update(_mapper.Map<Room>(roomAndCustomerDto));
         }
-
         public async Task IncreaseRoomDebtWhenDeletingIncomesAsync(int roomId, decimal moneyOfTheDay)
         {
             Room room = await _roomRepository.GetByIdAsync(roomId);
@@ -129,7 +117,6 @@ namespace Project.Service.Services
             _roomRepository.Update(room);
 
         }
-
         public async Task ReduceDeptAsync(int roomId, decimal price, decimal currency)
         {
             Room room = await _roomRepository.GetByIdAsync(roomId);
@@ -138,7 +125,6 @@ namespace Project.Service.Services
             _roomRepository.Update(room);
 
         }
-
         public async Task ReducingRoomCapacityAsync(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
@@ -165,7 +151,6 @@ namespace Project.Service.Services
                 return;
             }
         }
-
         public async Task<RoomUpdateDto> RoomCapacityAccuracyAsync(RoomUpdateDto roomUpdateDto)
         {
 
