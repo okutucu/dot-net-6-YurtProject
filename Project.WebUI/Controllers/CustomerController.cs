@@ -110,7 +110,7 @@ namespace Project.WebUI.Controllers
              await _recordService.AddAsync(record);
 
             await _customerService.RemoveAsync(customer);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); 
 
         }
     }
