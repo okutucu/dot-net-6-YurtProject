@@ -99,15 +99,16 @@ namespace Project.Service.Services
 
             return roomTypeDto;
         }
-        public async Task IncreaseCapacityWhenDeletingCustomersAsync(int roomId)
+        public async Task<RoomWithCustomerDto> IncreaseCapacityWhenDeletingCustomersAsync(int roomId)
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
             int customerCount = roomAndCustomerDto.Customers.Count();
             // incele
             roomAndCustomerDto.CurrentCapacity++;
 
-
             _roomRepository.Update(_mapper.Map<Room>(roomAndCustomerDto));
+
+            return roomAndCustomerDto;
         }
         public async Task IncreaseRoomDebtWhenDeletingIncomesAsync(int roomId, decimal moneyOfTheDay)
         {

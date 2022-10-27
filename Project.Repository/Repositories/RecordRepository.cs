@@ -10,32 +10,10 @@ using Project.Repository.Context;
 
 namespace Project.Repository.Repositories
 {
-    public class RecordRepository : IRecordRepository
+    public class RecordRepository : GenericRepository<Record>, IRecordRepository
     {
-        protected readonly YurtDbContext _context;
-        private readonly DbSet<Record> _dbSet;
-
-
-        public RecordRepository(YurtDbContext context, DbSet<Record> dbSet)
+        public RecordRepository(YurtDbContext context) : base(context)
         {
-            _context = context;
-            _dbSet = dbSet;
-        }
-
-        public async Task AddAsync(Record record)
-        {
-            await _dbSet.AddAsync(record);
-
-        }
-
-        public IQueryable<Record> GetAll()
-        {
-            return _dbSet.AsNoTracking().AsQueryable();
-        }
-
-        public void Remove(Record record)
-        {
-            _dbSet.Remove(record);
         }
     }
 }

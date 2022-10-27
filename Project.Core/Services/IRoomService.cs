@@ -12,7 +12,7 @@ namespace Project.Core.Services
         Task ReducingRoomCapacityAsync(int roomId);
         Task<RoomUpdateDto> RoomCapacityAccuracyAsync(RoomUpdateDto roomUpdateDto);
         Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId);
-        Task IncreaseCapacityWhenDeletingCustomersAsync(int roomId);
+        Task<RoomWithCustomerDto> IncreaseCapacityWhenDeletingCustomersAsync(int roomId);
         Task ReduceDeptAsync(int roomId, decimal price, decimal currency);
         Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, decimal currency, decimal price);
         Task IncreaseRoomDebtWhenDeletingIncomesAsync(int roomId, decimal moneyOfTheDay);

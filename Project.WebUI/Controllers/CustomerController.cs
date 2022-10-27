@@ -12,12 +12,14 @@ namespace Project.WebUI.Controllers
         private readonly ICustomerService _customerService;
         private readonly IRoomService _roomService;
         private readonly IMapper _mapper;
+        private readonly IRecordService _recordService;
 
-        public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService)
+        public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService)
         {
             _customerService = customerService;
             _mapper = mapper;
             _roomService = roomService;
+            _recordService = recordService;
         }
 
 
@@ -100,7 +102,7 @@ namespace Project.WebUI.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             Customer customer = await _customerService.GetByIdAsync(id);
-            await _roomService.IncreaseCapacityWhenDeletingCustomersAsync(customer.RoomId);
+            RoomWithCustomerDto roomWithCustomerDto =  await _roomService.IncreaseCapacityWhenDeletingCustomersAsync(customer.RoomId);
             await _customerService.RemoveAsync(customer);
             return RedirectToAction(nameof(Index));
 

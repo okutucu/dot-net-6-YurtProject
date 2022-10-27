@@ -7,10 +7,7 @@ using Project.Core.Models;
 
 namespace Project.Core.Services
 {
-    public interface IRecordService
+    public interface IRecordService : IService<Record>
     {
-        IQueryable<Record> GetAll();
-        Task<Record> AddAsync(Record record);
-        Task RemoveAsync(Record record);
     }
 }

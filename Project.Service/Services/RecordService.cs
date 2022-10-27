@@ -10,34 +10,10 @@ using Project.Core.UnitOfWorks;
 
 namespace Project.Service.Services
 {
-    public class RecordService : IRecordService
+    public class RecordService : Service<Record>, IRecordService
     {
-        private readonly IRecordRepository _recordRepository;
-        protected readonly IUnitOfWork _unitOfWok;
-
-
-        public RecordService(IRecordRepository recordRepository, IUnitOfWork unitOfWok)
+        public RecordService(IUnitOfWork unitOfWok, IGenericRepository<Record> repository) : base(unitOfWok, repository)
         {
-            _recordRepository = recordRepository;
-            _unitOfWok = unitOfWok;
-        }
-
-        public async Task<Record> AddAsync(Record record)
-        {
-            await _recordRepository.AddAsync(record);
-            await _unitOfWok.CommitAsync();
-            return record;
-        }
-
-        public async Task RemoveAsync(Record record)
-        {
-            _recordRepository.Remove(record);
-            await _unitOfWok.CommitAsync();
-        }
-
-        public IQueryable<Record> GetAll()
-        {
-            return _recordRepository.GetAll();
         }
     }
 }

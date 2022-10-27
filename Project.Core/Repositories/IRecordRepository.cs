@@ -7,10 +7,7 @@ using Project.Core.Models;
 
 namespace Project.Core.Repositories
 {
-    public interface IRecordRepository
+    public interface IRecordRepository : IGenericRepository<Record>
     {
-        IQueryable<Record> GetAll();
-        Task AddAsync(Record record);
-        void Remove(Record record);
     }
 }
