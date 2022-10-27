@@ -113,6 +113,18 @@ namespace Project.WebUI.Controllers
             return View(roomIncomeDto);
 		}
 
+        [ServiceFilter(typeof(NotFoundFilter<RoomIncome>))]
+
+        public async Task<IActionResult> Remove(int id)
+		{
+			RoomIncome roomIncome = await _roomIncomeService.GetByIdAsync(id);
+
+			await _roomService.IncreaseRoomDebtWhenDeletingIncomesAsync(roomIncome.RoomId,roomIncome.MoneyOfTheDay);
+            await _roomIncomeService.RemoveAsync(roomIncome);
+            return RedirectToAction(nameof(Index));
+
+        }
+
 
 	}
 }

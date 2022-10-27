@@ -99,14 +99,7 @@ namespace Project.Service.Services
             return roomDto;
         }
 
-        public async Task<RoomIncomeWithRoomDto> GetSingleRoomByIdWithRoomIncomesAsync(int roomId)
-        {
-            Room room = await _roomRepository.GetSingleRoomByIdWithRoomIncomesAsync(roomId);
 
-            RoomIncomeWithRoomDto roomDto = _mapper.Map<RoomIncomeWithRoomDto>(room);
-
-            return roomDto;
-        }
 
         public async Task<RoomTypeWithRoomDto> GetSingleRoomByIdWithRoomTypeAsync(int roomId)
         {
@@ -121,10 +114,20 @@ namespace Project.Service.Services
         {
             RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
             int customerCount = roomAndCustomerDto.Customers.Count();
+            // incele
             roomAndCustomerDto.CurrentCapacity++;
 
 
             _roomRepository.Update(_mapper.Map<Room>(roomAndCustomerDto));
+        }
+
+        public async Task IncreaseRoomDebtWhenDeletingIncomesAsync(int roomId, decimal moneyOfTheDay)
+        {
+            Room room = await _roomRepository.GetByIdAsync(roomId);
+
+            room.Debt += moneyOfTheDay;
+            _roomRepository.Update(room);
+
         }
 
         public async Task ReduceDeptAsync(int roomId, decimal price, decimal currency)
@@ -132,7 +135,7 @@ namespace Project.Service.Services
             Room room = await _roomRepository.GetByIdAsync(roomId);
             room.Debt -= (price * currency);
 
-            _roomRepository.Update(_mapper.Map<Room>(room));
+            _roomRepository.Update(room);
 
         }
 
