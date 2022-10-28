@@ -2,7 +2,7 @@
 
 namespace Project.Core.Repositories
 {
-    public interface IPaymentDetailRepository : IGenericRepository<PaymentDetail>
-    {
-    }
+	public interface IPaymentDetailRepository : IGenericRepository<PaymentDetail>
+	{
+	}
 }

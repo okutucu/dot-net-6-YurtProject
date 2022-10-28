@@ -1,20 +1,17 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
-using Project.Service.Services;
 
 namespace Project.WebUI.Controllers
 {
 	public class RoomIncomeController : Controller
 	{
-        private readonly IRoomService _roomService;
-        private readonly IRoomIncomeService _roomIncomeService;
-        private readonly IMapper _mapper;
+		private readonly IRoomService _roomService;
+		private readonly IRoomIncomeService _roomIncomeService;
+		private readonly IMapper _mapper;
 		private readonly IExchangeRateService _exchangeRateService;
 
 
@@ -37,26 +34,26 @@ namespace Project.WebUI.Controllers
 			Room room = await _roomService.GetByIdAsync(id);
 
 			JsonResult result = Json(room.Debt);
-			
-            return result;
-        }
 
-        public async Task<IActionResult> GetBySelected(DateTime selectedDate)
-        {
-			List<RoomIncomeWithRoomDto> roomDetailsDto = await _roomIncomeService.GetByMonth(selectedDate);
-            return View(roomDetailsDto);
+			return result;
+		}
 
-        }
-
-        public IActionResult Create()
+		public async Task<IActionResult> GetBySelected(DateTime selectedDate)
 		{
-            List<Room> rooms = _roomService.GetAll().ToList();
+			List<RoomIncomeWithRoomDto> roomDetailsDto = await _roomIncomeService.GetByMonth(selectedDate);
+			return View(roomDetailsDto);
 
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+		}
 
-            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+		public IActionResult Create()
+		{
+			List<Room> rooms = _roomService.GetAll().ToList();
 
-            return View();
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+
+			return View();
 		}
 
 		[HttpPost]
@@ -64,66 +61,66 @@ namespace Project.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-                ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
+				ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
 
-                await _roomService.ReduceDeptAsync(roomIncomeDto.RoomId, roomIncomeDto.Price,currency.Price);
+				await _roomService.ReduceDeptAsync(roomIncomeDto.RoomId, roomIncomeDto.Price, currency.Price);
 
-                await _roomIncomeService.AddByCurrency(roomIncomeDto, currency.Price);
-                return RedirectToAction(nameof(Index));
-            }
-            return View();
+				await _roomIncomeService.AddByCurrency(roomIncomeDto, currency.Price);
+				return RedirectToAction(nameof(Index));
+			}
+			return View();
 		}
 
-        [ServiceFilter(typeof(NotFoundFilter<RoomIncome>))]
-        public async Task<IActionResult> Update(int id)
+		[ServiceFilter(typeof(NotFoundFilter<RoomIncome>))]
+		public async Task<IActionResult> Update(int id)
 		{
 			RoomIncome roomIncome = await _roomIncomeService.GetByIdAsync(id);
 
-            List<Room> rooms = _roomService.GetAll().ToList();
+			List<Room> rooms = _roomService.GetAll().ToList();
 
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName",roomIncome.RoomId);
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", roomIncome.RoomId);
 
-            return View(_mapper.Map<RoomIncomeDto>(roomIncome));
+			return View(_mapper.Map<RoomIncomeDto>(roomIncome));
 		}
 
 		[HttpPost]
-		 public async Task<IActionResult> Update(RoomIncomeDto roomIncomeDto)
+		public async Task<IActionResult> Update(RoomIncomeDto roomIncomeDto)
 		{
 			if (ModelState.IsValid)
 			{
 				RoomIncomeWithRoomDto roomIncomeWithRoomDto = await _roomIncomeService.GetIncomeWithSingleRoomAsync(roomIncomeDto.Id);
-                ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
+				ExchangeRate currency = await _exchangeRateService.GetByName(roomIncomeDto.Exchange.ToString());
 
 
-                await _roomService.ChangeRoomIncomesByRoomIncomesAsync(roomIncomeWithRoomDto, roomIncomeDto.RoomId,currency.Price, roomIncomeDto.Price);
-                await _roomIncomeService.UpdateByCurrency(roomIncomeDto, currency.Price);
+				await _roomService.ChangeRoomIncomesByRoomIncomesAsync(roomIncomeWithRoomDto, roomIncomeDto.RoomId, currency.Price, roomIncomeDto.Price);
+				await _roomIncomeService.UpdateByCurrency(roomIncomeDto, currency.Price);
 
-                return RedirectToAction(nameof(Index));
+				return RedirectToAction(nameof(Index));
 
-            }
+			}
 
-            List<Room> rooms = _roomService.GetAll().ToList();
+			List<Room> rooms = _roomService.GetAll().ToList();
 
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", roomIncomeDto.RoomId);
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", roomIncomeDto.RoomId);
 
-            return View(roomIncomeDto);
+			return View(roomIncomeDto);
 		}
 
-        [ServiceFilter(typeof(NotFoundFilter<RoomIncome>))]
+		[ServiceFilter(typeof(NotFoundFilter<RoomIncome>))]
 
-        public async Task<IActionResult> Remove(int id)
+		public async Task<IActionResult> Remove(int id)
 		{
 			RoomIncome roomIncome = await _roomIncomeService.GetByIdAsync(id);
 
-			await _roomService.IncreaseRoomDebtWhenDeletingIncomesAsync(roomIncome.RoomId,roomIncome.MoneyOfTheDay);
-            await _roomIncomeService.RemoveAsync(roomIncome);
-            return RedirectToAction(nameof(Index));
+			await _roomService.IncreaseRoomDebtWhenDeletingIncomesAsync(roomIncome.RoomId, roomIncome.MoneyOfTheDay);
+			await _roomIncomeService.RemoveAsync(roomIncome);
+			return RedirectToAction(nameof(Index));
 
-        }
+		}
 
 
 	}

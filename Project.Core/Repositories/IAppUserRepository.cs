@@ -2,7 +2,7 @@
 
 namespace Project.Core.Repositories
 {
-	public interface IRecordRepository : IGenericRepository<Record>
+	public interface IAppUserRepository : IGenericRepository<AppUser>
 	{
 	}
 }

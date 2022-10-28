@@ -5,10 +5,10 @@ using Project.Core.UnitOfWorks;
 
 namespace Project.Service.Services
 {
-    public class RoomTypeService : Service<RoomType>, IRoomTypeService
-    {
-        public RoomTypeService(IUnitOfWork unitOfWok, IGenericRepository<RoomType> repository) : base(unitOfWok, repository)
-        {
-        }
-    }
+	public class RoomTypeService : Service<RoomType>, IRoomTypeService
+	{
+		public RoomTypeService(IUnitOfWork unitOfWok, IGenericRepository<RoomType> repository) : base(unitOfWok, repository)
+		{
+		}
+	}
 }

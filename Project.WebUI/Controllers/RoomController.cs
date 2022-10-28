@@ -7,95 +7,95 @@ using Project.Core.Services;
 
 namespace Project.WebUI.ControllersR
 {
-    public class RoomController : Controller
-    {
-        private readonly IRoomService _roomService;
-        private readonly IMapper _mapper;
-        private readonly IService<RoomType> _roomTypeService;
-        public RoomController(IRoomService roomService, IMapper mapper, IService<RoomType> roomTypeService)
-        {
-            _roomService = roomService;
-            _mapper = mapper;
-            _roomTypeService = roomTypeService;
-        }
-        public async Task<IActionResult> Index()
-        {
+	public class RoomController : Controller
+	{
+		private readonly IRoomService _roomService;
+		private readonly IMapper _mapper;
+		private readonly IService<RoomType> _roomTypeService;
+		public RoomController(IRoomService roomService, IMapper mapper, IService<RoomType> roomTypeService)
+		{
+			_roomService = roomService;
+			_mapper = mapper;
+			_roomTypeService = roomTypeService;
+		}
+		public async Task<IActionResult> Index()
+		{
 
-            return View(await _roomService.GetRoomWithRoomTypeAsync());
-        }
+			return View(await _roomService.GetRoomWithRoomTypeAsync());
+		}
 
-        public IActionResult Create()
-        {
-            List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
-            List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
+		public IActionResult Create()
+		{
+			List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
+			List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
 
-            ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName");
+			ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName");
 
-            return View();
-        }
+			return View();
+		}
 
-        [HttpPost]
-        public async Task<IActionResult> Create(RoomCreateDto roomCreateDto)
-        {
-            if (ModelState.IsValid)
-            {
-                roomCreateDto.CurrentCapacity = roomCreateDto.Capacity;
+		[HttpPost]
+		public async Task<IActionResult> Create(RoomCreateDto roomCreateDto)
+		{
+			if (ModelState.IsValid)
+			{
+				roomCreateDto.CurrentCapacity = roomCreateDto.Capacity;
 
-                await _roomService.AddAsync(_mapper.Map<Room>(roomCreateDto));
-                return RedirectToAction(nameof(Index));
-            }
+				await _roomService.AddAsync(_mapper.Map<Room>(roomCreateDto));
+				return RedirectToAction(nameof(Index));
+			}
 
-            return View(roomCreateDto);
-        }
-
-
-        [ServiceFilter(typeof(NotFoundFilter<Room>))]
-        public async Task<IActionResult> Update(int id)
-        {
-
-            Room room = await _roomService.GetByIdAsync(id);
-
-            List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
-            List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
-            ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName",room.RoomTypeId);
+			return View(roomCreateDto);
+		}
 
 
-            return View(_mapper.Map<RoomUpdateDto>(room));
-        }
+		[ServiceFilter(typeof(NotFoundFilter<Room>))]
+		public async Task<IActionResult> Update(int id)
+		{
 
-        [HttpPost]
-        public async Task<IActionResult> Update(RoomUpdateDto roomUpdateDto)
-        {
-            if (ModelState.IsValid)
-            {
+			Room room = await _roomService.GetByIdAsync(id);
 
-                RoomUpdateDto roomDto = await _roomService.RoomCapacityAccuracyAsync(roomUpdateDto);
-                await _roomService.UpdateAsync(_mapper.Map<Room>(roomDto));
-                return RedirectToAction(nameof(Index));
-                 
-            }
-
-            List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
-            List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
-            ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName", roomUpdateDto.RoomTypeId);
-            return View(roomUpdateDto);
-        }
+			List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
+			List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
+			ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName", room.RoomTypeId);
 
 
-        [ServiceFilter(typeof(NotFoundFilter<Room>))]
+			return View(_mapper.Map<RoomUpdateDto>(room));
+		}
 
-        public async Task<IActionResult> Detail(int id)
-        {
-            RoomWithCustomerDto roomAndCustomerDto = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
+		[HttpPost]
+		public async Task<IActionResult> Update(RoomUpdateDto roomUpdateDto)
+		{
+			if (ModelState.IsValid)
+			{
 
-            return View(roomAndCustomerDto);
-        }
+				RoomUpdateDto roomDto = await _roomService.RoomCapacityAccuracyAsync(roomUpdateDto);
+				await _roomService.UpdateAsync(_mapper.Map<Room>(roomDto));
+				return RedirectToAction(nameof(Index));
 
-        public async Task<IActionResult> Remove(int id)
-        {
-            Room room = await _roomService.GetByIdAsync(id);
-            await _roomService.RemoveAsync(room);
-            return RedirectToAction(nameof(Index));
-        }
-    }
+			}
+
+			List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
+			List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
+			ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName", roomUpdateDto.RoomTypeId);
+			return View(roomUpdateDto);
+		}
+
+
+		[ServiceFilter(typeof(NotFoundFilter<Room>))]
+
+		public async Task<IActionResult> Detail(int id)
+		{
+			RoomWithCustomerDto roomAndCustomerDto = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
+
+			return View(roomAndCustomerDto);
+		}
+
+		public async Task<IActionResult> Remove(int id)
+		{
+			Room room = await _roomService.GetByIdAsync(id);
+			await _roomService.RemoveAsync(room);
+			return RedirectToAction(nameof(Index));
+		}
+	}
 }

@@ -1,7 +1,7 @@
 ﻿namespace Project.Core.DTOs
 {
-    public class RoomIncomeWithRoomDto : RoomIncomeDto
+	public class RoomIncomeWithRoomDto : RoomIncomeDto
 	{
-        public RoomDto Room { get; set; }
-    }
+		public RoomDto Room { get; set; }
+	}
 }

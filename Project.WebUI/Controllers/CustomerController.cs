@@ -7,112 +7,112 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-    public class CustomerController : Controller
-    {
-        private readonly ICustomerService _customerService;
-        private readonly IRoomService _roomService;
-        private readonly IMapper _mapper;
-        private readonly IRecordService _recordService;
+	public class CustomerController : Controller
+	{
+		private readonly ICustomerService _customerService;
+		private readonly IRoomService _roomService;
+		private readonly IMapper _mapper;
+		private readonly IRecordService _recordService;
 
-        public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService)
-        {
-            _customerService = customerService;
-            _mapper = mapper;
-            _roomService = roomService;
-            _recordService = recordService;
-        }
+		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService)
+		{
+			_customerService = customerService;
+			_mapper = mapper;
+			_roomService = roomService;
+			_recordService = recordService;
+		}
 
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _customerService.GetCustomerWithRoomAsync());
-        }
+		public async Task<IActionResult> Index()
+		{
+			return View(await _customerService.GetCustomerWithRoomAsync());
+		}
 
-        public  async Task<IActionResult> Create()
-        {
-            List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
+		public async Task<IActionResult> Create()
+		{
+			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
 
-            List<RoomDto> roomsDto =  _mapper.Map<List<RoomDto>>(rooms);
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
 
-            return View();
-        }
+			return View();
+		}
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CustomerDto customerDto)
-        {
-            if(ModelState.IsValid)
-            {
-                await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
+		[HttpPost]
+		public async Task<IActionResult> Create(CustomerDto customerDto)
+		{
+			if (ModelState.IsValid)
+			{
+				await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
-                await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
-                return RedirectToAction(nameof(Index));
-            }
- 
-            List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
+				await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
+				return RedirectToAction(nameof(Index));
+			}
 
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
 
-            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-            return View(customerDto);
-        }
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
 
-        [ServiceFilter(typeof(NotFoundFilter<Customer>))]
-        public async Task<IActionResult> Update(int id)
-        {
-            List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
-            Customer customer = await _customerService.GetByIdAsync(id);
+			return View(customerDto);
+		}
 
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+		[ServiceFilter(typeof(NotFoundFilter<Customer>))]
+		public async Task<IActionResult> Update(int id)
+		{
+			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
+			Customer customer = await _customerService.GetByIdAsync(id);
 
-            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName",customer.RoomId);
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-            return View(_mapper.Map<CustomerDto>(customer));
-        }
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customer.RoomId);
 
-        [HttpPost]
-        public async Task<IActionResult> Update(CustomerDto customerDto)
-        {
-            if (ModelState.IsValid)
-            {
-                Customer customer = await _customerService.GetByIdAsync(customerDto.Id);  
-                if (customerDto.RoomId == customer.RoomId)
-                {
-                    await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    await _roomService.GetCustomerWithRoomForRoomChangeAsync(customer.RoomId, customerDto.RoomId);  
-                    await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
-                     return RedirectToAction(nameof(Index));
-                }
-            }
+			return View(_mapper.Map<CustomerDto>(customer));
+		}
 
-            List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
-            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customerDto.RoomId);
-            return View(customerDto);
+		[HttpPost]
+		public async Task<IActionResult> Update(CustomerDto customerDto)
+		{
+			if (ModelState.IsValid)
+			{
+				Customer customer = await _customerService.GetByIdAsync(customerDto.Id);
+				if (customerDto.RoomId == customer.RoomId)
+				{
+					await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
+					return RedirectToAction(nameof(Index));
+				}
+				else
+				{
+					await _roomService.GetCustomerWithRoomForRoomChangeAsync(customer.RoomId, customerDto.RoomId);
+					await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
+					return RedirectToAction(nameof(Index));
+				}
+			}
 
-        }
+			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customerDto.RoomId);
+			return View(customerDto);
 
-        [ServiceFilter(typeof(NotFoundFilter<Customer>))]
-        public async Task<IActionResult> Remove(int id)
-        {
-            Customer customer = await _customerService.GetByIdAsync(id);
-            RoomWithCustomerDto roomWithCustomerDto =  await _roomService.IncreaseCapacityWhenDeletingCustomersAsync(customer.RoomId);
+		}
 
-            Record record = _mapper.Map<Record>(customer);
-            record.Id = 0;
-            record.RoomName = roomWithCustomerDto.RoomName;
-             await _recordService.AddAsync(record);
+		[ServiceFilter(typeof(NotFoundFilter<Customer>))]
+		public async Task<IActionResult> Remove(int id)
+		{
+			Customer customer = await _customerService.GetByIdAsync(id);
+			RoomWithCustomerDto roomWithCustomerDto = await _roomService.IncreaseCapacityWhenDeletingCustomersAsync(customer.RoomId);
 
-            await _customerService.RemoveAsync(customer);
-            return RedirectToAction(nameof(Index)); 
+			Record record = _mapper.Map<Record>(customer);
+			record.Id = 0;
+			record.RoomName = roomWithCustomerDto.RoomName;
+			await _recordService.AddAsync(record);
 
-        }
-    }
+			await _customerService.RemoveAsync(customer);
+			return RedirectToAction(nameof(Index));
+
+		}
+	}
 
 }

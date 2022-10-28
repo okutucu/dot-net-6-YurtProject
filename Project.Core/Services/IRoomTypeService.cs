@@ -2,7 +2,7 @@
 
 namespace Project.Core.Services
 {
-    public interface IRoomTypeService : IService<RoomType>
-    {
-    }
+	public interface IRoomTypeService : IService<RoomType>
+	{
+	}
 }

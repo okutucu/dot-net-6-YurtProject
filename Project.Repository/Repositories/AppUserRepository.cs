@@ -4,9 +4,9 @@ using Project.Repository.Context;
 
 namespace Project.Repository.Repositories
 {
-	public class RecordRepository : GenericRepository<Record>, IRecordRepository
+	public class AppUserRepository : GenericRepository<AppUser>, IAppUserRepository
 	{
-		public RecordRepository(YurtDbContext context) : base(context)
+		public AppUserRepository(YurtDbContext context) : base(context)
 		{
 		}
 	}

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Project.Core.Models;
 
@@ -18,10 +13,10 @@ namespace Project.Repository.Seed
 			string userPassWord = BCrypt.Net.BCrypt.HashPassword("user123.");
 			builder.HasData
 				(
-				new AppUser() { Id = 1, UserName = "superadmin", Password = superAdminPassWord, Role=Core.Enums.Role.SuperAdmin },
-				new AppUser() { Id = 2, UserName = "admin", Password = adminPassword, Role = Core.Enums.Role.Admin},
-				new AppUser() { Id = 3, UserName = "user", Password = userPassWord, Role=Core.Enums.Role.User }
-				) ;
+				new AppUser() { Id = 1, UserName = "superadmin", Password = superAdminPassWord, Role = Core.Enums.Role.SuperAdmin, CreatedDate = DateTime.Now, UpdatedDate = DateTime.Now },
+				new AppUser() { Id = 2, UserName = "admin", Password = adminPassword, Role = Core.Enums.Role.Admin, CreatedDate = DateTime.Now, UpdatedDate = DateTime.Now },
+				new AppUser() { Id = 3, UserName = "user", Password = userPassWord, Role = Core.Enums.Role.User, CreatedDate = DateTime.Now, UpdatedDate = DateTime.Now }
+				);
 		}
 	}
 }
