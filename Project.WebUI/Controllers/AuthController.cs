@@ -42,5 +42,11 @@ namespace Project.WebUI.Controllers
 		{
 			return View();
 		}
+
+		public async Task<IActionResult> LogOut()
+		{
+			await HttpContext.SignOutAsync();
+			return RedirectToAction("Login");
+		}
 	}
 }
