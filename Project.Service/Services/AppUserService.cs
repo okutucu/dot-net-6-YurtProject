@@ -23,11 +23,12 @@ namespace Project.Service.Services
 
 		public async Task<ClaimsPrincipal> SignInAndCreateClaims(AppUserDto appUserDto)
 		{
-			List<Claim> claims = new List<Claim>()
+            AppUser appUser = _appUserRepository.Default(x => x.UserName == appUserDto.UserName);
+            List<Claim> claims = new List<Claim>()
 			{
-				new Claim("userName",appUserDto.UserName),
-				new Claim("userId",appUserDto.Id.ToString()),
-				new Claim("role",appUserDto.Role.ToString())
+				new Claim("userName",appUser.UserName),
+				new Claim("userId",appUser.Id.ToString()),
+				new Claim("role",appUser.Role.ToString())
 			};
 
 			ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);

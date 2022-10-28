@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
+using Project.Core.Models;
 using Project.Core.Services;
 
 namespace Project.WebUI.Controllers

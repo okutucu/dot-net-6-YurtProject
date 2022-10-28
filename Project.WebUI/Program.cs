@@ -28,6 +28,13 @@ builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie( options =>
 {
 	options.LoginPath = "/Auth/Login";
+	options.AccessDeniedPath = "/Auth/AccessDenied";
+});
+
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("SuperAdminPolicy", policy => policy.RequireClaim("role", "SuperAdmin"));
+	options.AddPolicy("AdminPolicy", policy => policy.RequireClaim("role", "SuperAdmin", "Admin"));
 });
 
 

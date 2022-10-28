@@ -7,7 +7,8 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminPolicy")]
+
     public class ExchangeRateController : Controller
 	{
 		private readonly IService<ExchangeRate> _service;

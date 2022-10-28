@@ -7,8 +7,7 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-    [Authorize]
-
+    [Authorize(Policy = "SuperAdminPolicy")]
     public class RecordController : Controller
 	{
 		private readonly IRecordService _recordService;

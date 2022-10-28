@@ -8,7 +8,7 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminPolicy")]
     public class RoomIncomeController : Controller
 	{
 		private readonly IRoomService _roomService;
