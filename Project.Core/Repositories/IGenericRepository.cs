@@ -12,6 +12,7 @@ namespace Project.Core.Repositories
 		Task AddAsync(T entity);
 		void Update(T entity);
 		void Remove(T entity);
+        T Default(Expression<Func<T, bool>> exp);
 
-	}
+    }
 }

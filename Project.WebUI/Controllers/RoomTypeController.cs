@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
 using Project.Core.Models;
@@ -6,6 +7,7 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
+	[Authorize]
 	public class RoomTypeController : Controller
 	{
 		private readonly IService<RoomType> _service;

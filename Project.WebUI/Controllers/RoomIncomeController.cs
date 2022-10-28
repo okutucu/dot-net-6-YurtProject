@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
@@ -7,7 +8,8 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-	public class RoomIncomeController : Controller
+    [Authorize]
+    public class RoomIncomeController : Controller
 	{
 		private readonly IRoomService _roomService;
 		private readonly IRoomIncomeService _roomIncomeService;

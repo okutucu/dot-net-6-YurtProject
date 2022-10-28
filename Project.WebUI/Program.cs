@@ -2,6 +2,7 @@ using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Project.Repository.Context;
 using Project.Service.Mapping;
@@ -12,11 +13,7 @@ using Project.WebUI.Modules;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<RoomDtoValidator>());
-
-
 builder.Services.AddAutoMapper(typeof(MapProfile));
-
-
 
 builder.Services.AddDbContext<YurtDbContext>(x =>
 {
@@ -28,6 +25,11 @@ builder.Services.AddDbContext<YurtDbContext>(x =>
 });
 
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie( options =>
+{
+	options.LoginPath = "/Auth/Login";
+});
+
 
 builder.Host.UseServiceProviderFactory
 	(new AutofacServiceProviderFactory());
@@ -49,7 +51,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

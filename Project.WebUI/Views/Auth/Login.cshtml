@@ -23,13 +23,17 @@
         <div class="welcome"><strong>Welcome,</strong> please login</div>
 
         <form asp-action="Login" asp-controller="Auth" method="post" class="form-horizontal login-form">
+              <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group position-relative">
                 <input id="login_username" class="form-control input-lg" type="text" placeholder="Username" required asp-for="UserName">
                 <i class="material-icons">person</i>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group position-relative password">
                 <input id="login_password" class="form-control input-lg" type="password" placeholder="Password" required asp-for="Password">
                 <i class="material-icons">lock</i>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
             </div>
             <div class="form-group d-grid">
                 <button type="submit" class="btn btn-success btn-lg">Login</button>

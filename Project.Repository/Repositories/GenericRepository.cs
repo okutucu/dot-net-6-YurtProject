@@ -27,6 +27,11 @@ namespace Project.Repository.Repositories
 			return await _dbSet.AnyAsync(exp);
 		}
 
+		public T Default(Expression<Func<T, bool>> exp)
+		{
+            return _dbSet.FirstOrDefault(exp);
+        }
+
 		public IQueryable<T> GetAll()
 		{
 			return _dbSet.AsNoTracking().AsQueryable();

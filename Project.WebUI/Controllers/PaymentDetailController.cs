@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
 using Project.Core.Models;
@@ -6,7 +7,8 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-	public class PaymentDetailController : Controller
+    [Authorize]
+    public class PaymentDetailController : Controller
 	{
 		private readonly IPaymentDetailService _paymentDetailService;
 		private readonly IExchangeRateService _exchangeRateService;

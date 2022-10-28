@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
 using Project.Core.Models;
@@ -6,7 +7,9 @@ using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-	public class RecordController : Controller
+    [Authorize]
+
+    public class RecordController : Controller
 	{
 		private readonly IRecordService _recordService;
 		private readonly IMapper _mapper;
