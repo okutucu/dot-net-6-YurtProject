@@ -38,6 +38,12 @@
                 <span asp-validation-for="PaymentMethod" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <select id="customerName" asp-for="CustomerName"  class="form-control"></select>
+
+                <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
@@ -67,6 +73,7 @@
 
             let id = $("#roomId").val();
             let url = "/RoomIncome/GetByDebt";
+            let roomWithCustomerUrl = "/RoomIncome/GetBySingleRoomByIdWithCustomer/";
 
             $.post(url , {id : id}, function(data) {
                 $("#debt").html(data);
@@ -77,8 +84,30 @@
                  id = $("#roomId").val();
                  $.post(url , {id : id}, function(data) {
                     $("#debt").html(data);
-                })
-             
+                    $.get(roomWithCustomerUrl + id, function (response) {
+                        $('#customerName').empty();
+
+                        if(response.length > 0)
+                        {
+                            $('#customerName')
+                                .append($("<option></option>")
+                                    .text("-- Choose Customer"));
+                            $.each(response, function (key, value) {
+                                $('#customerName')
+                                    .append($("<option></option>")
+                                        .attr("value", value.id)
+                                        .text(value.fullName));
+                            });
+                        }
+                        else
+                        {
+                            $('#customerName')
+                            .append($("<option></option>")
+                                .text("-- Havent Customer"));
+                        }   
+                    });
+                    
+                })   
             });
         });
         </script>

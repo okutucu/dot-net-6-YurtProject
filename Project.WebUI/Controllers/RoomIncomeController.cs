@@ -16,7 +16,6 @@ namespace Project.WebUI.Controllers
 		private readonly IMapper _mapper;
 		private readonly IExchangeRateService _exchangeRateService;
 
-
 		public RoomIncomeController(IRoomService roomService, IMapper mapper, IRoomIncomeService roomIncomeService, IExchangeRateService exchangeRateService)
 		{
 			_roomService = roomService;
@@ -40,20 +39,32 @@ namespace Project.WebUI.Controllers
 			return result;
 		}
 
-		public async Task<IActionResult> GetBySelected(DateTime selectedDate)
+        [HttpGet]
+        public async Task<IActionResult> GetBySelected(DateTime selectedDate)
 		{
 			List<RoomIncomeWithRoomDto> roomDetailsDto = await _roomIncomeService.GetByMonth(selectedDate);
 			return View(roomDetailsDto);
 
 		}
 
+		[HttpGet]
+		public async Task<JsonResult> GetBySingleRoomByIdWithCustomer(int id)
+		{
+			RoomWithCustomerDto roomsWithCustomer = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
+            JsonResult result = Json(roomsWithCustomer.Customers);
+
+            return result;
+        }
+
 		public IActionResult Create()
 		{
-			List<Room> rooms = _roomService.GetAll().ToList();
+            
+
+            List<Room> rooms = _roomService.GetAll().ToList();
 
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
-
-			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+			
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
 
 			return View();
 		}

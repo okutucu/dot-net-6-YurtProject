@@ -4,6 +4,7 @@ namespace Project.Core.DTOs
 {
 	public class RoomIncomeDto : BaseDto
 	{
+		public string CustomerName { get; set; }
 		public decimal Price { get; set; }
 		public DateTime PaymentDate { get; set; }
 		public Exchange Exchange { get; set; }
