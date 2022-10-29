@@ -77,6 +77,26 @@
 
             $.post(url , {id : id}, function(data) {
                 $("#debt").html(data);
+                 $.get(roomWithCustomerUrl + id, function (response) {
+                        if(response.length > 0)
+                        {
+                            $('#customerName')
+                                .append($("<option></option>")
+                                    .text("-- Choose Customer"));
+                            $.each(response, function (key, value) {
+                                $('#customerName')
+                                    .append($("<option></option>")
+                                    .attr("value", value.fullName)
+                                        .text(value.fullName));
+                            });
+                        }
+                        else
+                        {
+                            $('#customerName')
+                            .append($("<option></option>")
+                                .text("-- Havent Customer"));
+                        }   
+                    });
             })
 
             $("#roomId").change(function () {
@@ -95,7 +115,7 @@
                             $.each(response, function (key, value) {
                                 $('#customerName')
                                     .append($("<option></option>")
-                                        .attr("value", value.id)
+                                        .attr("value", value.fullName)
                                         .text(value.fullName));
                             });
                         }

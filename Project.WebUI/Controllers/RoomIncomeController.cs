@@ -58,7 +58,6 @@ namespace Project.WebUI.Controllers
 
 		public IActionResult Create()
 		{
-            
 
             List<Room> rooms = _roomService.GetAll().ToList();
 
@@ -81,7 +80,13 @@ namespace Project.WebUI.Controllers
 				await _roomIncomeService.AddByCurrency(roomIncomeDto, currency.Price);
 				return RedirectToAction(nameof(Index));
 			}
-			return View();
+
+            List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+            return View(roomIncomeDto);
 		}
 
 		[ServiceFilter(typeof(NotFoundFilter<RoomIncome>))]

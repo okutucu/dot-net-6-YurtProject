@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using Project.Core.DTOs;
 using Project.Core.Models;
 
 namespace Project.Service.Validations
 {
-	public class AppUserValidator : AbstractValidator<AppUser>
+	public class AppUserValidator : AbstractValidator<AppUserDto>
 	{
 		public AppUserValidator()
 		{
