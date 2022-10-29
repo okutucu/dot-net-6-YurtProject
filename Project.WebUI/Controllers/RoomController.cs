@@ -11,6 +11,7 @@ namespace Project.WebUI.ControllersR
     [Authorize]
     public class RoomController : Controller
 	{
+		//todo otomatik oda borcu artması
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
 		private readonly IService<RoomType> _roomTypeService;
