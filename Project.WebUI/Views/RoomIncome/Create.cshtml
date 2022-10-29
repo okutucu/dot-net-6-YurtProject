@@ -80,9 +80,6 @@
                  $.get(roomWithCustomerUrl + id, function (response) {
                         if(response.length > 0)
                         {
-                            $('#customerName')
-                                .append($("<option></option>")
-                                    .text("-- Choose Customer"));
                             $.each(response, function (key, value) {
                                 $('#customerName')
                                     .append($("<option></option>")
@@ -109,9 +106,6 @@
 
                         if(response.length > 0)
                         {
-                            $('#customerName')
-                                .append($("<option></option>")
-                                    .text("-- Choose Customer"));
                             $.each(response, function (key, value) {
                                 $('#customerName')
                                     .append($("<option></option>")
