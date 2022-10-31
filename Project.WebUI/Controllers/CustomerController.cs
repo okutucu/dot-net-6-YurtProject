@@ -15,13 +15,15 @@ namespace Project.WebUI.Controllers
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
 		private readonly IRecordService _recordService;
+		private readonly IMailService _mailService;
 
-		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService)
+		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IMailService mailService)
 		{
 			_customerService = customerService;
 			_mapper = mapper;
 			_roomService = roomService;
 			_recordService = recordService;
+			_mailService = mailService;
 		}
 
 
@@ -49,6 +51,8 @@ namespace Project.WebUI.Controllers
 				await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
 				await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
+
+				await _mailService.SendMailAsync(customerDto.Email, "Sinemis Student Dormitory Registration Information", "<strong> Your dormitory registration has been carried out successfully. We wish you a nice day. </strong>");
 				return RedirectToAction(nameof(Index));
 			}
 
