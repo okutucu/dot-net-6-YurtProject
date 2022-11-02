@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
 
@@ -9,11 +11,13 @@ namespace Project.WebUI.Controllers
     {
         private readonly ICustomerService _customerService;
         private readonly IMailService _mailService;
+        private readonly IMapper _mapper;
 
-        public MailController(ICustomerService customerService, IMailService mailService)
+        public MailController(ICustomerService customerService, IMailService mailService, IMapper mapper)
         {
             _customerService = customerService;
             _mailService = mailService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -21,21 +25,31 @@ namespace Project.WebUI.Controllers
             return View();
         }
 
+        //todo redirect popup
         [HttpPost]
-        public async Task<IActionResult> SendAMailToTheDebtors(string subject, string body)
+        public async Task<IActionResult> SendAMailToTheDebtors(MailDto mailDto)
         {
-            List<string> customers = await  _customerService.Where(x => x.Room.Debt >0).Select(x=> x.Email).ToListAsync();
-            await _mailService.SendAMailToCondition(customers, subject, body);
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                List<string> customers = await _customerService.Where(x => x.Room.Debt > 0).Select(x => x.Email).ToListAsync();
+                await _mailService.SendAMailToCondition(customers, mailDto);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(nameof(Index),mailDto);
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendAMailToAllUsers(string subject, string body)
+        public async Task<IActionResult> SendAMailToAllUsers(MailDto mailDto)
         {
-            List<string> customers = await _customerService.GetAll().Select(x => x.Email).ToListAsync();
-            await _mailService.SendAMailToCondition(customers, subject, body);
+            if (ModelState.IsValid)
+            {
+                List<string> customers = await _customerService.GetAll().Select(x => x.Email).ToListAsync();
+                await _mailService.SendAMailToCondition(customers, mailDto);
+                return RedirectToAction(nameof(Index));
 
-            return RedirectToAction(nameof(Index));
+            }
+
+            return View(nameof(Index), mailDto);
         }
 
     }

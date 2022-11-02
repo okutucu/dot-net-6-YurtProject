@@ -43,6 +43,8 @@ namespace Project.Service.Mapping
 			CreateMap<AppUser, AppUserDto>().ReverseMap();
 
 
+
+
 		}
 	}
 }

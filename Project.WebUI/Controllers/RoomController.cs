@@ -23,7 +23,6 @@ namespace Project.WebUI.ControllersR
 		}
 		public async Task<IActionResult> Index()
 		{
-
 			return View(await _roomService.GetRoomWithRoomTypeAsync());
 		}
 

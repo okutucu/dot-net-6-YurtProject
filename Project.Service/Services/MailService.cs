@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
 
@@ -20,15 +21,24 @@ namespace Project.Service.Services
             _configuration = configuration;
         }
 
-        public async Task SendAMailToCondition(List<string> customers, string subject, string body, bool isBodyHtml = true)
+        public async Task SendAMailToCondition(List<string> customers,MailDto mailDto, bool isBodyHtml = true)
         {
-            string[] tos = new string[customers.Count];
-
+            List<string> notNullCustomers = new List<string>();
             for (int i = 0; i < customers.Count; i++)
             {
-                tos[i] = customers[i];
+                if (customers[i] != null)
+                {
+                    notNullCustomers.Add(customers[i]);
+                }
             }
-            await SendMailAsync(tos, subject,body,isBodyHtml);
+
+            string[] tos = new string[notNullCustomers.Count];
+
+            for (int i = 0; i < notNullCustomers.Count; i++)
+            {
+                tos[i] = notNullCustomers[i];
+            }
+            await SendMailAsync(tos, mailDto.Subject, mailDto.Body, isBodyHtml);
         }
 
         public async Task SendMailAsync(string? to, string subject, string body, bool isBodyHtml = true)
