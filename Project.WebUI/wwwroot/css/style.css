@@ -114,6 +114,15 @@ h6 {
     vertical-align: baseline;
     border-radius: 0.25em;
 }
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    transition: background-color 9999s ease-in-out 0s !important;
+}
+input:-webkit-autofill {
+    -webkit-text-fill-color: white !important;
+}
 
 .btn {
     display: inline-block;
@@ -5510,7 +5519,133 @@ tr:hover {
     transition-delay: .3s;
     -webkit-transition-delay: .3s;
 }
-,
+#rooms-section .card .card-body .btn-outline-primary {
+    border-color: #20638f;
+    color: #20638f;
+}
+#rooms-section .card .card-body .btn-outline-primary:hover {
+    background-color: #20638f;
+    color: #fff;
+}
+    /*
+            ############ DATE STYLES #############
+    */
+
+/*input.date {*/
+/*    border-radius: 10px;*/
+/*    height: auto;*/
+/*    transition: all ease 400ms;*/
+/*    box-shadow: 0px 0px 1px 1px #3a3f51;*/
+/*}*/
+
+/*input.date:hover {*/
+/*    box-shadow: 0 0 5px 5px #3a3f51;*/
+/*}*/
+
+/*.quesadilla {*/
+/*    position: relative;*/
+/*}*/
+
+/*.quesadilla:after {*/
+/*    z-index: -1;*/
+/*    content: '📅';*/
+/*    display: block;*/
+/*    font-size: 2rem;*/
+/*    color: STEELBLUE;*/
+/*    background: none;*/
+/*    background: url('') no-repeat;*/
+/*    background-size: 10%;*/
+/*    width: 50px;*/
+/*    height: 50px;*/
+/*    position: absolute;*/
+/*    top: 13px;*/
+/*    right: -7px;*/
+/*}*/
+
+/*!**/
+/*>here is the nasty part*/
+/**!*/
+/*.enchilada::-webkit-calendar-picker-indicator {*/
+/*    opacity: 0;*/
+/*/ / removes awful triangle indicator*/
+/*}*/
+
+/*.enchilada, .enchilada:focus {*/
+/*    background: rgba(0, 0, 0, 0);*/
+/*/ / "removes" input background because our icon is behind it 😒 * shake fist **/
+/*}*/
+
+/*!**/
+/*>BONUS! types of HTML5 input dates*/
+/**!*/
+
+/*::-webkit-datetime-edit {*/
+/*    padding: .15rem;*/
+/*    font-size: 1.9rem;*/
+/*}*/
+
+/*::-webkit-datetime-edit-fields-wrapper {*/
+/*    background: #f0eabd;*/
+/*    border-radius: 10px;*/
+/*    padding: 7px;*/
+/*}*/
+
+/*::-webkit-datetime-edit-text {*/
+/*    color: silver;*/
+/*    padding: 0 0.6em;*/
+/*}*/
+
+/*::-webkit-datetime-edit-day-field {*/
+/*    color: DeepPink;*/
+/*}*/
+
+/*::-webkit-datetime-edit-month-field {*/
+/*    color: LimeGreen;*/
+/*}*/
+
+/*::-webkit-datetime-edit-year-field {*/
+/*    color: MediumSlateBlue;*/
+/*}*/
+
+/*::-webkit-inner-spin-button {*/
+/*    opacity: 1;*/
+/*/ / shows element font-size: 2 rem;*/
+/*    margin-top: 5px;*/
+/*/ / -webkit-appearance: none;*/
+/*/ / removes element*/
+/*}*/
+
+/*::-webkit-calendar-picker-indicator {*/
+/*    background: DarkSlateGray;*/
+/*    color: Cornsilk;*/
+/*    opacity: 1;*/
+/*    font-size: 1.5rem;*/
+/*    transition: all ease 400ms;*/
+/*    transform: scale(1);*/
+/*    margin-left: 5px;*/
+/*}*/
+
+/*::-webkit-calendar-picker-indicator:hover {*/
+/*    background: Teal;*/
+/*    color: Cyan;*/
+/*    transform: scale(1.2);*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*input::-webkit-datetime-edit-year-field[enabled] {*/
+/*    font-size: 5rem;*/
+/*}*/
+
+/*!**/
+/*>Datetime*/
+/**!*/
+
+/*input::-webkit-datetime-edit {*/
+/*    background: #3a3f51;*/
+/*    border-radius: 10px;*/
+/*}*/
+
+
 /* ######### LOGIN CSS ######### */
 .checkbox-inline+.checkbox-inline,
 .radio-inline+.radio-inline {
@@ -5520,12 +5655,12 @@ tr:hover {
 /******* Login Page *******/
 
 body.login {
-    background-image: url('../img/admin-bg.jpg');
+    background-image: url('../img/bg-01.jpg');
     display: flex;
     align-items: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: -160px 0px;
+    background-position: 0 0;
 }
 .login-container-wrapper .logo,
 .login-container-wrapper .welcome {
@@ -5544,7 +5679,7 @@ body.login {
     width: 25%;
     left: 37.5%;
     border-radius: 50%;
-    background: -webkit-linear-gradient(top, #4e4f569e, #ba363fdb);
+    background-color: #344455;
     padding: 7px;
     box-shadow: 0px 0px 9px 2px #344454;
 }
@@ -5554,11 +5689,11 @@ body.login {
 
 .login-container-wrapper {
     max-width: 400px;
-    margin: auto;
+    margin:auto;
     padding: 80px 40px 40px 40px;
     box-sizing: border-box;
-    background: -webkit-linear-gradient(top, #4e4f569e, #ba363fdb);
-    box-shadow: 1px 1px 10px 1px #c1575ed1, 8px 8px 0px 0px #87383ddb, 12px 12px 10px 0px #8d383edb;
+    background: rgba(57, 89, 116, 0.8);
+    box-shadow: 1px 1px 10px 1px #000000, 8px 8px 0px 0px #344454, 12px 12px 10px 0px #000000;
     position: relative;
 }
 
@@ -5588,10 +5723,11 @@ body.login {
     border-radius: 0;
 }
 
-.login input[type="text"],
+.login input[type="email"],
 .login input[type="password"],
+.login input[type="text"],
 .login input:focus {
-    background-color: rgba(40, 52, 67, 0.75);
+    background-color: rgba(40, 52, 67, 0.75) !important;
     border: 1px solid #4a525f;
     color: #eee;
     border-left: 4px solid #93a5ab;
@@ -5599,25 +5735,10 @@ body.login {
 
 .login input:focus {
     border-left: 4px solid #ccd8da;
-}
-
-#login_password:focus, #login_username:focus {
-    box-shadow: 0 0 0 0.25rem rgb(85 81 101 / 55%);
-}
-
-input:-webkit-autofill,
-textarea:-webkit-autofill,
-select:-webkit-autofill {
     background-color: rgba(40, 52, 67, 0.75) !important;
-    background-image: none;
-    color: rgb(0, 0, 0);
-    border-color: #FAFFBD;
 }
 
-.login .checkbox label,
-.login .checkbox a {
-    color: #ddd;
-}
+
 
 .btn-success {
     background-color: transparent;
@@ -5646,4 +5767,142 @@ select:-webkit-autofill {
     height:100%;
     position:absolute;
     z-index:-1;
+}
+#showPass{
+    cursor: pointer;
+}
+
+#available-rooms .card .card-content .card-body p {
+    margin: 0;
+    padding: 5px 0;
+}
+#available-rooms .card .card-content .ticket-box {
+    position: absolute;
+    top: 0px;
+    height: 130px;
+    width: 143px;
+    text-align: center;
+    z-index: 0;
+    right: 0px;
+    border-top-right-radius: 0.7em;
+    overflow: hidden;
+}
+#available-rooms .card .card-content .ticket-box .on-sale, #available-rooms .card .card-content .ticket-box .on-sale-2, #available-rooms .card .card-content .ticket-box .on-sale-3 {
+    font-size: 12px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    width: 281px;
+    text-align: center;
+    display: block;
+    position: absolute;
+    left: -56px;
+    top: -18px;
+    transform: rotate(44deg);
+    box-shadow: rgba(0, 0, 0, 0.75) 3px -4px 13px 3px;
+    padding: 5px 35px 3px 125px;
+    transition: all 0.5s ease 0s;
+}
+#available-rooms .card .card-content .ticket-box .on-sale {
+    background: rgb(40, 167, 69);
+}
+#available-rooms .card .card-content .ticket-box .on-sale-2 {
+    background-color: #0a89b1dd
+}
+#available-rooms .card .card-content .ticket-box .on-sale-3 {
+    background-color: #db0e0e;
+}
+#available-rooms .card {
+    transition: all 0.5s ease 0s;
+    border-radius: 50px;
+}
+#available-rooms .card:hover {
+    transform: scale(1.05);
+    transition: all 0.5s ease 0s;
+    z-index: 1;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+}
+#available-rooms .card button {
+    border-radius: 10px 10px 35px 35px;
+}
+#page-403_full {
+    padding: 0 !important;
+}
+.page_403 {
+    background-image: linear-gradient(120deg, #4f0088 0%, #000000 100%);
+    height: 100vh;
+    width:100%;
+}
+.page_403 h1 {
+    font-size: 45vw !important;
+    position: fixed;
+    width: 100vw;
+    z-index: 1;
+    color: #ffffff26;
+    text-shadow: 0 0 50px rgba(0, 0, 0, 0.07);
+    top: 50%;
+    transform: translateY(-50%);
+}
+#access-denied {
+    background: rgba(0, 0, 0, 0);
+    width: 70vw;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    padding: 30px 30px 10px;
+    box-shadow: 0 0 150px -20px rgba(0, 0, 0, 0.5);
+    z-index: 3;
+}
+.page_403 p {
+    font-family: "Share Tech Mono", monospace;
+    color: #f5f5f5;
+    margin: 0 0 20px;
+    font-size: 17px;
+    line-height: 1.2;
+}
+.page_403 span {
+    color: #f0c674;
+}
+.page_403 i {
+    color: #8abeb7;
+}
+.page_403 #access-denied a {
+    text-decoration: none;
+}
+.page_403 b {
+    color: #81a2be;
+}
+@keyframes slide {
+    from {
+        right: -100px;
+        transform: rotate(360deg);
+        opacity: 0;
+    }
+    to {
+        right: 15px;
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+}
+.page-content .page-bar .card .card-body aside .nav .active {
+    background-color: #20638f;
+    color: #fff;
+}
+.page-content .page-bar .card .card-body aside .nav a {
+    color: #20638f;
+}
+.page-content .page-bar .card .card-body aside .nav a i {
+    /*position: absolute;*/
+    padding-left: 4px;
+}
+.page-content .page-bar .card .card-body .content-body button {
+    background-color: #20638f;
+}
+
+.page-content .page-bar .card .card-header.bg-mail {
+    background-color: #20638f;
+    color: #fff;
 }

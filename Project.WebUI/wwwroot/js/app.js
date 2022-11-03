@@ -396,4 +396,20 @@ jQuery(document).ready(function () {
         },
         1000
     );
+    $('#normalChecked').attr('checked',true);
+    $('#monthly').attr('disabled','disabled');
+    $('#paymentSection').change((e) => {
+        if(e.target.name === 'checkedPayment') {
+            if ($('#monthlyChecked').is(':checked')) $('#monthly').removeAttr('disabled') && ($('#normalDate').attr('disabled', 'true') && $('#normalDate').val('')) && (console.log(e.target.parentElement.previousElementSibling.id));
+            if ($('#normalChecked').is(':checked')) $('#normalDate').removeAttr('disabled') && ($('#monthly').attr('disabled', 'true') && $('#monthly').val('')) && (console.log(e.target.parentElement.previousElementSibling.id));
+
+        }
+    });
+    $("#monthly").on("change", function() {
+        this.setAttribute(
+            "data-date",
+            moment(this.value, "YYYY-MM")
+                .format( this.getAttribute("data-date-format") )
+        )
+    }).trigger("change")
 });
