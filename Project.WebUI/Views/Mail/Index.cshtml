@@ -4,11 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h3>Send  Mail </h3>
+    <div class="d-flex align-items-center justify-content-center">
+                <div class="page-bar w-100">
+                    <div class="container">
+                        <div class="card">
+                            <div class="card-header text-center bg-mail">
+                                Send a Message
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-5">
+                                    <aside class="col-lg-3 border-end">
+                                        <div class="d-flex align-items-start">
+                                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                <a class="nav-link active" id="v-pills-allMessage-tab" data-bs-toggle="pill" data-bs-target="#v-pills-allMessage" type="button" role="tab" aria-controls="v-pills-allMessage" aria-selected="true">Message to All <i class="material-icons">email</i></a>
+                                                <a class="nav-link" id="v-pills-debtMessage-tab" data-bs-toggle="pill" data-bs-target="#v-pills-debtMessage" type="button" role="tab" aria-controls="v-pills-debtMessage" aria-selected="false">Message to Debt <i class="material-icons">message</i></a>
+                                            </div>
+                                        </div>
 
-   <div class="row">
-       <div class="col-md-12">
-                <form asp-action="SendAMailToTheDebtors" asp-controller="Mail" method="post">
+                                    </aside>
+                                    <div class="col-lg-9">
+                                        <section class="content-body p-xl-4">
+                                            <div class="tab-content" id="v-pills-tabContent">
+                                                <div class="tab-pane fade show active" id="v-pills-allMessage" role="tabpanel" aria-labelledby="v-pills-allMessage-tab">
+                                        <form asp-action="SendAMailToAllUsers" asp-controller="Mail" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Subject" class="control-label">  </label>
@@ -24,13 +42,9 @@
                     </div>
                     <button class="btn btn-primary mt-2" type="submit">Send Mail</button>
                 </form>
-       </div>
-   </div>
-
-
-   <div class="row">
-       <div class="col-md-12">
-        <form asp-action="SendAMailToAllUsers" asp-controller="Mail" method="post">
+                                                </div>
+                                                <div class="tab-pane fade" id="v-pills-debtMessage" role="tabpanel" aria-labelledby="v-pills-debtMessage-tab">
+                                        <form asp-action="SendAMailToTheDebtors" asp-controller="Mail" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Subject" class="control-label">  </label>
@@ -46,5 +60,14 @@
             </div>
             <button class="btn btn-primary mt-2" type="submit">Send Mail</button>
                 </form>
-       </div>
-   </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>

@@ -12,8 +12,9 @@ namespace Project.Service.Validations
     {
         public MailValidator()
         {
-            RuleFor(x => x.Body).NotNull().WithMessage("{PropertyName} is required").NotEmpty().WithMessage("(PropertyName) is required");
-            RuleFor(x => x.Subject).NotNull().WithMessage("{PropertyName} is required").NotEmpty().WithMessage("(PropertyName) is required");
+            // todo multiple post 
+            //RuleFor(x => x.Body).NotNull().WithMessage("{PropertyName} is required").NotEmpty().WithMessage("(PropertyName) is required");
+            //RuleFor(x => x.Subject).NotNull().WithMessage("{PropertyName} is required").NotEmpty().WithMessage("(PropertyName) is required");
         }
     }
 }
