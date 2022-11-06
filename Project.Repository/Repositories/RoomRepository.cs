@@ -19,7 +19,7 @@ namespace Project.Repository.Repositories
 
 		public async Task<List<Room>> GetRoomWithRoomTypeAsync()
 		{
-			return await _context.Rooms.Include(x => x.RoomType).ToListAsync();
+			return await _context.Rooms.Include(x => x.RoomType).Include(x=>x.Customers).ToListAsync();
 		}
 
 		public async Task<Room> GetSingleRoomByIdWithCustomerAsync(int roomId)

@@ -114,15 +114,6 @@ h6 {
     vertical-align: baseline;
     border-radius: 0.25em;
 }
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
-    transition: background-color 9999s ease-in-out 0s !important;
-}
-input:-webkit-autofill {
-    -webkit-text-fill-color: white !important;
-}
 
 .btn {
     display: inline-block;
@@ -528,7 +519,7 @@ body {
 }
 
 .navbar-fixed-top {
-    position: fixed;
+    position: sticky;
     right: 0px;
     left: 0px;
     top: 0px;
@@ -1396,7 +1387,9 @@ li.divider {
 .page-header.navbar .hor-menu.hor-menu-light .navbar-nav > li > .dropdown-menu {
     border-top: 0;
 }
-
+.sidemenu-container{
+    z-index: 1;
+}
 .page-header.navbar .menu-toggler > span,
 .sidemenu-container .sidebar-toggler > span,
 .sidemenu-closed.sidemenu-container-fixed
@@ -2615,7 +2608,7 @@ li
 }
 
 .page-header-fixed .page-container {
-    margin-top: 50px;
+
 }
 
 .page-full-width.page-header-fixed .page-container {
@@ -5116,7 +5109,6 @@ ul.activity-list .activity-desk h5 a {
 .badge,
 .btn {
     font-weight: 600;
-    text-transform: uppercase;
 }
 
 .list-separated {
@@ -5327,10 +5319,10 @@ ul.activity-list .activity-desk h5 a {
 }
 
 .four_zero_four_bg {
-
     background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
     height: 400px;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 
@@ -5439,6 +5431,19 @@ tr:hover {
 }
 #summary-section .card .card-body p {
     margin: 0;
+}
+#summary-section .card .card-content {
+    position: relative;
+}
+#summary-section .card .card-content:before {
+    content: "";
+    position: absolute;
+    right: 240px;
+    z-index: 100;
+    width: .7px;
+    height: 90%;
+    top:10px;
+    background: #fff;
 }
 #rooms-section .card {
     width: 34rem;
@@ -5655,7 +5660,7 @@ tr:hover {
 /******* Login Page *******/
 
 body.login {
-    background-image: url('../img/bg-01.jpg');
+    background-image: url('../img/admin-bg.jpg');
     display: flex;
     align-items: center;
     background-repeat: no-repeat;
@@ -5688,11 +5693,11 @@ body.login {
 }
 
 .login-container-wrapper {
-    max-width: 400px;
+    max-width: 500px;
     margin:auto;
-    padding: 80px 40px 40px 40px;
+    padding: 110px 40px 60px 40px;
     box-sizing: border-box;
-    background: rgba(57, 89, 116, 0.8);
+    background: -webkit-linear-gradient(#4e4f569e, #ba363fdb);
     box-shadow: 1px 1px 10px 1px #000000, 8px 8px 0px 0px #344454, 12px 12px 10px 0px #000000;
     position: relative;
 }
@@ -5727,7 +5732,7 @@ body.login {
 .login input[type="password"],
 .login input[type="text"],
 .login input:focus {
-    background-color: rgba(40, 52, 67, 0.75) !important;
+    background-color: rgba(40, 52, 67, 0.75);
     border: 1px solid #4a525f;
     color: #eee;
     border-left: 4px solid #93a5ab;
@@ -5735,10 +5740,19 @@ body.login {
 
 .login input:focus {
     border-left: 4px solid #ccd8da;
-    background-color: rgba(40, 52, 67, 0.75) !important;
 }
 
+input:-webkit-autofill,
+/*input:autofill,*/
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    transition: background-color 9999s ease-in-out 0s, color 9999s ease-in-out 0s;
+}
 
+.login .checkbox label,
+.login .checkbox a {
+    color: #ddd;
+}
 
 .btn-success {
     background-color: transparent;
@@ -5905,4 +5919,24 @@ body.login {
 .page-content .page-bar .card .card-header.bg-mail {
     background-color: #20638f;
     color: #fff;
+}
+.scroll-to-top {
+    position: fixed;
+    bottom:10px;
+    color: black;
+    cursor:pointer;
+    -webkit-animation: uparrow 0.6s infinite alternate ease-in-out;
+}
+@-webkit-keyframes uparrow {
+    0% { -webkit-transform: translateY(0); opacity: 0.4 }
+    100% { -webkit-transform: translateY(-0.4em); opacity: 0.9 }
+}
+.scroll-to-top .material-icons {
+    font-size: 35px;
+}
+
+.material-css{
+    position :relative;
+    top : 3px;
+    font-size : 17px !important;
 }

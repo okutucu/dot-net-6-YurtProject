@@ -3,7 +3,7 @@
 	ViewData["Title"] = "Index";
 }
 
-<a asp-controller="Room" asp-action="Create"> New Room</a>
+<a asp-controller="Room" asp-action="Create" class="btn btn-outline-primary"> New Room <i class="material-icons f-left material-css">add_box</i></a>
 <table class="table table-striped">
 	<thead>
 	<tr>
@@ -32,7 +32,23 @@
 				<th>@room.Debt</th>
 				<th>@room.Lack</th>
 				<th>@room.LackDetail</th>
-				<th>PAID</th>
+				 @if (room.Debt > 0)
+				{
+					<th class="text-danger">Unpaid</th>
+				}
+				else
+				{
+					@if (room.Customers.Count == 0)
+					{
+						<th class="text-info">Empty</th>
+					}
+					else
+					{
+						<th class="text-success">Paid</th>
+					}
+				}
+					
+				
 				<th>
 					<a class="btn btn-info" asp-controller="Room" asp-action="Detail" asp-route-id="@room.Id">Detail</a>
 					

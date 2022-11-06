@@ -85,7 +85,6 @@ namespace Project.WebUI.ControllersR
 
 
 		[ServiceFilter(typeof(NotFoundFilter<Room>))]
-
 		public async Task<IActionResult> Detail(int id)
 		{
 			RoomWithCustomerDto roomAndCustomerDto = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
