@@ -57,28 +57,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 828, DateTimeKind.Local).AddTicks(9756),
-                            Password = "$2a$11$YIRc/6FHYw6E8ou6x8F3ceiXZ9Ihty4uwU.p2KgF/ulVr9.2QwGjS",
+                            CreatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 857, DateTimeKind.Local).AddTicks(2537),
+                            Password = "$2a$11$pF35/mr2weM.SMPhsygoF.fuA24Dsafz5emMWiUnQWxUy2tHTqIOq",
                             Role = 1,
-                            UpdatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 828, DateTimeKind.Local).AddTicks(9816),
+                            UpdatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 857, DateTimeKind.Local).AddTicks(2594),
                             UserName = "superadmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 828, DateTimeKind.Local).AddTicks(9827),
-                            Password = "$2a$11$AMxSGVRx8jiuBIi4UWHyVubwSBoo.paWeuR.S/2j9NZi2xYIZiCTG",
+                            CreatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 857, DateTimeKind.Local).AddTicks(2605),
+                            Password = "$2a$11$xFfpUkAx4GeedDfQ7.eGtOqaYD4XsRfKmsJnX3.R1Hf0g9nzAWGeO",
                             Role = 2,
-                            UpdatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 828, DateTimeKind.Local).AddTicks(9830),
+                            UpdatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 857, DateTimeKind.Local).AddTicks(2607),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 828, DateTimeKind.Local).AddTicks(9834),
-                            Password = "$2a$11$uUBUXwFWAmIWu8xFl45OyO1bM669/JnDJIIM6TmbLjvEBz0Rwg0BK",
+                            CreatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 857, DateTimeKind.Local).AddTicks(2611),
+                            Password = "$2a$11$i.iDKrZynlwXjKjPc9/AhOjDnmpoJyAESxmmocmWSp1gKpbeaInCq",
                             Role = 3,
-                            UpdatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 828, DateTimeKind.Local).AddTicks(9875),
+                            UpdatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 857, DateTimeKind.Local).AddTicks(2649),
                             UserName = "user"
                         });
                 });
@@ -120,7 +120,7 @@ namespace Project.Repository.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("AppUserDetail");
+                    b.ToTable("AppUserDetail", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Customer", b =>
@@ -209,34 +209,34 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExchangeRates");
+                    b.ToTable("ExchangeRates", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 277, DateTimeKind.Local).AddTicks(4257),
+                            CreatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 265, DateTimeKind.Local).AddTicks(3856),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 277, DateTimeKind.Local).AddTicks(4308),
+                            CreatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 265, DateTimeKind.Local).AddTicks(3918),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 277, DateTimeKind.Local).AddTicks(4318),
+                            CreatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 265, DateTimeKind.Local).AddTicks(3923),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 11, 6, 21, 45, 49, 277, DateTimeKind.Local).AddTicks(4322),
+                            CreatedDate = new DateTime(2022, 10, 29, 13, 13, 2, 265, DateTimeKind.Local).AddTicks(3930),
                             ExchangeName = "Tl",
                             Price = 1m
                         });
@@ -288,7 +288,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("IncomeDetails");
+                    b.ToTable("IncomeDetails", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.PaymentDetail", b =>
@@ -332,7 +332,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentDetails");
+                    b.ToTable("PaymentDetails", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Record", b =>
@@ -388,7 +388,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Records");
+                    b.ToTable("Records", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Room", b =>
@@ -410,12 +410,6 @@ namespace Project.Repository.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Debt")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Discount")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("DiscountAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("Lack")
@@ -440,7 +434,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomTypeId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.RoomIncome", b =>
@@ -488,7 +482,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomIncomes");
+                    b.ToTable("RoomIncomes", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.RoomType", b =>
@@ -518,7 +512,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoomType");
+                    b.ToTable("RoomType", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.AppUserDetail", b =>

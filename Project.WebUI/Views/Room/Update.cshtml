@@ -5,59 +5,81 @@
 }
 
 
-<h4>@Model.RoomName Update Page</h4>
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="Update" method="post" asp-controller="Room">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="RoomName" class="control-label"></label>
-                <input asp-for="RoomName" class="form-control" />
-                <span asp-validation-for="RoomName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Capacity" class="control-label"></label>
-                <input asp-for="Capacity" class="form-control" />
-                <span asp-validation-for="Capacity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoomTypeId"></label>
-                <select asp-for="RoomTypeId" asp-items="ViewBag.roomTypes" class="form-control"> </select>
-                <span asp-validation-for="RoomTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" id="checkId" asp-for="Lack" /> @Html.DisplayNameFor(model => model.Lack)
-                </label>
-            </div>
+<div class="d-flex justify-content-between">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Update Room</li>
+        </ol>
+    </nav>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update Room</li>
+        </ol>
+    </nav>
+</div>
 
-            @if(Model.Lack==true)
-            {
-                <div class="form-group d-block" id="lackDetailId">
-                    <label asp-for="LackDetail" class="control-label"></label>
-                    <input asp-for="LackDetail" class="form-control" />
-                </div>
-            }
-            else
-            {
-                <div class="form-group d-none" id="lackDetailId">
-                    <label asp-for="LackDetail" class="control-label"></label>
-                    <input asp-for="LackDetail" class="form-control" />
-                </div>
-            }
+<div class="card">
+    <h4 class="card-title ps-4">@Model.RoomName Update Page </h4>
+    <div class="card-body">
+        <div class="row g-5">
+            <div class="col-lg-12 col-md-12">
+                <form asp-action="Update" method="post" asp-controller="Room" class="needs-validation" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input asp-for="Id" type="hidden" />
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label">Room Name</label>
+                                <input asp-for="RoomName" class="form-control" placeholder="Please Enter Room Name" />
+                                <span asp-validation-for="RoomName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label"> Capacity</label>
+                                <input asp-for="Capacity" class="form-control" placeholder="Please Enter Room Capacity" />
+                                <span asp-validation-for="Capacity" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label"> Room Type</label>
+                                <select asp-for="RoomTypeId" asp-items="ViewBag.roomTypes" class="form-select"> </select>
+                                <span asp-validation-for="RoomTypeId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="checkId" asp-for="Lack" />
+                                <label class="form-check-label" for="checkId">
+                                    Room Lack
+                                </label>
+                            </div>
+                            <div class="form-group col-6">
+                                <div class="d-none" id="lackDetailId">
+                                    <label asp-for="LackDetail"></label>
+                                    <input asp-for="LackDetail" class="form-control" />
+                                </div>
+                            </div>
 
-            <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
+
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit"><i class="material-icons f-left material-css">thumb_up</i>  Submit </button>
+                            <a asp-action="Index" class="btn btn-danger">
+                                <i class="material-icons f-left material-css">backspace</i>
+                                Back To List
+                            </a>
+
+                        </div>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{
