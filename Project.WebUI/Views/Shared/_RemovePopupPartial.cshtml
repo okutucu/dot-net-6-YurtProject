@@ -1,0 +1,54 @@
+﻿
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+	$(document).ready(function () {
+
+		let serviceUrl = "";
+		let id = "";
+
+		$(document).on('click', '.hashtagDeleteBtn', function (event) {
+				event.preventDefault();
+			
+				Swal.fire({
+					title: 'Are you sure you want to delete',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!'
+				}).then((data) => {
+						if (data.isConfirmed) {
+							serviceUrl = $(this).data('service-url');
+							id = $(this).data('id');
+
+							$.ajax({
+								url: serviceUrl + id,
+								type: 'POST',
+								success: function (data) {
+									console.log(data)
+									Swal.fire(
+										'Deleted!',
+										`Your file named ${data} has been deleted.`,
+										'success' 
+									);
+									setTimeout(function () {
+										window.location.reload();
+									}, 2000);
+								},
+								error: function (error) {
+									Swal.fire(
+										'Error!',
+										'Your request was not successful. There may be data associated with the data you want to delete.',
+										'error'
+									)
+								},
+							});
+						}
+				});
+				
+		});
+	});
+		
+
+</script>

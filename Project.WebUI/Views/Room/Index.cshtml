@@ -3,6 +3,11 @@
 	ViewData["Title"] = "Index";
 }
 
+@section ExtraCss{
+	<link href="~/css/datatable/jquery.datatables.min.css" rel="stylesheet" />
+	<link href="~/css/datatable/responsive.datatables.min.css" rel="stylesheet" />
+}
+
 <a asp-controller="Room" asp-action="Create" class="btn btn-outline-primary"> New Room <i class="material-icons f-left material-css">add_box</i></a>
 
 <div class="card">
@@ -56,7 +61,7 @@
 							<div class="d-flex justify-content-evenly">
 								<a class="btn btn-outline-success" asp-controller="Room" asp-action="Detail" asp-route-id="@room.Id"><i class="material-icons">home</i></a>
 								<a class="btn btn-outline-warning"asp-controller="Room" asp-action="Update" asp-route-id="@room.Id"><i class="material-icons">mode_edit</i></a>
-								<a class="btn btn-outline-danger" asp-controller="Room" asp-action="Remove" asp-route-id="@room.Id"><i class="material-icons">delete</i></a>
+								<a class="btn btn-outline-danger hashtagDeleteBtn" data-service-url="/Room/Remove/" data-id="@room.Id"><i class="material-icons">delete</i></a>
 							</div>
 						</th>
 
@@ -67,6 +72,29 @@
             </table>
           </div>
         </div>
+
+		@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_RemovePopupPartial");
+	}
+	}
+
+
+		@section ExtraScripts{
+	<script src="~/js/datatable/jquery.datatables.min.js"></script>
+		<script src="~/js/datatable/datatables.datatables.min.js"></script>
+		<script src="~/js/datatable/datatables.responsive.min.js"></script>
+		<script src="~/js/datatable/responsive.datatables.min.js"></script>
+
+
+		<script>
+			$(document).ready(
+			function(){
+				$('#example').DataTable();
+			});
+
+		</script>
+		}
 
 
 

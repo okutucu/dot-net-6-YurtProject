@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/plugins.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/material_style.css" asp-append-version="true" />
+    @await RenderSectionAsync("ExtraCss", false)
 </head>
 <body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
     <div class="page-wrapper">

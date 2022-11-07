@@ -92,11 +92,13 @@ namespace Project.WebUI.ControllersR
 			return View(roomAndCustomerDto);
 		}
 
-		public async Task<IActionResult> Remove(int id)
+		public async Task<JsonResult> Remove(int id)
 		{
 			Room room = await _roomService.GetByIdAsync(id);
 			await _roomService.RemoveAsync(room);
-			return RedirectToAction(nameof(Index));
-		}
-	}
+            JsonResult result = Json(room.RoomName);
+            return result;
+        }
+
+    }
 }
