@@ -52,7 +52,7 @@ namespace Project.WebUI.Controllers
 
 				await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
 
-				await _mailService.SendMailAsync(customerDto.Email, "Sinemis Student Dormitory Registration Information", "<strong> Your dormitory registration has been carried out successfully. We wish you a nice day. </strong>");
+				//await _mailService.SendMailAsync(customerDto.Email, "Sinemis Student Dormitory Registration Information", "<strong> Your dormitory registration has been carried out successfully. We wish you a nice day. </strong>");
 				return RedirectToAction(nameof(Index));
 			}
 
