@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Repository.Context;
 
@@ -11,9 +12,10 @@ using Project.Repository.Context;
 namespace Project.Repository.Migrations
 {
     [DbContext(typeof(YurtDbContext))]
-    partial class YurtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221107141823_mig_addedPaymentdetailRelationalProperties")]
+    partial class mig_addedPaymentdetailRelationalProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,28 +59,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 608, DateTimeKind.Local).AddTicks(1830),
-                            Password = "$2a$11$kTJz2WcpAl1GCoZZMEcYb.ktAh/ClZlW47rJa6fQzu8Nw4qU37Os6",
+                            CreatedDate = new DateTime(2022, 11, 7, 16, 18, 23, 148, DateTimeKind.Local).AddTicks(413),
+                            Password = "$2a$11$v/r6CYGgCBEKaf4Q1Rjm6ORyo3xMcgwihwJPc5rx/qEw3fJ8R0Xau",
                             Role = 1,
-                            UpdatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 608, DateTimeKind.Local).AddTicks(1887),
+                            UpdatedDate = new DateTime(2022, 11, 7, 16, 18, 23, 148, DateTimeKind.Local).AddTicks(467),
                             UserName = "superadmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 608, DateTimeKind.Local).AddTicks(1903),
-                            Password = "$2a$11$1n5To.ItBCVjcHQJoXoF1u3/h1lGEyzRI7opeGx529Sl1qDhHeyPK",
+                            CreatedDate = new DateTime(2022, 11, 7, 16, 18, 23, 148, DateTimeKind.Local).AddTicks(480),
+                            Password = "$2a$11$7fKCNFwSDKI6jcdxic.qhe3wFb3ayzduUXzJ80qB8t6.UB9/Lk8ae",
                             Role = 2,
-                            UpdatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 608, DateTimeKind.Local).AddTicks(1905),
+                            UpdatedDate = new DateTime(2022, 11, 7, 16, 18, 23, 148, DateTimeKind.Local).AddTicks(482),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 608, DateTimeKind.Local).AddTicks(1908),
-                            Password = "$2a$11$V3GGW04H4mUZaiFVzUMhge0qfvn/w5sfxjzeEwyRe8.d13C5eKF9W",
+                            CreatedDate = new DateTime(2022, 11, 7, 16, 18, 23, 148, DateTimeKind.Local).AddTicks(486),
+                            Password = "$2a$11$f6aMV7Pl6vOVAQij3zMNWeyfdo6/Vs2O0IvxXhfCDaLlNIQY9MK4W",
                             Role = 3,
-                            UpdatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 608, DateTimeKind.Local).AddTicks(2032),
+                            UpdatedDate = new DateTime(2022, 11, 7, 16, 18, 23, 148, DateTimeKind.Local).AddTicks(529),
                             UserName = "user"
                         });
                 });
@@ -215,28 +217,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 14, DateTimeKind.Local).AddTicks(9195),
+                            CreatedDate = new DateTime(2022, 11, 7, 16, 18, 22, 565, DateTimeKind.Local).AddTicks(4725),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 14, DateTimeKind.Local).AddTicks(9243),
+                            CreatedDate = new DateTime(2022, 11, 7, 16, 18, 22, 565, DateTimeKind.Local).AddTicks(4781),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 14, DateTimeKind.Local).AddTicks(9255),
+                            CreatedDate = new DateTime(2022, 11, 7, 16, 18, 22, 565, DateTimeKind.Local).AddTicks(4793),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 11, 7, 16, 22, 14, 14, DateTimeKind.Local).AddTicks(9261),
+                            CreatedDate = new DateTime(2022, 11, 7, 16, 18, 22, 565, DateTimeKind.Local).AddTicks(4799),
                             ExchangeName = "Tl",
                             Price = 1m
                         });
@@ -301,9 +303,6 @@ namespace Project.Repository.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CustomerName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)

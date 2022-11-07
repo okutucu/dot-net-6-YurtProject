@@ -14,6 +14,7 @@
 		public IList<Customer> Customers { get; set; }
 		public IList<RoomIncome> RoomIncomes { get; set; }
 		public IList<IncomeDetail> IncomeDetails { get; set; }
+		public IList<PaymentDetail> PaymentDetails { get; set; }
 		public virtual RoomType RoomType { get; set; }
 
 	}
