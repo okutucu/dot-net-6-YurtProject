@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Repositories;
@@ -58,18 +59,18 @@ namespace Project.Service.Services
 			throw new Exception("An error occurred in the date format");
 		}
 
-		public async Task<List<IncomeWithRoomDto>> FilterIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
-		{
-			int month = selectedDate.Month;
-			int year = selectedDate.Year;
+		//public async Task<List<IncomeDetailListDto>> FilterIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
+		//{
+		//	int month = selectedDate.Month;
+		//	int year = selectedDate.Year;
 
-            List<IncomeWithRoomDto> incomeDetailWithRoom = await GetIncomeWithSingleRoomIdAsync(roomId);
+  //          List<IncomeDetailListDto> incomeDetailWithRoom = await GetIncomeWithSingleRoomIdAsync(roomId);
 
-			List<IncomeWithRoomDto> filterIncomeDetailWithRoom = incomeDetailWithRoom.Where( i => i.PaymentDate.Month == month && i.PaymentDate.Year == year).ToList();
+		//	List<IncomeDetailListDto> filterIncomeDetailWithRoom = await GetIncomeWithSingleRoomIdAsync(roomId);
 
-			return filterIncomeDetailWithRoom;
+  //          return incomeDetailWithRoom;
 
-        }
+  //      }
 
 		public async Task<List<IncomeWithRoomDto>> GetByDay(int year, int month, int day)
 		{
@@ -101,11 +102,16 @@ namespace Project.Service.Services
 
 		}
 
-		public async Task<List<IncomeWithRoomDto>> GetIncomeWithSingleRoomIdAsync(int roomId)
+		public async Task<List<IncomeWithRoomDto>> GetIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
 		{
-			List<IncomeDetail> incomeDetails = await _incomeDetailRepository.GetIncomeWithSingleRoomIdAsync(roomId);
-			List<IncomeWithRoomDto> incomeWithRoomDtos = _mapper.Map<List<IncomeWithRoomDto>>(incomeDetails);
-			return incomeWithRoomDtos;
+			int month = selectedDate.Month;
+			int year = selectedDate.Year;
+            //todo error
+
+            List<IncomeWithRoomDto> incomeDetailWithRoom = await GetIncomeWithRoomAsync();
+
+            List<IncomeWithRoomDto> incomeDetailWithRoomDto = incomeDetailWithRoom.Where(i => i.RoomId == roomId && i.PaymentDate.Month == month && i.PaymentDate.Year == year).ToList();
+			return incomeDetailWithRoomDto;
 		}
 
 		public async Task UpdateByCurrency(IncomeDetailDto incomeDetailDto, decimal currency)
@@ -117,5 +123,7 @@ namespace Project.Service.Services
 			_incomeDetailRepository.Update(_mapper.Map<IncomeDetail>(incomeDetailDto));
 			await _unitOfWok.CommitAsync();
 		}
+
+		
 	}
 }

@@ -5,7 +5,8 @@ namespace Project.Core.Services
 {
 	public interface IPaymentDetailService : IService<PaymentDetail>
 	{
-		Task AddByCurrency(PaymentDetailDto paymentDetailDto, decimal currency);
+        Task<List<PaymentDetailDto>> GetPaymentWithSingleRoomIdAsync(int roomId);
+        Task AddByCurrency(PaymentDetailDto paymentDetailDto, decimal currency);
 		Task UpdateByCurrency(PaymentDetailDto paymentDetailDto, decimal currency);
 		Task<List<PaymentDetailDto>> DailyOrMonthly(string selectedDate);
 		Task<List<PaymentDetailDto>> GetByMonth(int year, int month);

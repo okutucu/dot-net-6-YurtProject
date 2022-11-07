@@ -32,9 +32,9 @@ namespace Project.WebUI.Controllers
 		public async Task<IActionResult> GetBySelected(DateTime selectedDate, int roomId)
 		{
 
-			var roomIncomeWithRoomDto = await _incomeDetailService.FilterIncomeWithSingleRoomIdAsync(roomId, selectedDate);
+			List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.GetIncomeWithSingleRoomIdAsync(roomId,selectedDate);
 
-            return View(roomIncomeWithRoomDto);
+            return View(incomeWithRoomDtos);
 		}
 	}
 }

@@ -5,9 +5,7 @@ namespace Project.Core.Services
 {
 	public interface IIncomeDetailService : IService<IncomeDetail>
 	{
-        Task<List<IncomeWithRoomDto>> GetIncomeWithSingleRoomIdAsync(int roomId);
-        Task<List<IncomeWithRoomDto>> FilterIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate);
-		
+        Task<List<IncomeWithRoomDto>> GetIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate);
         Task<List<IncomeWithRoomDto>> GetIncomeWithRoomAsync();
 		Task AddByCurrency(IncomeDetailDto incomeDetailDto, decimal currency);
 		Task UpdateByCurrency(IncomeDetailDto incomeDetailDto, decimal currency);

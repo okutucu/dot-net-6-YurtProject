@@ -92,6 +92,9 @@ namespace Project.Service.Services
 			return paymentDetailsDto;
 		}
 
-
+		public Task<List<PaymentDetailDto>> GetPaymentWithSingleRoomIdAsync(int roomId)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

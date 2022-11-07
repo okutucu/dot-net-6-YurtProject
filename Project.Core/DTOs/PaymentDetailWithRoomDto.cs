@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Project.Core.DTOs
 {
-    public class AllUserMailDto
+    public class PaymentDetailWithRoomDto :RoomDto
     {
-        public string Subject { get; set; }
-        public string Body { get; set; }
+        public List<PaymentDetailDto> PaymentDetails { get; set; }
     }
 }

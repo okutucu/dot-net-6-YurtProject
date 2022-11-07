@@ -1,4 +1,5 @@
-﻿using Project.Core.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.Core.Models;
 using Project.Core.Repositories;
 using Project.Repository.Context;
 
@@ -9,10 +10,11 @@ namespace Project.Repository.Repositories
 		public PaymentDetailRepository(YurtDbContext context) : base(context)
 		{
 		}
-
-		public Task<List<PaymentDetail>> GetPaymentWithRoomAsync()
+  
+		public async Task<List<PaymentDetail>> GetPaymentWithSingleRoomIdAsync(int roomId)
 		{
-			throw new NotImplementedException();
+			return await _context.PaymentDetails.Where(p => p.RoomId == roomId).Include(p => p.RoomId).ToListAsync();
+
 		}
 	}
 }

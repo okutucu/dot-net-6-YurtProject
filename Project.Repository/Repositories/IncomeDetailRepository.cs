@@ -13,12 +13,12 @@ namespace Project.Repository.Repositories
 
 		public async Task<List<IncomeDetail>> GetIncomeWithRoomAsync()
 		{
-			return await _context.IncomeDetails.Include(c => c.Room).ToListAsync();
+			return await _context.IncomeDetails.Include(i => i.Room).ToListAsync();
 		}
 
-		public Task<List<IncomeDetail>> GetIncomeWithSingleRoomIdAsync(int roomId)
+		public async Task<List<IncomeDetail>> GetIncomeWithSingleRoomIdAsync(int roomId)
 		{
-            return  _context.IncomeDetails.Where(x => x.RoomId == roomId).Include(c => c.Room).ToListAsync();
+            return await  _context.IncomeDetails.Where(i => i.RoomId == roomId).Include(i => i.Room).ToListAsync();
 
         }
     }
