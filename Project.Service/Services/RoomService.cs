@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Repositories;
@@ -35,6 +36,8 @@ namespace Project.Service.Services
 				_roomRepository.Update(_mapper.Map<Room>(newRoom));
 			}
 		}
+
+
 		public async Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId)
 		{
 			RoomWithCustomerDto newRoom = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
@@ -55,6 +58,7 @@ namespace Project.Service.Services
 			_roomRepository.Update(_mapper.Map<Room>(oldRoom));
 			_roomRepository.Update(_mapper.Map<Room>(newRoom));
 		}
+
 		public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync()
 		{
 			List<Room> rooms = await _roomRepository.GetRoomWithCustomerAsync();
@@ -168,5 +172,6 @@ namespace Project.Service.Services
 
 
 		}
-	}
+
+    }
 }

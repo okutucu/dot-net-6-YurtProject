@@ -16,8 +16,8 @@ namespace Project.Core.Services
 		Task ReduceDeptAsync(int roomId, decimal price, decimal currency);
 		Task ChangeRoomIncomesByRoomIncomesAsync(RoomIncomeWithRoomDto roomIncomeWithRoomDto, int newRoomId, decimal currency, decimal price);
 		Task IncreaseRoomDebtWhenDeletingIncomesAsync(int roomId, decimal moneyOfTheDay);
+      
 
 
-
-	}
+    }
 }

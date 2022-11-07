@@ -25,18 +25,18 @@
         <div class="card-body">
             <div class="row" id="paymentSection">
                 <div class="col-6">
-                    <input id="monthly" type="month" name="selectedDate" class="form-control">
                     <div class="form-check">
                         <input id="monthlyChecked" name="checkedPayment" type="radio"
                                class="form-check-input">
                         <label for="monthlyChecked" class="form-check-label">Monthly</label>
-                       
                     </div>
+                    <input id="monthly" type="month" name="selectedDate" class="form-control">
+                    
                 </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label for="roomName" class="form-label">Room Name  <span class="text-muted">(Required)</span> </label>
-                        <select id="roomName"  asp-items="ViewBag.rooms" class="form-control" aria-label="Default select example"> </select>
+                        <select id="roomName" name="roomId" asp-items="ViewBag.rooms" class="form-control" aria-label="Default select example"> </select>
                     </div>
 
                 </div>

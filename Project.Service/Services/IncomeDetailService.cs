@@ -58,6 +58,19 @@ namespace Project.Service.Services
 			throw new Exception("An error occurred in the date format");
 		}
 
+		public async Task<List<IncomeWithRoomDto>> FilterIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
+		{
+			int month = selectedDate.Month;
+			int year = selectedDate.Year;
+
+            List<IncomeWithRoomDto> incomeDetailWithRoom = await GetIncomeWithSingleRoomIdAsync(roomId);
+
+			List<IncomeWithRoomDto> filterIncomeDetailWithRoom = incomeDetailWithRoom.Where( i => i.PaymentDate.Month == month && i.PaymentDate.Year == year).ToList();
+
+			return filterIncomeDetailWithRoom;
+
+        }
+
 		public async Task<List<IncomeWithRoomDto>> GetByDay(int year, int month, int day)
 		{
 			List<IncomeDetail> incomeDetails = await _incomeDetailRepository.GetIncomeWithRoomAsync();
@@ -88,7 +101,12 @@ namespace Project.Service.Services
 
 		}
 
-
+		public async Task<List<IncomeWithRoomDto>> GetIncomeWithSingleRoomIdAsync(int roomId)
+		{
+			List<IncomeDetail> incomeDetails = await _incomeDetailRepository.GetIncomeWithSingleRoomIdAsync(roomId);
+			List<IncomeWithRoomDto> incomeWithRoomDtos = _mapper.Map<List<IncomeWithRoomDto>>(incomeDetails);
+			return incomeWithRoomDtos;
+		}
 
 		public async Task UpdateByCurrency(IncomeDetailDto incomeDetailDto, decimal currency)
 		{

@@ -1,4 +1,5 @@
-﻿using Project.Core.Models;
+﻿using Project.Core.DTOs;
+using Project.Core.Models;
 
 namespace Project.Core.Repositories
 {
@@ -11,6 +12,7 @@ namespace Project.Core.Repositories
 		Task<Room> GetSingleRoomByIdWithRoomIncomesAsync(int roomId);
 		Task<Room> ReducingRoomCapacity(int roomId);
 		Task<Room> RoomCapacityAccuracy(int roomId);
+	
 
 
 

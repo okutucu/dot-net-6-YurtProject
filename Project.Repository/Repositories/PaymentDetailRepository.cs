@@ -9,5 +9,10 @@ namespace Project.Repository.Repositories
 		public PaymentDetailRepository(YurtDbContext context) : base(context)
 		{
 		}
+
+		public Task<List<PaymentDetail>> GetPaymentWithRoomAsync()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -10,12 +10,14 @@ namespace Project.WebUI.Controllers
 	public class RoomReportController : Controller
 	{
 		private readonly IRoomService _roomService;
+		private readonly IIncomeDetailService _incomeDetailService;
 		private readonly IMapper _mapper;
 
-		public RoomReportController(IRoomService roomService, IMapper mapper)
+		public RoomReportController(IRoomService roomService, IMapper mapper, IIncomeDetailService incomeDetailService)
 		{
 			_roomService = roomService;
 			_mapper = mapper;
+			_incomeDetailService = incomeDetailService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -25,6 +27,14 @@ namespace Project.WebUI.Controllers
             ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
 
             return View();
+		}
+
+		public async Task<IActionResult> GetBySelected(DateTime selectedDate, int roomId)
+		{
+
+			var roomIncomeWithRoomDto = await _incomeDetailService.FilterIncomeWithSingleRoomIdAsync(roomId, selectedDate);
+
+            return View(roomIncomeWithRoomDto);
 		}
 	}
 }

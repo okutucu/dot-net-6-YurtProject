@@ -10,5 +10,7 @@ namespace Project.Core.Services
 		Task<List<PaymentDetailDto>> DailyOrMonthly(string selectedDate);
 		Task<List<PaymentDetailDto>> GetByMonth(int year, int month);
 		Task<List<PaymentDetailDto>> GetByDay(int year, int month, int day);
-	}
+       
+
+    }
 }

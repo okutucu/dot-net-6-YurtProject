@@ -23,6 +23,9 @@ namespace Project.Service.Mapping
 			CreateMap<RoomCreateDto, Room>().ReverseMap();
 			CreateMap<RoomUpdateDto, Room>().ReverseMap();
 
+			CreateMap<Room,RoomWithAllRelationalshipDto>();
+
+
 
 
 			CreateMap<ExchangeRate, ExchangeRateDto>().ReverseMap();
