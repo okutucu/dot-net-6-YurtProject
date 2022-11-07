@@ -4,59 +4,69 @@
 }
 
 <a asp-controller="Room" asp-action="Create" class="btn btn-outline-primary"> New Room <i class="material-icons f-left material-css">add_box</i></a>
-<table class="table table-striped">
-	<thead>
-	<tr>
-		<td>RoomName</td>
-		<td>Capacity</td>
-		<td>Price</td>
-		<td>Room State </td>
-		<td>Room Type</td>
-		<td>Dept</td>
-		<td>Lack</td>
-		<td>Lack Details</td>
-		<td>Payment Status</td>
-		<td>Action</td>
-		
-	</tr>
-	</thead>
-	<tbody>
-		@foreach (RoomTypeWithRoomDto room in Model)
-		{
-		<tr>
-				<th>@room.RoomName</th>
-				<th>@room.Capacity</th>
-				<th>@room.RoomType.Price</th>
-				<th>@room.CurrentCapacity</th>
-				<th>@room.RoomType.RoomName</th>
-				<th>@room.Debt</th>
-				<th>@room.Lack</th>
-				<th>@room.LackDetail</th>
-				 @if (room.Debt > 0)
+
+<div class="card">
+          <div class="card-header bg-sin text-light text-center"><h5>Our  Rooms</h5></div>
+          <div class="card-body">
+            <table id="example" class="table table-striped dt-responsive nowrap" style="width:100%">
+              <thead>
+              <tr>
+					<td>RoomName</td>
+					<td>Capacity</td>
+					<td>Price</td>
+					<td>Room State </td>
+					<td>Room Type</td>
+					<td>Dept</td>
+					<td>Lack</td>
+					<td>Lack Details</td>
+					<td>Payment Status</td>
+					<td>Action</td>
+				</tr>
+              </thead>
+              <tbody>
+				@foreach (RoomTypeWithRoomDto room in Model)
 				{
-					<th class="text-danger">Unpaid</th>
+					<tr>
+						<th>@room.RoomName</th>
+						<th>@room.Capacity</th>
+						<th>@room.RoomType.Price</th>
+						<th>@room.CurrentCapacity</th>
+						<th>@room.RoomType.RoomName</th>
+						<th>@room.Debt</th>
+						<th>@room.Lack</th>
+						<th>@room.LackDetail</th>
+						@if (room.Debt > 0)
+						{
+							<th class="text-danger">Unpaid</th>
+						}
+						else
+						{
+							@if (room.Customers.Count == 0)
+							{
+								<th class="text-info">Empty</th>
+							}
+							else
+							{
+								<th class="text-success">Paid</th>
+							}
+						}
+
+
+						<th>
+							<div class="d-flex justify-content-evenly">
+								<a class="btn btn-outline-success" asp-controller="Room" asp-action="Detail" asp-route-id="@room.Id"><i class="material-icons">home</i></a>
+								<a class="btn btn-outline-warning"asp-controller="Room" asp-action="Update" asp-route-id="@room.Id"><i class="material-icons">mode_edit</i></a>
+								<a class="btn btn-outline-danger" asp-controller="Room" asp-action="Remove" asp-route-id="@room.Id"><i class="material-icons">delete</i></a>
+							</div>
+						</th>
+
+					</tr>
 				}
-				else
-				{
-					@if (room.Customers.Count == 0)
-					{
-						<th class="text-info">Empty</th>
-					}
-					else
-					{
-						<th class="text-success">Paid</th>
-					}
-				}
-					
-				
-				<th>
-					<a class="btn btn-info" asp-controller="Room" asp-action="Detail" asp-route-id="@room.Id">Detail</a>
-					
-					<a class="btn btn-warning" asp-controller="Room" asp-action="Update" asp-route-id="@room.Id">Update	</a>
-				<a class="btn btn-danger" asp-controller="Room" asp-action="Remove" asp-route-id="@room.Id">Delete	</a>	
-				</th>
-				
-		</tr>
-		}
-	</tbody>
-</table>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+

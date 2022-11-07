@@ -4,77 +4,133 @@
     ViewData["Title"] = "Create";
 }
 
-<h4>Create Customer</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-controller="Customer" asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
+<div class="d-flex justify-content-between">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">You can add customer from this page</li>
+        </ol>
+    </nav>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add Customer</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card">
+    <h4 class="card-title ps-4">Add Customer</h4>
+    <div class="card-body">
+        <div class="row g-5">
+            <div class="col-md-12 col-lg-12">
+                <form asp-controller="Customer" asp-action="Create"  class="needs-validation" novalidate="">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                             <div class="form-group">
+                                <label for="fullName" class="form-label">Full Name <span class="text-muted">(Required)</span></label>
+                                <input type="text" asp-for="FullName"  class="form-control" id="fullName" placeholder="Please Enter Full Name">
+                                <span asp-validation-for="FullName" class="text-danger"></span>
+                            </div>
+                         </div>
+                        <div class="col-6">
+                                <div class="form-group">
+                                <label for="idNo" class="form-label">ID No<span class="text-muted">(Optional)</span></label>
+                                    <div class="input-group has-validation">
+                                    <span class="input-group-text">#</span>
+                                        <input id="idNo" asp-for="IdentityNo" class="form-control" placeholder="Please Enter ID No" />
+                                         <span asp-validation-for="IdentityNo" class="text-danger"></span>
+                                    </div>                           
+                            </div>
+                        </div>
+                        <div class="col-6">
+                             <div class="form-group">
+                                <label for="email" class="form-label">Email <span class="text-muted">(Required)</span></label>
+                                <input type="email" asp-for="Email" class="form-control" id="email" placeholder="Please Enter Email (you@example.com)" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                                <div class="form-group">
+                                <label for="phoneNumber" class="form-label">Phone Number<span class="text-muted">(Optional)</span></label>
+                                <input asp-for="Phone" class="form-control" id="phoneNumber" placeholder="+90......" />
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                        </div>
+                        <div class="col-6">
+                             <div class="form-group">
+                                <label for="entryDate" class="form-label">Entry Date <span class="text-muted">(Required)</span> </label>
+                                <input asp-for="EntryDate" class="form-control" id="entryDate" />
+                                <span asp-validation-for="EntryDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                                 <div class="form-group">
+                                    <label for="departDate" class="form-label">Depart Date <span class="text-muted">(Required)</span> </label>
+                                    <input asp-for="Depart" class="form-control" id="departDate" />
+                                    <span asp-validation-for="Depart" class="text-danger"></span>
+                                </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="relativeFullName" class="form-label">
+                                    Relative Name
+                                    Surname <span class="text-muted">(Optional)</span>
+                                </label>
+                                <input id="relativeFullName" asp-for="RelativeNameSurname" placeholder="Please Enter Relative Name Surname" class="form-control" />
+                                <span asp-validation-for="RelativeNameSurname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="RelativePhoneNumber" class="form-label">Relative Phone Number<span class="text-muted">(Optional)</span></label>
+                                <input asp-for="RelativePhone" class="form-control" id="RelativePhoneNumber" placeholder="+90......" />
+                                <span asp-validation-for="RelativePhone" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                           <div class="col-6">
+                            <div class="form-group">
+                                <label for="universityName" class="form-label">University Name<span class="text-muted">(Optional)</span></label>
+                                <input asp-for="UniversityName" id="universityName" class="form-control"  placeholder="Plase Enter University Name"/>
+                                <span asp-validation-for="UniversityName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="description" class="form-label">Description<span class="text-muted">(Optional)</span></label>
+                                <input asp-for="Description" class="form-control" id="description"    placeholder="Plase Enter Description" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="roomName" class="form-label">Room Name  <span class="text-muted">(Required)</span> </label>
+                                <select id="rommName" asp-for="RoomId" asp-items="ViewBag.rooms" class="form-control" aria-label="Default select example"> </select>
+                                <span asp-validation-for="RoomId" class="text-danger"></span>
+                            </div>
+                         
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit"><i class="material-icons f-left material-css">thumb_up</i>  Submit </button>
+                            <a asp-action="Index" class="btn btn-danger">
+                                <i class="material-icons f-left material-css">backspace</i>
+                                Back To List
+                            </a>
+
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="IdentityNo" class="control-label"></label>
-                <input asp-for="IdentityNo" class="form-control" />
-                <span asp-validation-for="IdentityNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EntryDate" class="control-label"></label>
-                <input asp-for="EntryDate" class="form-control" />
-                <span asp-validation-for="EntryDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Depart" class="control-label"></label>
-                <input asp-for="Depart" class="form-control" />
-                <span asp-validation-for="Depart" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RelativeNameSurname" class="control-label"></label>
-                <input asp-for="RelativeNameSurname" class="form-control" />
-                <span asp-validation-for="RelativeNameSurname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RelativePhone" class="control-label"></label>
-                <input asp-for="RelativePhone" class="form-control" />
-                <span asp-validation-for="RelativePhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UniversityName" class="control-label"></label>
-                <input asp-for="UniversityName" class="form-control" />
-                <span asp-validation-for="UniversityName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoomId"></label>
-                <select asp-for="RoomId" asp-items="ViewBag.rooms" class="form-control"> </select>
-                <span asp-validation-for="RoomId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
