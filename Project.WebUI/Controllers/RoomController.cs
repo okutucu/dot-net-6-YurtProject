@@ -26,7 +26,15 @@ namespace Project.WebUI.ControllersR
 			return View(await _roomService.GetRoomWithRoomTypeAsync());
 		}
 
-		public IActionResult Create()
+        [HttpGet]
+        public async Task<JsonResult> GetBySingleRoomByIdWithCustomer(int id)
+        {
+            RoomWithCustomerDto roomsWithCustomer = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
+            JsonResult result = Json(roomsWithCustomer.Customers);
+
+            return result;
+        }
+        public IActionResult Create()
 		{
 			List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
 			List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);

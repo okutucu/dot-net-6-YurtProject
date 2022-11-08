@@ -39,15 +39,6 @@ namespace Project.WebUI.Controllers
 			return View(paymentDetailDtos);
 		}
 
-        [HttpGet]
-        public async Task<JsonResult> GetBySingleRoomByIdWithCustomer(int id)
-        {
-            RoomWithCustomerDto roomsWithCustomer = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
-            JsonResult result = Json(roomsWithCustomer.Customers);
-
-            return result;
-        }
-
         public IActionResult Create()
 		{
             List<Room> rooms = _roomService.GetAll().ToList();
