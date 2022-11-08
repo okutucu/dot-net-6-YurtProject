@@ -2,7 +2,16 @@
 
 @{
     ViewData["Title"] = "Create";
+    var a = Model.RoomName;
+    var b = Model.Price;
+    var c = Model.IncreasedPrice;
+
+    if (true)
+    {
+        
+    }
 }
+
 
 
 <div class="d-flex justify-content-between">
@@ -42,14 +51,14 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label"> Price</label>
-                                <input type="number" asp-for="Price" class="form-control" placeholder="Please Enter Room Price" />
+                                <input  asp-for="Price" class="form-control" placeholder="Please Enter Room Price" />
                                 <span asp-validation-for="Price" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="form-label"> Increased Price</label>
-                                <input type="number" asp-for="IncreasedPrice" class="form-control" placeholder="Please Enter Room Increased Price" />
+                                <input asp-for="IncreasedPrice" class="form-control" placeholder="Please Enter Room Increased Price" />
                                 <span asp-validation-for="IncreasedPrice" class="text-danger"></span>
                             </div>
                         </div>

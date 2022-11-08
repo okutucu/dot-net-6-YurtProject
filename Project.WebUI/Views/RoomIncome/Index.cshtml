@@ -16,9 +16,25 @@
 
     <div class="card">
         <div class="card-body">
-            <div class="row">
+            <div class="my-2">
+                <a href="#" class="btn btn-outline-warning">Add New +</a>
+            </div>
+            <div class="row" id="paymentSection">
                 <div class="col-6">
-                    <input  type="month" name="selectedDate" class="form-control">
+                    <input id="monthly" type="month" name="selectedDate" class="form-control">
+                    <div class="form-check">
+                        <input id="monthlyChecked" name="checkedPayment" type="radio"
+                               class="form-check-input">
+                        <label for="monthlyChecked" class="form-check-label">Monthly</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <input type="datetime-local" name="selectedDate" class="form-control" id="normalDate">
+                    <div class="form-check">
+                        <input id="normalChecked" type="radio" name="checkedPayment"
+                               class="form-check-input">
+                        <label for="normalChecked" class="form-check-label">Daily</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,4 +46,13 @@
         <input type="submit" value="Submit" class="btn btn-primary" />
     </div>
 
+
 </form>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_MonthlyOrDailyPartial");
+    }
+    }

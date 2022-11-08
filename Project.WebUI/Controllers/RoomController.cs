@@ -34,6 +34,16 @@ namespace Project.WebUI.ControllersR
 
             return result;
         }
+        [HttpPost]
+        public async Task<JsonResult> GetByDebt(int id)
+        {
+            Room room = await _roomService.GetByIdAsync(id);
+
+            JsonResult result = Json(room.Debt);
+
+            return result;
+        }
+
         public IActionResult Create()
 		{
 			List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
@@ -55,7 +65,12 @@ namespace Project.WebUI.ControllersR
 				return RedirectToAction(nameof(Index));
 			}
 
-			return View(roomCreateDto);
+            List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
+            List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
+
+            ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName");
+
+            return View(roomCreateDto);
 		}
 
 

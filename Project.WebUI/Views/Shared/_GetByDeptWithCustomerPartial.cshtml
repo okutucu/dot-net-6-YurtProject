@@ -2,8 +2,8 @@
     $(document).ready(function () {
 
         let id = $("#roomId").val();
-        let url = "/RoomIncome/GetByDebt";
-        let roomWithCustomerUrl = "/RoomIncome/GetBySingleRoomByIdWithCustomer/";
+        let url = "/Room/GetByDebt";
+        let roomWithCustomerUrl = "/Room/GetBySingleRoomByIdWithCustomer/";
 
         $.post(url, { id: id }, function (data) {
             $("#debt").html(data);

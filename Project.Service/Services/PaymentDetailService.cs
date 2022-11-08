@@ -97,9 +97,6 @@ namespace Project.Service.Services
 		public async Task<List<PaymentDetailWithRoomDto>> GetPaymentWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
 		{
 			List<PaymentDetailWithRoomDto> paymentDetailWithRoom = await GetPaymentWithRoomAsync();
-          
-
-
             return paymentDetailWithRoom;
 
 

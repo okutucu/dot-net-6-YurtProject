@@ -29,33 +29,13 @@ namespace Project.WebUI.Controllers
 			return View();
 		}
 
-		[HttpPost]
-		public async Task<JsonResult> GetByDebt(int id)
-		{
-			Room room = await _roomService.GetByIdAsync(id);
-
-			JsonResult result = Json(room.Debt);
-
-			return result;
-		}
-
         [HttpGet]
-        public async Task<IActionResult> GetBySelected(DateTime selectedDate)
+        public async Task<IActionResult> GetBySelected(string selectedDate)
 		{
-			List<RoomIncomeWithRoomDto> roomDetailsDto = await _roomIncomeService.GetByMonth(selectedDate);
+			List<RoomIncomeWithRoomDto> roomDetailsDto = await _roomIncomeService.DailyOrMonthly(selectedDate);
 			return View(roomDetailsDto);
 
 		}
-
-		[HttpGet]
-		public async Task<JsonResult> GetBySingleRoomByIdWithCustomer(int id)
-		{
-			RoomWithCustomerDto roomsWithCustomer = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
-            JsonResult result = Json(roomsWithCustomer.Customers);
-
-            return result;
-        }
-
 		public IActionResult Create()
 		{
 
