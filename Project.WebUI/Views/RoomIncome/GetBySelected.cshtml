@@ -69,47 +69,6 @@ else
 	</div>
 
 
-	var detailPaymentsDatas = from payment in Model
-									group payment by payment.PaymentName into payments
-									select new
-									{
-										PaymentName = payments.Key,
-										PaymentDetail = from paymentDetail in payments
-														group paymentDetail by paymentDetail.Exchange into paymentDetailGroup
-														select new
-														{
-															Exchange = paymentDetailGroup.Key,
-															Sum = paymentDetailGroup.Sum(x => x.Price),
-														}
-									};
-	//todo daha tecrübeli birine sor !! --> Group By
-
-
-
-	<div class="row">
-		<h3>Detailed Payments Table</h3>
-
-		@foreach (var item in detailPaymentsDatas)
-		{
-			<div class="col-md-3">
-				<h4>@item.PaymentName </h4>
-				@foreach (var paymentDetail in @item.PaymentDetail)
-				{
-					<p class="info-box-number">Total amount : <span style="font-size:20px"> @paymentDetail.Sum  </span>  <span style="font-size:14px"> @paymentDetail.Exchange.ToString()</span>  </p>
-				}
-
-
-			</div>
-
-		}
-
-
-
-
-
-
-	</div>
-
 
 
 
@@ -118,13 +77,12 @@ else
 			<tr>
 				<td>Room Name</td>
 				<td>Customer Name</td>
-				<td>PaymentName</td>
-				<td>PaymentMethod</td>
+				<td>Payment Method</td>
 				<td>Price</td>
-				<td>CurrencyName </td>
-				<td>MoneyOfTheDay</td>
+				<td>Currency Name </td>
+				<td>Money Of The Day</td>
 				<td>Description</td>
-				<td>PaymentDate</td>
+				<td>Payment Date</td>
 				<td>Action</td>
 
 			</tr>
@@ -135,7 +93,6 @@ else
 				<tr>
 					<th>@incomeDetail.Room.RoomName</th>
 					<th>@incomeDetail.CustomerName</th>
-					<th>@incomeDetail.PaymentName</th>
 					<th>@incomeDetail.PaymentMethod</th>
 					<th>@incomeDetail.Price</th>
 					<th>@incomeDetail.Exchange</th>

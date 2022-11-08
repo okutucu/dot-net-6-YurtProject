@@ -10,7 +10,6 @@ namespace Project.Core.Models
     public abstract class PaymentIncome : BaseEntity
     {
         public string CustomerName { get; set; }
-        public PaymentName PaymentName { get; set; }
         public decimal Price { get; set; }
         public Exchange Exchange { get; set; }
         public DateTime PaymentDate { get; set; }

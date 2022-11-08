@@ -4,6 +4,7 @@ namespace Project.Core.Models
 {
 	public class PaymentDetail : PaymentIncome
     {
+        public PaymentName PaymentName { get; set; }
         public int? RoomId { get; set; }
 
         // Relational Properties

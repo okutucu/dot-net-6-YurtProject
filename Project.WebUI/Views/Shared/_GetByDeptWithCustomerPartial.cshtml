@@ -2,10 +2,10 @@
     $(document).ready(function () {
 
         let id = $("#roomId").val();
-        let url = "/Room/GetByDebt";
+        let url = "/Room/GetByDebt/";
         let roomWithCustomerUrl = "/Room/GetBySingleRoomByIdWithCustomer/";
 
-        $.post(url, { id: id }, function (data) {
+        $.get(url, { id: id }, function (data) {
             $("#debt").html(data);
             $.get(roomWithCustomerUrl + id, function (response) {
                 if (response.length > 0) {
@@ -27,7 +27,7 @@
         $("#roomId").change(function () {
 
             id = $("#roomId").val();
-            $.post(url, { id: id }, function (data) {
+            $.get(url, { id: id }, function (data) {
                 $("#debt").html(data);
                 $.get(roomWithCustomerUrl + id, function (response) {
                     $('#customerName').empty();
