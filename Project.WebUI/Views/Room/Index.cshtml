@@ -60,7 +60,7 @@
 						<th>
 							<div class="d-flex justify-content-evenly">
 								<a class="btn btn-outline-success" asp-controller="Room" asp-action="Detail" asp-route-id="@room.Id"><i class="material-icons">home</i></a>
-								<a class="btn btn-outline-warning"asp-controller="Room" asp-action="Update" asp-route-id="@room.Id"><i class="material-icons">mode_edit</i></a>
+								<a class="btn btn-outline-warning roomUpdateButton"  data-id="@room.Id"><i class="material-icons">mode_edit</i></a>
 								<a class="btn btn-outline-danger hashtagDeleteBtn" data-service-url="/Room/Remove/" data-id="@room.Id"><i class="material-icons">delete</i></a>
 							</div>
 						</th>
@@ -86,13 +86,34 @@
 		<script src="~/js/datatable/datatables.responsive.min.js"></script>
 		<script src="~/js/datatable/responsive.datatables.min.js"></script>
 
-
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script>
-			$(document).ready(
-			function(){
-				$('#example').DataTable();
-			});
+		$(document).ready(function () {
+			//function() {
+			//	$('#example').DataTable();
+			//};
 
+			let url = "/Room/GetByDebt/";
+
+			$(document).on('click', '.roomUpdateButton', function (event) {
+				event.preventDefault();
+				let id = $(this).data('id');
+
+				$.get(url + id, function (response) {
+					if (response > 0) {
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'You cannot edit this room because the room debt is higher than 0!',
+							footer: '<a href="www.myhashtag.co.uk">If the room has no debt, please contact us !</a>'
+						})
+					}
+					else {
+							window.location = '/Room/Update/' + id;
+					}
+				});
+			});
+		});
 		</script>
 		}
 

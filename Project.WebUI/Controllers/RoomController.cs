@@ -34,7 +34,8 @@ namespace Project.WebUI.ControllersR
 
             return result;
         }
-        [HttpPost]
+
+        [HttpGet]
         public async Task<JsonResult> GetByDebt(int id)
         {
             Room room = await _roomService.GetByIdAsync(id);
