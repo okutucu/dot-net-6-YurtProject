@@ -113,7 +113,7 @@ namespace Project.WebUI.Controllers
 		public async Task<IActionResult> Remove(int id)
 		{
 			RoomIncome roomIncome = await _roomIncomeService.GetByIdAsync(id);
-			await _roomService.IncreaseRoomDebtWhenDeletingIncomesAsync(roomIncome.RoomId, roomIncome.MoneyOfTheDay);
+			await _roomService.IncreaseRoomDebtWhenDeletingIncomesAsync((int)roomIncome.RoomId, roomIncome.MoneyOfTheDay);
 			await _roomIncomeService.RemoveAsync(roomIncome);
 			return RedirectToAction(nameof(Index));
 		}

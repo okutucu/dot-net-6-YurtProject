@@ -91,7 +91,7 @@ namespace Project.WebUI.Controllers
 				}
 				else
 				{
-					await _roomService.GetCustomerWithRoomForRoomChangeAsync(customer.RoomId, customerDto.RoomId);
+					await _roomService.GetCustomerWithRoomForRoomChangeAsync((int)customer.RoomId, customerDto.RoomId);
 					await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
 					return RedirectToAction(nameof(Index));
 				}
@@ -108,7 +108,7 @@ namespace Project.WebUI.Controllers
 		public async Task<IActionResult> Remove(int id)
 		{
 			Customer customer = await _customerService.GetByIdAsync(id);
-			RoomWithCustomerDto roomWithCustomerDto = await _roomService.IncreaseCapacityWhenDeletingCustomersAsync(customer.RoomId);
+			RoomWithCustomerDto roomWithCustomerDto = await _roomService.IncreaseCapacityWhenDeletingCustomersAsync((int)customer.RoomId);
 
 			Record record = _mapper.Map<Record>(customer);
 			record.Id = 0;
