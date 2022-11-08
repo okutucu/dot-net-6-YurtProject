@@ -1,5 +1,5 @@
 ﻿@using System.Globalization
-@model List<PaymentDetailDto>
+@model List<PaymentDetailWithRoomDto>
 
 @{
 	ViewData["Title"] = "Get By Selected";
@@ -113,21 +113,25 @@ else
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<td>PaymentName</td>
-				<td>PaymentMethod</td>
+				<td>Room Name</td>
+				<td>Customer Name</td>
+				<td>Payment Name</td>
+				<td>Payment Method</td>
 				<td>Price</td>
-				<td>CurrencyName </td>
-				<td>MoneyOfTheDay</td>
+				<td>Currency Name </td>
+				<td>Money Of The Day</td>
 				<td>Description</td>
-				<td>PaymentDate</td>
+				<td>Payment Date</td>
 				<td>Action</td>
 
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (PaymentDetailDto paymentDetail in Model)
+			@foreach (PaymentDetailWithRoomDto paymentDetail in Model)
 			{
 				<tr>
+					<th>@paymentDetail.Room.RoomName</th>
+					<th>@paymentDetail.CustomerName</th>
 					<th>@paymentDetail.PaymentName</th>
 					<th>@paymentDetail.PaymentMethod</th>
 					<th>@paymentDetail.Price</th>

@@ -36,8 +36,6 @@ namespace Project.Service.Services
 				_roomRepository.Update(_mapper.Map<Room>(newRoom));
 			}
 		}
-
-
 		public async Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId)
 		{
 			RoomWithCustomerDto newRoom = await GetSingleRoomByIdWithCustomerAsync(newRoomId);
@@ -58,7 +56,6 @@ namespace Project.Service.Services
 			_roomRepository.Update(_mapper.Map<Room>(oldRoom));
 			_roomRepository.Update(_mapper.Map<Room>(newRoom));
 		}
-
 		public async Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync()
 		{
 			List<Room> rooms = await _roomRepository.GetRoomWithCustomerAsync();

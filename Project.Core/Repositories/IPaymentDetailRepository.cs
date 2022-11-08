@@ -4,7 +4,7 @@ namespace Project.Core.Repositories
 {
 	public interface IPaymentDetailRepository : IGenericRepository<PaymentDetail>
 	{
-        Task<List<PaymentDetail>> GetPaymentWithSingleRoomIdAsync(int roomId);
+        Task<List<PaymentDetail>> GetPaymentWithRoomAsync();
 
 
     }

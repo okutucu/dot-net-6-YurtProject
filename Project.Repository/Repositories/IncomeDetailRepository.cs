@@ -15,11 +15,5 @@ namespace Project.Repository.Repositories
 		{
 			return await _context.IncomeDetails.Include(i => i.Room).ToListAsync();
 		}
-
-		public async Task<List<IncomeDetail>> GetIncomeWithSingleRoomIdAsync(int roomId)
-		{
-            return await  _context.IncomeDetails.Where(i => i.RoomId == roomId).Include(i => i.Room).ToListAsync();
-
-        }
     }
 }

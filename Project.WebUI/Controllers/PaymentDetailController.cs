@@ -1,24 +1,28 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
+using Project.Service.Services;
 
 namespace Project.WebUI.Controllers
 {
     [Authorize]
     public class PaymentDetailController : Controller
 	{
-		private readonly IPaymentDetailService _paymentDetailService;
+        private readonly IRoomService _roomService;
+        private readonly IPaymentDetailService _paymentDetailService;
 		private readonly IExchangeRateService _exchangeRateService;
 		private readonly IMapper _mapper;
 
-		public PaymentDetailController(IPaymentDetailService paymentDetailService, IMapper mapper, IExchangeRateService exchangeRateService)
+		public PaymentDetailController(IPaymentDetailService paymentDetailService, IMapper mapper, IExchangeRateService exchangeRateService, IRoomService roomService)
 		{
 			_paymentDetailService = paymentDetailService;
 			_mapper = mapper;
 			_exchangeRateService = exchangeRateService;
+			_roomService = roomService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -29,16 +33,32 @@ namespace Project.WebUI.Controllers
 		public async Task<IActionResult> GetBySelected(string selectedDate)
 		{
 
-			List<PaymentDetailDto> paymentDetailDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
+			List<PaymentDetailWithRoomDto> paymentDetailDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
 
 
 			return View(paymentDetailDtos);
-
 		}
 
-		public IActionResult Create()
+        [HttpGet]
+        public async Task<JsonResult> GetBySingleRoomByIdWithCustomer(int id)
+        {
+            RoomWithCustomerDto roomsWithCustomer = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
+            JsonResult result = Json(roomsWithCustomer.Customers);
+
+            return result;
+        }
+
+
+
+        public IActionResult Create()
 		{
-			return View();
+            List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+
+            return View();
 		}
 		[HttpPost]
 		public async Task<IActionResult> Create(PaymentDetailDto paymentDetailDto)
@@ -49,7 +69,12 @@ namespace Project.WebUI.Controllers
 				await _paymentDetailService.AddByCurrency(paymentDetailDto, currency.Price);
 				return RedirectToAction(nameof(Index));
 			}
-			return View(paymentDetailDto);
+            List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName");
+            return View(paymentDetailDto);
 		}
 
 		[ServiceFilter(typeof(NotFoundFilter<PaymentDetail>))]

@@ -32,6 +32,7 @@ namespace Project.Service.Mapping
 
 
 			CreateMap<PaymentDetail, PaymentDetailDto>().ReverseMap();
+			CreateMap<PaymentDetail, PaymentDetailWithRoomDto>();
 			CreateMap<IncomeDetail, IncomeDetailDto>().ReverseMap();
 
 

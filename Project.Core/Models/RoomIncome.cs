@@ -2,15 +2,9 @@
 
 namespace Project.Core.Models
 {
-	public class RoomIncome : BaseEntity
-	{
-		public string CustomerName { get; set; }
-		public Exchange Exchange { get; set; }
-		public decimal Price { get; set; }
-		public decimal MoneyOfTheDay { get; set; }
-		public DateTime PaymentDate { get; set; }
-		public PaymentMethod PaymentMethod { get; set; }
-		public string Description { get; set; }
+	public class RoomIncome : PaymentIncome
+    {
+	
 		public int RoomId { get; set; }
 
 		// Relational Properties

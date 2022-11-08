@@ -59,19 +59,6 @@ namespace Project.Service.Services
 			throw new Exception("An error occurred in the date format");
 		}
 
-		//public async Task<List<IncomeDetailListDto>> FilterIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
-		//{
-		//	int month = selectedDate.Month;
-		//	int year = selectedDate.Year;
-
-  //          List<IncomeDetailListDto> incomeDetailWithRoom = await GetIncomeWithSingleRoomIdAsync(roomId);
-
-		//	List<IncomeDetailListDto> filterIncomeDetailWithRoom = await GetIncomeWithSingleRoomIdAsync(roomId);
-
-  //          return incomeDetailWithRoom;
-
-  //      }
-
 		public async Task<List<IncomeWithRoomDto>> GetByDay(int year, int month, int day)
 		{
 			List<IncomeDetail> incomeDetails = await _incomeDetailRepository.GetIncomeWithRoomAsync();
@@ -104,13 +91,9 @@ namespace Project.Service.Services
 
 		public async Task<List<IncomeWithRoomDto>> GetIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
 		{
-			int month = selectedDate.Month;
-			int year = selectedDate.Year;
-            //todo error
-
             List<IncomeWithRoomDto> incomeDetailWithRoom = await GetIncomeWithRoomAsync();
 
-            List<IncomeWithRoomDto> incomeDetailWithRoomDto = incomeDetailWithRoom.Where(i => i.RoomId == roomId && i.PaymentDate.Month == month && i.PaymentDate.Year == year).ToList();
+            List<IncomeWithRoomDto> incomeDetailWithRoomDto = incomeDetailWithRoom.Where(i => i.RoomId == roomId && i.PaymentDate.Month == selectedDate.Month && i.PaymentDate.Year == selectedDate.Year).ToList();
 			return incomeDetailWithRoomDto;
 		}
 

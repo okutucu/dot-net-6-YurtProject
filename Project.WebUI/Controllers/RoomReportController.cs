@@ -11,13 +11,15 @@ namespace Project.WebUI.Controllers
 	{
 		private readonly IRoomService _roomService;
 		private readonly IIncomeDetailService _incomeDetailService;
+		private readonly IPaymentDetailService _paymentDetailService;
 		private readonly IMapper _mapper;
 
-		public RoomReportController(IRoomService roomService, IMapper mapper, IIncomeDetailService incomeDetailService)
+		public RoomReportController(IRoomService roomService, IMapper mapper, IIncomeDetailService incomeDetailService, IPaymentDetailService paymentDetailService)
 		{
 			_roomService = roomService;
 			_mapper = mapper;
 			_incomeDetailService = incomeDetailService;
+			_paymentDetailService = paymentDetailService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -33,6 +35,8 @@ namespace Project.WebUI.Controllers
 		{
 
 			List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.GetIncomeWithSingleRoomIdAsync(roomId,selectedDate);
+
+            List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await _paymentDetailService.GetPaymentWithSingleRoomIdAsync(roomId, selectedDate);
 
             return View(incomeWithRoomDtos);
 		}

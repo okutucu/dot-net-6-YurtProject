@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Project.Core.DTOs
 {
-    public class PaymentDetailWithRoomDto :RoomDto
+    public class PaymentDetailWithRoomDto : PaymentDetailDto
     {
-        public List<PaymentDetailDto> PaymentDetails { get; set; }
+        public RoomDto Room { get; set; }
     }
 }

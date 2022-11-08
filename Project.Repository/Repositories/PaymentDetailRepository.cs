@@ -10,11 +10,11 @@ namespace Project.Repository.Repositories
 		public PaymentDetailRepository(YurtDbContext context) : base(context)
 		{
 		}
-  
-		public async Task<List<PaymentDetail>> GetPaymentWithSingleRoomIdAsync(int roomId)
-		{
-			return await _context.PaymentDetails.Where(p => p.RoomId == roomId).Include(p => p.RoomId).ToListAsync();
 
-		}
-	}
+		public async Task<List<PaymentDetail>> GetPaymentWithRoomAsync()
+		{
+            return await _context.PaymentDetails.Include(i => i.Room).ToListAsync();
+
+        }
+    }
 }

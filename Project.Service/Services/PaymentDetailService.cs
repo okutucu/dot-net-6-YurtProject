@@ -1,9 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
+using AutoMapper;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Repositories;
 using Project.Core.Services;
 using Project.Core.UnitOfWorks;
+using Project.Repository.Repositories;
 
 namespace Project.Service.Services
 {
@@ -23,17 +26,15 @@ namespace Project.Service.Services
 			paymentDetailDto.MoneyOfTheDay = currency * paymentDetailDto.Price;
 			paymentDetailDto.PaymentDate = DateTime.Now;
 
-
 			await _paymentDetailRepository.AddAsync(_mapper.Map<PaymentDetail>(paymentDetailDto));
 			await _unitOfWok.CommitAsync();
 
 
 		}
-
-
 		public async Task UpdateByCurrency(PaymentDetailDto paymentDetailDto, decimal currency)
 		{
 			paymentDetailDto.MoneyOfTheDay = currency * paymentDetailDto.Price;
+			//todo control
 			paymentDetailDto.PaymentDate = DateTime.Now;
 
 
@@ -41,9 +42,7 @@ namespace Project.Service.Services
 			await _unitOfWok.CommitAsync();
 		}
 
-
-
-		public async Task<List<PaymentDetailDto>> DailyOrMonthly(string selectedDate)
+		public async Task<List<PaymentDetailWithRoomDto>> DailyOrMonthly(string selectedDate)
 		{
 
 			if (selectedDate != null)
@@ -74,27 +73,45 @@ namespace Project.Service.Services
 
 		}
 
-		public async Task<List<PaymentDetailDto>> GetByMonth(int year, int month)
+		public async Task<List<PaymentDetailWithRoomDto>> GetByMonth(int year, int month)
 		{
-			List<PaymentDetail> paymentDetails = _paymentDetailRepository.Where(p => p.PaymentDate.Year == year && p.PaymentDate.Month == month).ToList();
 
-			List<PaymentDetailDto> paymentDetailsDto = _mapper.Map<List<PaymentDetailDto>>(paymentDetails);
+			List<PaymentDetail> paymentDetails = await _paymentDetailRepository.GetPaymentWithRoomAsync();
+			List<PaymentDetail> paymentFilters = paymentDetails.Where(p => p.PaymentDate.Year == year && p.PaymentDate.Month == month).ToList();
 
-			return paymentDetailsDto;
+			List<PaymentDetailWithRoomDto> paymentDetailWithRoomDtos = _mapper.Map<List<PaymentDetailWithRoomDto>>(paymentFilters);
+
+			return paymentDetailWithRoomDtos;
 		}
 
-		public async Task<List<PaymentDetailDto>> GetByDay(int year, int month, int day)
+		public async Task<List<PaymentDetailWithRoomDto>> GetByDay(int year, int month, int day)
 		{
-			List<PaymentDetail> paymentDetails = _paymentDetailRepository.Where(p => p.PaymentDate.Year == year && p.PaymentDate.Month == month && p.PaymentDate.Day == day).ToList();
+            List<PaymentDetail> paymentDetails = await _paymentDetailRepository.GetPaymentWithRoomAsync();
+            List<PaymentDetail> paymentFilters = paymentDetails.Where(p => p.PaymentDate.Year == year && p.PaymentDate.Month == month && p.PaymentDate.Day == day).ToList();
 
-			List<PaymentDetailDto> paymentDetailsDto = _mapper.Map<List<PaymentDetailDto>>(paymentDetails);
+            List<PaymentDetailWithRoomDto> paymentDetailWithRoomDtos = _mapper.Map<List<PaymentDetailWithRoomDto>>(paymentFilters);
 
-			return paymentDetailsDto;
+            return paymentDetailWithRoomDtos;
 		}
 
-		public Task<List<PaymentDetailDto>> GetPaymentWithSingleRoomIdAsync(int roomId)
+		public async Task<List<PaymentDetailWithRoomDto>> GetPaymentWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
 		{
-			throw new NotImplementedException();
-		}
+			List<PaymentDetailWithRoomDto> paymentDetailWithRoom = await GetPaymentWithRoomAsync();
+          
+
+
+            return paymentDetailWithRoom;
+
+
+        }
+
+		public async Task<List<PaymentDetailWithRoomDto>> GetPaymentWithRoomAsync()
+		{
+            List<PaymentDetail> paymentDetails = await _paymentDetailRepository.GetPaymentWithRoomAsync();
+
+            List<PaymentDetailWithRoomDto> paymentDetailsDto = _mapper.Map<List<PaymentDetailWithRoomDto>>(paymentDetails);
+
+            return paymentDetailsDto;
+        }
 	}
 }

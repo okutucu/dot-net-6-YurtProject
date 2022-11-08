@@ -19,6 +19,11 @@
                 <span asp-validation-for="PaymentName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="RoomId"></label>
+                <select asp-for="RoomId"   id="roomId" asp-items="ViewBag.rooms" class="form-control"> </select>
+                <span asp-validation-for="RoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
@@ -28,6 +33,12 @@
                 <select asp-for="Exchange" asp-items="Html.GetEnumSelectList<Exchange>()" class="form-control"></select>
 
                 <span asp-validation-for="Exchange" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerName" class="control-label"></label>
+                <select id="customerName" asp-for="CustomerName" class="form-control"></select>
+
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PaymentMethod" class="control-label"></label>
@@ -53,4 +64,57 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+    @section ExtraScripts{
+    <script>
+        $(document).ready(function () {
+
+            let id = $("#roomId").val();
+            let roomWithCustomerUrl = "/PaymentDetail/GetBySingleRoomByIdWithCustomer/";
+
+            $.get(roomWithCustomerUrl + id, function (response) {
+                $('#customerName').empty();
+
+                if (response.length > 0) {
+                    $.each(response, function (key, value) {
+                        $('#customerName')
+                            .append($("<option></option>")
+                                .attr("value", value.fullName)
+                                .text(value.fullName));
+                    });
+                }
+                else {
+                    $('#customerName')
+                        .append($("<option></option>")
+                            .text("-- Havent Customer"));
+                }
+            });
+
+            $("#roomId").change(function () {
+
+                id = $("#roomId").val();
+                $.get(roomWithCustomerUrl + id, function (response) {
+                        $('#customerName').empty();
+
+                        if (response.length > 0) {
+                            $.each(response, function (key, value) {
+                                $('#customerName')
+                                    .append($("<option></option>")
+                                        .attr("value", value.fullName)
+                                        .text(value.fullName));
+                            });
+                        }
+                        else {
+                            $('#customerName')
+                                .append($("<option></option>")
+                                    .text("-- Havent Customer"));
+                        }
+                 });
+            });
+
+            
+        });
+    </script>
 }
