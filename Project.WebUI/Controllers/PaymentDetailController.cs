@@ -48,8 +48,6 @@ namespace Project.WebUI.Controllers
             return result;
         }
 
-
-
         public IActionResult Create()
 		{
             List<Room> rooms = _roomService.GetAll().ToList();
@@ -77,12 +75,23 @@ namespace Project.WebUI.Controllers
             return View(paymentDetailDto);
 		}
 
+
 		[ServiceFilter(typeof(NotFoundFilter<PaymentDetail>))]
 		public async Task<IActionResult> Update(int id)
 		{
-			PaymentDetail paymentDetail = await _paymentDetailService.GetByIdAsync(id);
+            PaymentDetail paymentDetail = await _paymentDetailService.GetByIdAsync(id);
+
+
+            List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", paymentDetail.RoomId);
+
 			return View(_mapper.Map<PaymentDetailDto>(paymentDetail));
 		}
+
+
 		[HttpPost]
 		public async Task<IActionResult> Update(PaymentDetailDto paymentDetailDto)
 		{
@@ -94,8 +103,13 @@ namespace Project.WebUI.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
+            List<Room> rooms = _roomService.GetAll().ToList();
 
-			return View(paymentDetailDto);
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", paymentDetailDto.RoomId);
+
+            return View(paymentDetailDto);
 		}
 
 		[ServiceFilter(typeof(NotFoundFilter<PaymentDetail>))]
