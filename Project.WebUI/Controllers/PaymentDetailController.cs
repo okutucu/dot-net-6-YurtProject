@@ -32,10 +32,7 @@ namespace Project.WebUI.Controllers
 
 		public async Task<IActionResult> GetBySelected(string selectedDate)
 		{
-
 			List<PaymentDetailWithRoomDto> paymentDetailDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
-
-
 			return View(paymentDetailDtos);
 		}
 

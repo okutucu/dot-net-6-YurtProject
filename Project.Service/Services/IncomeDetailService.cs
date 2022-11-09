@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.DTOs;
 using Project.Core.Models;
@@ -12,8 +13,6 @@ namespace Project.Service.Services
 	{
 		private readonly IIncomeDetailRepository _incomeDetailRepository;
 		private readonly IMapper _mapper;
-
-
 		public IncomeDetailService(IUnitOfWork unitOfWok, IGenericRepository<IncomeDetail> repository, IIncomeDetailRepository incomeDetailRepository, IMapper mapper) : base(unitOfWok, repository)
 		{
 			_incomeDetailRepository = incomeDetailRepository;
@@ -38,11 +37,15 @@ namespace Project.Service.Services
 				int year;
 				string[] subs = selectedDate.Split('-');
 
-				if (subs.Length == 2)
+				if (subs.Length == 1)
+				{
+                    year = int.Parse(subs[0]);
+                    return await GetByYear(year);
+                }
+                else if(subs.Length == 2)
 				{
 					year = int.Parse(subs[0]);
 					month = int.Parse(subs[1]);
-
 					return await GetByMonth(year, month);
 				}
 				else if (subs.Length == 3)
@@ -52,7 +55,6 @@ namespace Project.Service.Services
 					int day = int.Parse(subs[2].Substring(0, 2));
 
 					return await GetByDay(year, month, day);
-
 				}
 			}
 
@@ -78,8 +80,16 @@ namespace Project.Service.Services
 			return incomeDetailDto;
 		}
 
+        public async Task<List<IncomeWithRoomDto>> GetByYear(int year)
+        {
+            List<IncomeDetail> incomeDetails = await _incomeDetailRepository.GetIncomeWithRoomAsync();
+            List<IncomeDetail> filterIncome = incomeDetails.Where(p => p.PaymentDate.Year == year).ToList();
+            List<IncomeWithRoomDto> incomeDetailDto = _mapper.Map<List<IncomeWithRoomDto>>(filterIncome);
 
-		public async Task<List<IncomeWithRoomDto>> GetIncomeWithRoomAsync()
+            return incomeDetailDto;
+        }
+
+        public async Task<List<IncomeWithRoomDto>> GetIncomeWithRoomAsync()
 		{
 			List<IncomeDetail> incomeDetails = await _incomeDetailRepository.GetIncomeWithRoomAsync();
 
@@ -97,6 +107,7 @@ namespace Project.Service.Services
 			return incomeDetailWithRoomDto;
 		}
 
+	
 		public async Task UpdateByCurrency(IncomeDetailDto incomeDetailDto, decimal currency)
 		{
 			incomeDetailDto.MoneyOfTheDay = currency * incomeDetailDto.Price;

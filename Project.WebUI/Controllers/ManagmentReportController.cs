@@ -1,12 +1,47 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Project.Core.DTOs;
+using Project.Core.Models;
+using Project.Core.Services;
+using Project.WebUI.ViewModel;
 
 namespace Project.WebUI.Controllers
 {
 	public class ManagmentReportController : Controller
 	{
-		public IActionResult Index()
+        private readonly IRoomService _roomService;
+        private readonly IIncomeDetailService _incomeDetailService;
+        private readonly IRoomIncomeService _roomIncomeService;
+        private readonly IPaymentDetailService _paymentDetailService;
+
+        public ManagmentReportController(IRoomService roomService, IIncomeDetailService incomeDetailService, IRoomIncomeService roomIncomeService, IPaymentDetailService paymentDetailService)
+		{
+			_roomService = roomService;
+			_incomeDetailService = incomeDetailService;
+			_roomIncomeService = roomIncomeService;
+			_paymentDetailService = paymentDetailService;
+		}
+
+
+        public IActionResult Index()
 		{
 			return View();
 		}
-	}
+
+        public async Task<IActionResult> GetBySelected(string selectedDate)
+        {
+            ViewBag.date = selectedDate;
+            List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
+            List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await  _paymentDetailService.DailyOrMonthly(selectedDate);
+            List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.DailyOrMonthly(selectedDate);
+
+            SingleRoomReports_VM singleRoomReports_VM = new SingleRoomReports_VM
+            {
+                IncomeWithRoomDtos = incomeWithRoomDtos,
+                PaymentDetailWithRoomDtos = paymentWithRoomDtos,
+                RoomIncomeWithRoomDtos = roomIncomeWithRoomDtos,
+            };
+
+            return View(singleRoomReports_VM);
+        }
+    }
 }

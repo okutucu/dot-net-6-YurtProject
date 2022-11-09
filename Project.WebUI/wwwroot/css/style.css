@@ -551,6 +551,8 @@ body {
 .page-header.navbar .top-menu ul.nav li.dropdown ul.dropdown-menu {
     padding-top: 0;
     padding-bottom: 0 !important;
+    right: 0;
+    left: auto;
 }
 .page-header.navbar .top-menu ul.nav li.dropdown ul.dropdown-menu li .slimScrollDiv .dropdown-menu-list span {
     color: #000;
@@ -627,7 +629,7 @@ body {
 .dropdown-menu
 > li.external
 > h3 {
-    color: #555;
+    color: #fff;
 }
 
 .page-header.navbar
@@ -5422,9 +5424,6 @@ a#addRow {
     color: #fff;
 }
 
-span {
-    color: #fff;
-}
 
 i.material-icons.f-left.btn-danger.btn-lg.m-2 {
     background: #FF3636 !important;

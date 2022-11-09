@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using AutoMapper;
 using Project.Core.DTOs;
@@ -51,7 +52,12 @@ namespace Project.Service.Services
 				int year;
 				string[] subs = selectedDate.Split('-');
 
-				if (subs.Length == 2)
+                if (subs.Length == 1)
+                {
+                    year = int.Parse(subs[0]);
+                    return await GetByYear(year);
+                }
+                else if (subs.Length == 2)
 				{
 					year = int.Parse(subs[0]);
 					month = int.Parse(subs[1]);
@@ -110,6 +116,16 @@ namespace Project.Service.Services
             List<PaymentDetailWithRoomDto> paymentDetailsDto = _mapper.Map<List<PaymentDetailWithRoomDto>>(paymentDetails);
 
             return paymentDetailsDto;
+        }
+
+		public async Task<List<PaymentDetailWithRoomDto>> GetByYear(int year)
+		{
+            List<PaymentDetail> paymentDetails = await _paymentDetailRepository.GetPaymentWithRoomAsync();
+            List<PaymentDetail> paymentFilters = paymentDetails.Where(p => p.PaymentDate.Year == year).ToList();
+
+            List<PaymentDetailWithRoomDto> paymentDetailWithRoomDtos = _mapper.Map<List<PaymentDetailWithRoomDto>>(paymentFilters);
+
+            return paymentDetailWithRoomDtos;
         }
 	}
 }

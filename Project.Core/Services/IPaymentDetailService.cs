@@ -11,8 +11,8 @@ namespace Project.Core.Services
 		Task UpdateByCurrency(PaymentDetailDto paymentDetailDto, decimal currency);
 		Task<List<PaymentDetailWithRoomDto>> DailyOrMonthly(string selectedDate);
 		Task<List<PaymentDetailWithRoomDto>> GetByMonth(int year, int month);
+		Task<List<PaymentDetailWithRoomDto>> GetByYear(int year);
 		Task<List<PaymentDetailWithRoomDto>> GetByDay(int year, int month, int day);
-       
 
     }
 }

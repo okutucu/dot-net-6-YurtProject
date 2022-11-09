@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Repositories;
@@ -53,7 +54,12 @@ namespace Project.Service.Services
                 int year;
                 string[] subs = selectedDate.Split('-');
 
-                if (subs.Length == 2)
+                if (subs.Length == 1)
+                {
+                    year = int.Parse(subs[0]);
+                    return await GetByYear(year);
+                }
+                else if (subs.Length == 2)
                 {
                     year = int.Parse(subs[0]);
                     month = int.Parse(subs[1]);
@@ -109,6 +115,16 @@ namespace Project.Service.Services
             List<RoomIncomeWithRoomDto> roomIncomesDto = _mapper.Map<List<RoomIncomeWithRoomDto>>(roomIncomes);
 
             return roomIncomesDto;
+        }
+
+        public async Task<List<RoomIncomeWithRoomDto>> GetByYear(int year)
+        {
+            List<RoomIncome> roomIncomes = await _roomIncomeRepository.GetIncomeWithRoomAsync();
+            List<RoomIncome> roomIncomeFilters = roomIncomes.Where(p => p.PaymentDate.Year == year).ToList();
+
+            List<RoomIncomeWithRoomDto> incomeDetailWithRoomDtos = _mapper.Map<List<RoomIncomeWithRoomDto>>(roomIncomeFilters);
+
+            return incomeDetailWithRoomDtos;
         }
     }
 }

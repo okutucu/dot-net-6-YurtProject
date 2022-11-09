@@ -1,0 +1,157 @@
+﻿@using Project.WebUI.ViewModel
+@model SingleRoomReports_VM
+
+@{
+    ViewData["Title"] = "GetBySelected";
+}
+
+
+
+@if (Model.IncomeWithRoomDtos.Count == 0 && Model.PaymentDetailWithRoomDtos.Count == 0 && Model.RoomIncomeWithRoomDtos.Count == 0)
+{
+
+	<div class="alert alert-info" role="alert">
+		No data found for the date you entered !   <br>
+		(<span class="text-bold">@ViewBag.date</span>)
+		<br>
+		<a asp-action="Index" class="alert-link">Click</a>  to go back.
+	</div>
+}
+else
+{
+	<div>
+		<h3>@ViewBag.date</h3>
+	</div>
+
+	<div>
+	<h3>Room Rent Reports</h3>
+    <div class="row">
+        <table class="table table-striped">
+			<thead>
+			<tr>
+				<td>Room Name</td>
+				<td>Customer Name</td>
+				<td>Price</td>
+				<td> Exchange</td>
+				<td>Money Of The Day	</td>
+				<td> Payment Method</td>
+				<td> Description </td>
+				<td> Payment Date </td>
+				<td>Action</td>
+			</tr>
+			</thead>
+			<tbody>
+				@foreach (RoomIncomeWithRoomDto roomIncome in Model.RoomIncomeWithRoomDtos)
+				{
+				<tr>
+						<th>@roomIncome.Room.RoomName</th>
+						<th>@roomIncome.CustomerName</th>
+						<th>@roomIncome.Price</th>
+						<th>@roomIncome.Exchange</th>
+						<th>@roomIncome.MoneyOfTheDay</th>
+						<th>@roomIncome.PaymentMethod</th>
+						<th>@roomIncome.Description</th>
+						<th>@roomIncome.PaymentDate</th>
+						<th>
+							<a class="btn btn-warning" asp-controller="RoomIncome" asp-action="Update" asp-route-id="@roomIncome.Id">Update</a>
+							<a class="btn btn-danger" asp-controller="RoomIncome" asp-action="Remove" asp-route-id="@roomIncome.Id">Delete</a>
+						</th>
+				</tr>
+				}
+			</tbody>
+		</table>
+    </div>
+</div>
+
+
+<div>
+	<h3>Incomes Detail Reports</h3>
+	<div class="row">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<td>Room Name</td>
+					<td>Customer Name</td>
+					<td>Price</td>
+					<td> Exchange</td>
+					<td>Money Of The Day	</td>
+					<td> Payment Method</td>
+					<td> Payment Name</td>
+					<td> Description </td>
+					<td> Payment Date </td>
+					<td>Action</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (IncomeWithRoomDto roomIncome in Model.IncomeWithRoomDtos)
+				{
+					<tr>
+						<th>@roomIncome.Room.RoomName</th>
+						<th>@roomIncome.CustomerName</th>
+						<th>@roomIncome.Price</th>
+						<th>@roomIncome.Exchange</th>
+						<th>@roomIncome.MoneyOfTheDay</th>
+						<th>@roomIncome.PaymentMethod</th>
+						<th>@roomIncome.PaymentName</th>
+						<th>@roomIncome.Description</th>
+						<th>@roomIncome.PaymentDate</th>
+						<th>
+							<a class="btn btn-warning" asp-controller="IncomeDetail" asp-action="Update" asp-route-id="@roomIncome.Id">Update</a>
+							<a class="btn btn-danger" asp-controller="IncomeDetail" asp-action="Remove" asp-route-id="@roomIncome.Id">Delete</a>
+						</th>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+
+<div>
+	<h3>Payment Detail Reports</h3>
+	<div class="row">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<td>Room Name</td>
+					<td>Customer Name</td>
+					<td>Price</td>
+					<td> Exchange</td>
+					<td>Money Of The Day	</td>
+					<td> Payment Method</td>
+					<td> Payment Name</td>
+					<td> Description </td>
+					<td> Payment Date </td>
+					<td>Action</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (PaymentDetailWithRoomDto roomIncome in Model.PaymentDetailWithRoomDtos)
+				{
+					<tr>
+						<th>@roomIncome.Room.RoomName</th>
+						<th>@roomIncome.CustomerName</th>
+						<th>@roomIncome.Price</th>
+						<th>@roomIncome.Exchange</th>
+						<th>@roomIncome.MoneyOfTheDay</th>
+						<th>@roomIncome.PaymentMethod</th>
+						<th>@roomIncome.PaymentName</th>
+						<th>@roomIncome.Description</th>
+						<th>@roomIncome.PaymentDate</th>
+						<th>
+							<a class="btn btn-warning" asp-controller="PaymentDetail" asp-action="Update" asp-route-id="@roomIncome.Id">Update</a>
+							<a class="btn btn-danger" asp-controller="PaymentDetail" asp-action="Remove" asp-route-id="@roomIncome.Id">Delete</a>
+						</th>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+}
+
+
+
