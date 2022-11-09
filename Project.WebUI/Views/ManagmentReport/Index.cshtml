@@ -1,0 +1,33 @@
+﻿<h3>Managment Reports</h3>
+
+
+<form class="mt-2" asp-controller="ManagmentReport" asp-action="GetBySelected" method="get">
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row" id="paymentSection">
+                <div class="col-6">
+                    <input id="monthly" type="month" name="selectedDate" class="form-control">
+                    <div class="form-check">
+                        <input id="monthlyChecked" name="checkedPayment" type="radio"
+                               class="form-check-input">
+                        <label for="monthlyChecked" class="form-check-label">Monthly</label>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <input type="datetime-local" name="selectedDate" class="form-control" id="normalDate">
+                    <div class="form-check">
+                        <input id="normalChecked" type="radio" name="checkedPayment"
+                               class="form-check-input">
+                        <label for="normalChecked" class="form-check-label">Daily</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-primary" />
+    </div>
+
+</form>
