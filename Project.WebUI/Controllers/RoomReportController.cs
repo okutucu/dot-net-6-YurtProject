@@ -36,10 +36,14 @@ namespace Project.WebUI.Controllers
 
 		public async Task<IActionResult> GetBySelected(DateTime selectedDate, int roomId)
 		{
+			Room room = await _roomService.GetByIdAsync(roomId);
+			ViewBag.roomName = room.RoomName;
 
-			List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.GetIncomeWithSingleRoomIdAsync(roomId,selectedDate);
+            List <IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.GetIncomeWithSingleRoomIdAsync(roomId,selectedDate);
             List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await _paymentDetailService.GetPaymentWithSingleRoomIdAsync(roomId, selectedDate);
 			List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.GetRoomIncomeWithSingleRoomIdAsync(roomId, selectedDate);
+
+			
 
 			SingleRoomReports_VM singleRoomReports_VM = new SingleRoomReports_VM
 			{
