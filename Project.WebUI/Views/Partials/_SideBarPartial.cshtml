@@ -47,6 +47,7 @@
                     <ul class="sub-menu">
                         <li class="nav-item active">
                             <a asp-controller="Room" asp-action="Index" class="nav-link">
+                                <i class="material-icons">store</i>
 
                                 <span class="title">Our Rooms</span>
                                 <span class="selected"></span>
@@ -54,11 +55,15 @@
                         </li>
                         <li class="nav-item ">
                             <a asp-controller="RoomType" asp-action="Index" class="nav-link">
+                                <i class="material-icons">store</i>
+
                                 <span class="title">Room Type</span>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a asp-controller="RoomReport" asp-action="Index" class="nav-link">
+                                <i class="material-icons">store</i>
+
                                 <span class="title">Room Reports</span>
                             </a>
                         </li>
@@ -102,43 +107,55 @@
                     <ul class="sub-menu">
                         <li class="nav-item active">
                             <a asp-controller="RoomIncome" asp-action="Index" class="nav-link">
-
+                                <i class="material-icons">store</i>
                                 <span class="title">Rent Incomes</span>
                                 <span class="selected"></span>
                             </a>
                         </li>
                         <li class="nav-item ">
                             <a asp-controller="IncomeDetail" asp-action="Index" class="nav-link">
-                            
+                                <i class="material-icons">store</i>
                                 <span class="title">Other Incomes</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <span class="title">Yearly Balance</span>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="ExchangeRate" asp-action="Index" class="nav-link">
-                        <i class="material-icons">dvr</i>
-                        <span class="title">Others</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Mail" asp-action="Index" class="nav-link">
-
-                        <i class="material-icons">store</i>
-                        <span class="title">Mail </span>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="#" class="nav-link nav-toggle">
-                        <i class="material-icons">store</i>
-                        <span class="title">Log Data</span>
+                        <i class="material-icons">attach_money</i>
+                        <span class="title">Managment</span>
+                        <span class="selected"></span>
+                        <span class="arrow open"></span>
                     </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item active">
+                            <a asp-controller="ManagmentReports" asp-action="Index" class="nav-link">
+                                <i class="material-icons">store</i>
+                                <span class="title">Managment Reports</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="ExchangeRate" asp-action="Index" class="nav-link">
+                                <i class="material-icons">store</i>
+                                <span class="title">Exchange Rate</span>
+                                <span class="selected"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a asp-controller="Mail" asp-action="Index" class="nav-link">
+                                <i class="material-icons">store</i>
+                                <span class="title">Mail</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="material-icons">store</i>
+                                <span class="title">Log Data</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
             </ul>
         </div>
     </div>
