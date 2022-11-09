@@ -93,5 +93,22 @@ namespace Project.Service.Services
 
             return incomeDetailWithRoomDtos;
         }
-	}
+
+        public async Task<List<RoomIncomeWithRoomDto>> GetRoomIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate)
+        {
+            List<RoomIncomeWithRoomDto> roomIncomesWithRoom = await GetRoomIncomeWithRoomAsync();
+
+            List<RoomIncomeWithRoomDto> roomIncomesWithRoomDto = roomIncomesWithRoom.Where(i => i.RoomId == roomId && i.PaymentDate.Month == selectedDate.Month && i.PaymentDate.Year == selectedDate.Year).ToList();
+            return roomIncomesWithRoomDto;
+        }
+
+        public async Task<List<RoomIncomeWithRoomDto>> GetRoomIncomeWithRoomAsync()
+        {
+            List<RoomIncome> roomIncomes = await _roomIncomeRepository.GetIncomeWithRoomAsync();
+
+            List<RoomIncomeWithRoomDto> roomIncomesDto = _mapper.Map<List<RoomIncomeWithRoomDto>>(roomIncomes);
+
+            return roomIncomesDto;
+        }
+    }
 }

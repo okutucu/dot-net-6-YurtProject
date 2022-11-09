@@ -6,7 +6,8 @@ namespace Project.Core.Services
 	public interface IRoomIncomeService : IService<RoomIncome>
 	{
         Task<RoomIncomeWithRoomDto> GetIncomeWithSingleRoomAsync(int roomIncomeId);
-
+        Task<List<RoomIncomeWithRoomDto>> GetRoomIncomeWithSingleRoomIdAsync(int roomId, DateTime selectedDate);
+        Task<List<RoomIncomeWithRoomDto>> GetRoomIncomeWithRoomAsync();
         Task AddByCurrency(RoomIncomeDto roomIncomeDto, decimal currency);
 		Task UpdateByCurrency(RoomIncomeDto roomIncomeDto, decimal currency);
         Task<List<RoomIncomeWithRoomDto>> DailyOrMonthly(string selectedDate);
