@@ -1,4 +1,9 @@
-﻿<h3>Managment Reports</h3>
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h3>Managment Reports</h3>
 
 
 <form class="mt-2" asp-controller="ManagmentReport" asp-action="GetBySelected" method="get">
@@ -24,7 +29,7 @@
                 </div>
                 
                 <div class="col-4">
-                    <input type="text" class="form-control" name="selectedDate" id="yearly" disabled>
+                    <input type="text" class="form-control" name="selectedDate" disabled id="yearly" placeholder="----">
                     <div class="form-check">
                         <input id="yearlyChecked" type="radio" name="checkedPayment"
                                class="form-check-input">

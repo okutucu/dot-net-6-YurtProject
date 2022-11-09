@@ -12,7 +12,7 @@
 
 	<div class="alert alert-info" role="alert">
 		No data found for the date you entered !   <br>
-		(<span class="text-bold">@ViewBag.date</span>)
+		(<span class="text-bold" id="dateId">@ViewBag.date</span>)
 		<br>
 		<a asp-action="Index" class="alert-link">Click</a>  to go back.
 	</div>
@@ -22,6 +22,57 @@ else
 	<div>
 		<h3>@ViewBag.date</h3>
 	</div>
+
+
+		var allRentIncomesWithExchange = Model.RoomIncomeWithRoomDtos.GroupBy(p => p.Exchange).Select(group => new
+		{
+		Exchange = group.Key,
+		Sum = group.Sum( s => s.Price)
+		
+		});
+
+
+	var allRentIncomesWithPaymentMethod = from payment in Model.RoomIncomeWithRoomDtos
+										group payment by payment.PaymentMethod into payments
+										select new
+										{
+											PaymentMethod = payments.Key,
+											PaymentDetail = from paymentDetail in payments
+															group paymentDetail by paymentDetail.Exchange into paymentDetailGroup
+															select new 
+															{
+																Exchange = paymentDetailGroup.Key,
+																Sum = paymentDetailGroup.Sum(x => x.Price),
+															}
+										};
+
+		<div class="row">
+			<div class="card col-12">
+				<h4>Kur'a göre grup</h4>
+				@foreach (var item in allRentIncomesWithExchange)
+				{
+				<ul style="background-color:red">
+					<li>Exchange = @item.Exchange</li>
+					<li>Total Price = @item.Sum</li>
+				</ul>
+			}
+			</div>
+		<div class="card col-12">
+			<h4>Ödeme Method'una göre grup</h4>
+
+			@foreach (var item in allRentIncomesWithPaymentMethod)
+			{
+				<h5>@item.PaymentMethod</h5>
+				@foreach (var rentIncomeDetail in item.PaymentDetail)
+				{
+					<ul style="background-color:green">
+						<li>Exchange = @rentIncomeDetail.Exchange</li>
+						<li>Total Price = @rentIncomeDetail.Sum</li>
+					</ul>
+				}
+			}
+		</div>
+		</div>
 
 	<div>
 	<h3>Room Rent Reports</h3>
@@ -151,7 +202,15 @@ else
 	</div>
 </div>
 
+
+	@section ExtraScripts{
+
+	<script>
+		$(document).ready(function () {
+			console.log("adad");
+		});
+	</script>
+		}
+
 }
-
-
 

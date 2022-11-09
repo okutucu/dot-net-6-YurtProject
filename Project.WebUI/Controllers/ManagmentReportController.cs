@@ -43,5 +43,24 @@ namespace Project.WebUI.Controllers
 
             return View(singleRoomReports_VM);
         }
+
+        public async Task<JsonResult> VisualizeRoomRentResult(string selectedDate)
+        {
+            List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
+            var datas = (from exchange in incomeWithRoomDtos
+                         group exchange by exchange.Price
+                                 into exchangeGroup
+                         select new
+                         {
+                             Exchange = exchangeGroup.Key,
+                             Sum = exchangeGroup.Sum(s => s.Price)
+                         }).ToList();
+
+
+
+            return Json(datas);
+        }
+
+
     }
 }
