@@ -64,9 +64,10 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @{
-        await Html.RenderPartialAsync("_GetRoomWithCustomerPartial");
-    }
+}
+
+@section ExtraScripts{
+<script src="~/js/getbysingleroombyidwithcustomer.js"></script>
 }
 
 
