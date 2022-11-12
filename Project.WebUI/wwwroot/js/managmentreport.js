@@ -12,12 +12,15 @@ $(document).ready(function () {
         url: visualizeRoomRentResultUrl + date,
         success: function (result) {
             google.charts.load('current', {
-                'packages': ['corechart']
+                'packages': ['corechart'],
             });
             google.charts.setOnLoadCallback(function () {
                 drawChart(result);
-                chartJsBar(result);
             });
+            google.charts.setOnLoadCallback(function () {
+                barChart(result);
+            });
+
         }
     });
 
@@ -25,7 +28,7 @@ $(document).ready(function () {
 
 function drawChart(result) {
     var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Exchange');
+    data.addColumn('string', 'Currency');
     data.addColumn('number', 'Total Price');
     var dataArray = [];
 
@@ -49,80 +52,47 @@ function drawChart(result) {
 }
 
 
-function chartJsBar(result) {
-    var dataArray = [];
-    var dataSet = [];
+function barChart(result) {
 
-    console.log(result)
+    var periodOne = '2004';
+    var periodTwo = '2005';
 
-    $.each(result.allRentIncomesWithPaymentMethod, function (i, obj) {
-        dataArray.push([obj.paymentMethod]);
-        $.each(obj.paymentDetail, function (j, item) {
-            dataSet.push([item]);
-        })
-    })
-    console.log(dateArray)
-    console.log(dateSet)
+    // non-fixed variables, variables that I will receive and that will not always be the same size.
+    var columns = ['Example 1', 'Example 2', 'Example 3'];
+    var valuesP1 = [1000, 400, 100];
+    var valuesP2 = [1170, 460, 500];
 
-    var ctx = document.getElementById("rentIncomePaymentPieChart").getContect('2d');
+    // create blank data table
+    var data = new google.visualization.DataTable();
 
-    var chart = new Chart(barCanvas, {
+    // add period column
+    data.addColumn('string', 'Year');
 
-        type: 'bar',
-        data: {
-            labels: dataArray,
-            datasets: [{
-                
-            }]
-        }
-    })
+    // add columns
+    columns.forEach(function (label) {
+        data.addColumn('number', label);
+    });
 
+    // add period to data
+    valuesP1.splice(0, 0, periodOne);
+    valuesP2.splice(0, 0, periodTwo);
 
+    // add data
+    data.addRow(valuesP1);
+    data.addRow(valuesP2);
 
+    // draw chart
+    var options = {
+        title: 'Company Performance',
+        hAxis: { title: 'Year', titleTextStyle: { color: 'red' } },
+        tooltip: { legend: 'none', isHtml: true, textStyle: { color: '#FF0000' }, showColorCode: true }
+    };
 
-
-
-
-
-console.log("*** DATA ARRAY ***")
-    console.log(dataArray)
-    console.log("*** DATA ARRAY ***")
-
-
-
-    console.log("*** DATA SET ***")
-    console.log(dataSet)
-    console.log("*** DATA SET ***")
-
-    //var datasetvalues = {
-    //    labels: [$.each(result.allRentIncomesWithPaymentMethod, function (i, obj) {
-    //        dataArray.push([obj.paymentMethod]);
-    //    })],//x-axis label values
-    //    datasets: [$.each(result.allRentIncomesWithExchange.paymentDetail, function (i, obj) {
-    //        dataSet.push([obj.exchange, obj.sum]);
-    //    })]//y-axis
-    //};
-
-    //var chartOptions = {
-    //    scales: {
-    //        xAxes: [{
-    //            barPercentage: 1,//Percent (0-1) of the available width each bar should
-    //            categoryPercentage: 0.6,//Percent (0-1) of the available width each category
-    //        }],
-    //        yAxes: [{
-    //            barPercentage: 1,
-    //            categoryPercentage: 0.6,
-    //            ticks: {
-    //                beginAtZero: true
-    //            }
-    //        }],
-    //    }
-    //};
-    //var barChart = new Chart(barCanvas, {
-    //    type: 'bar',
-    //    data: datasetvalues,
-    //    options: chartOptions
-    //});
-
-
+    var chart = new google.visualization.ColumnChart(document.getElementById('rentIncomePaymentPieChart'));
+    window.addEventListener('resize', function () {
+        chart.draw(data, options);
+    });
+    chart.draw(data, options);
 }
+
+
