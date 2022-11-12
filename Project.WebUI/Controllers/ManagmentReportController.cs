@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Cryptography;
+using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
@@ -46,19 +47,36 @@ namespace Project.WebUI.Controllers
 
         public async Task<JsonResult> VisualizeRoomRentResult(string selectedDate)
         {
-            List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
-            var datas = (from exchange in incomeWithRoomDtos
-                         group exchange by exchange.Price
+            List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.DailyOrMonthly(selectedDate);
+            var allRentIncomesWithExchange = (from exchange in roomIncomeWithRoomDtos
+                         group exchange by exchange.Exchange.ToString()
                                  into exchangeGroup
                          select new
                          {
                              Exchange = exchangeGroup.Key,
                              Sum = exchangeGroup.Sum(s => s.Price)
                          }).ToList();
+            var allRentIncomesWithPaymentMethod = from payment in roomIncomeWithRoomDtos
+                                                  group payment by payment.PaymentMethod.ToString() into payments
+                                                  select new
+                                                  {
+                                                      PaymentMethod = payments.Key,
+                                                      PaymentDetail = from paymentDetail in payments
+                                                                      group paymentDetail by paymentDetail.Exchange.ToString() into paymentDetailGroup
+                                                                      select new
+                                                                      {
+                                                                          Exchange = paymentDetailGroup.Key,
+                                                                          Sum = paymentDetailGroup.Sum(x => x.Price),
+                                                                      }
+                                                  };
 
+            var allRentIncomes = new
+            {
+                allRentIncomesWithPaymentMethod,
+                allRentIncomesWithExchange
+            };
 
-
-            return Json(datas);
+            return Json(allRentIncomes);
         }
 
 

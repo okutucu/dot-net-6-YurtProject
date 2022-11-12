@@ -12,7 +12,7 @@
 
 	<div class="alert alert-info" role="alert">
 		No data found for the date you entered !   <br>
-		(<span class="text-bold" id="dateId">@ViewBag.date</span>)
+		(<span class="text-bold">@ViewBag.date</span>)
 		<br>
 		<a asp-action="Index" class="alert-link">Click</a>  to go back.
 	</div>
@@ -20,7 +20,13 @@
 else
 {
 	<div>
-		<h3>@ViewBag.date</h3>
+		<h3  id="dateId">@ViewBag.date</h3>
+	</div>
+
+	<div>
+		<h3>Rent Income Chart</h3>
+		<div id="rentIncomeCurrencyPieChart"></div>
+		<canvas id="rentIncomePaymentPieChart"></canvas>
 	</div>
 
 
@@ -201,6 +207,18 @@ else
 		</table>
 	</div>
 </div>
+
+
+
+@section ExtraScripts {
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="~/js/managmentreport.js"></script>
+
+
+	
+    }
 
 }
 
