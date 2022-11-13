@@ -3,23 +3,20 @@ $(document).ready(function () {
     let date = $('#dateId').text();
     let visualizeRoomRentResultUrl = "/ManagmentReport/VisualizeRoomRentResult?selectedDate=";
 
-
-
     $.ajax({
-        type: "POST",
+        type: "GET",
         dataType: "json",
         contentType: "application/json",
         url: visualizeRoomRentResultUrl + date,
         success: function (result) {
-            google.charts.load('current', {
-                'packages': ['corechart'],
-            });
-            google.charts.setOnLoadCallback(function () {
+            console.log(result)
+            google.charts.load('current', { 'packages': ['corechart'] });
+             google.charts.setOnLoadCallback(function () {
                 drawChart(result);
             });
-            google.charts.setOnLoadCallback(function () {
-                barChart(result);
-            });
+
+           
+
 
         }
     });
@@ -45,54 +42,37 @@ function drawChart(result) {
     };
 
     var columnChart = new google.visualization.PieChart(document
-        .getElementById('rentIncomeCurrencyPieChart'));
+        .getElementById('rentIncomeCurrencyChart'));
 
     columnChart.draw(data, columnChartOptions);
 
 }
 
 
-function barChart(result) {
+//function drawChart(result) {
+//    var dataArray = [];
 
-    var periodOne = '2004';
-    var periodTwo = '2005';
+//    $.each(result.allRentIncomesWithPaymentMethod, function (i, obj) {
+//        dataArray.push([obj.paymentMethod]);
+//    });
 
-    // non-fixed variables, variables that I will receive and that will not always be the same size.
-    var columns = ['Example 1', 'Example 2', 'Example 3'];
-    var valuesP1 = [1000, 400, 100];
-    var valuesP2 = [1170, 460, 500];
+//    var data = google.visualization.arrayToDataTable([
+//        [dataArray],
+//        ['2014', 1000, 400, 200],
+//        ['2015', 1170, 460, 250],
+//        ['2016', 660, 1120, 300],
+//        ['2017', 1030, 540, 350]
+//    ]);
 
-    // create blank data table
-    var data = new google.visualization.DataTable();
+//    var options = {
+//        chart: {
+//            title: 'Payment Method Chart',
+//            subtitle: 'Income chart by payment method',
+//        }
+//    };
+//    var chart = new google.charts.Bar(document.getElementById('rentIncomePaymentChart'));
 
-    // add period column
-    data.addColumn('string', 'Year');
-
-    // add columns
-    columns.forEach(function (label) {
-        data.addColumn('number', label);
-    });
-
-    // add period to data
-    valuesP1.splice(0, 0, periodOne);
-    valuesP2.splice(0, 0, periodTwo);
-
-    // add data
-    data.addRow(valuesP1);
-    data.addRow(valuesP2);
-
-    // draw chart
-    var options = {
-        title: 'Company Performance',
-        hAxis: { title: 'Year', titleTextStyle: { color: 'red' } },
-        tooltip: { legend: 'none', isHtml: true, textStyle: { color: '#FF0000' }, showColorCode: true }
-    };
-
-    var chart = new google.visualization.ColumnChart(document.getElementById('rentIncomePaymentPieChart'));
-    window.addEventListener('resize', function () {
-        chart.draw(data, options);
-    });
-    chart.draw(data, options);
-}
+//    chart.draw(data, google.charts.Bar.convertOptions(options));
+//}
 
 
