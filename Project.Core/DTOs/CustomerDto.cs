@@ -12,7 +12,11 @@
 		public string RelativePhone { get; set; }
 		public string UniversityName { get; set; }
 		public string Description { get; set; }
-		public int RoomId { get; set; }
+        public bool DownPayment { get; set; }
+        public decimal DownPaymentPrice { get; set; }
+        public bool Discount { get; set; }
+        public decimal DiscountPrice { get; set; }
+        public int RoomId { get; set; }
 
 	}
 

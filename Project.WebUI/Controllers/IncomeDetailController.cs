@@ -16,6 +16,7 @@ namespace Project.WebUI.Controllers
 		private readonly IMapper _mapper;
 		private readonly IExchangeRateService _exchangeRateService;
 
+		//todo income detail // paymentdetail // room income sadece managmentta mı olacak ??
 
 		public IncomeDetailController(IIncomeDetailService incomeDetailService, IMapper mapper, IExchangeRateService exchangeRateService, IRoomService roomService)
 		{
@@ -131,7 +132,6 @@ namespace Project.WebUI.Controllers
 			IncomeDetail incomeDetail = await _incomeDetailService.GetByIdAsync(id);
 			await _incomeDetailService.RemoveAsync(incomeDetail);
 			return RedirectToAction(nameof(Index));
-
 		}
 
 
