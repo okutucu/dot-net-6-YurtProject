@@ -34,9 +34,30 @@ namespace Project.WebUI.Controllers
 
 		public async Task<IActionResult> GetBySelected(string selectedDate)
 		{
+			ViewBag.date = selectedDate;
 			List<IncomeWithRoomDto> incomeDetailDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
 
-			return View(incomeDetailDtos);
+            ViewBag.allPaymentsDatas = incomeDetailDtos.GroupBy(p => p.Exchange).Select(group => new
+            {
+                Exchange = group.Key,
+                Sum = group.Sum(s => s.Price)
+
+            });
+            ViewBag.detailPaymentsDatas = from payment in incomeDetailDtos
+                                          group payment by payment.PaymentName into payments
+                                      select new
+                                      {
+                                          PaymentName = payments.Key,
+                                          PaymentDetail = from paymentDetail in payments
+                                                          group paymentDetail by paymentDetail.Exchange into paymentDetailGroup
+                                                          select new
+                                                          {
+                                                              Exchange = paymentDetailGroup.Key,
+                                                              Sum = paymentDetailGroup.Sum(x => x.Price),
+                                                          }
+                                      };
+
+            return View(incomeDetailDtos);
 
 		}
 

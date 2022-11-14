@@ -1,11 +1,8 @@
-﻿@using System.Globalization
-@model List<IncomeWithRoomDto>
+﻿@model List<IncomeWithRoomDto>
 
 @{
 	ViewData["Title"] = "Get By Selected";
-
 	string color = "";
-
 }
 
 
@@ -20,23 +17,13 @@
 else
 {
 
-	DateTime date = Model[0].PaymentDate;
-	string fullMonthName = date.ToString("MMMM", CultureInfo.CreateSpecificCulture("en"));
-	string year = date.Year.ToString();
-
-
-	<h1>@fullMonthName @year </h1>
+	<h1>@ViewBag.date </h1>
 
 	<h3>All Incomes</h3>
 
-	var allPaymentsDatas = Model.GroupBy(p => p.Exchange).Select(group => new
-	{
-		Exchange = group.Key,
-		Sum = group.Sum(s => s.Price)
-
-	});
+	
 	<div class="row mt-5">
-		@foreach (var item in allPaymentsDatas)
+		@foreach (var item in @ViewBag.allPaymentsDatas)
 		{
 			switch (item.Exchange.ToString())
 			{
@@ -66,28 +53,10 @@ else
 
 	</div>
 
-
-	var detailPaymentsDatas = from payment in Model
-									group payment by payment.PaymentName into payments
-									select new
-									{
-										PaymentName = payments.Key,
-										PaymentDetail = from paymentDetail in payments
-														group paymentDetail by paymentDetail.Exchange into paymentDetailGroup
-														select new
-														{
-															Exchange = paymentDetailGroup.Key,
-															Sum = paymentDetailGroup.Sum(x => x.Price),
-														}
-									};
-	//todo daha tecrübeli birine sor !! --> Group By
-
-
-
 	<div class="row">
 		<h3>Detailed Payments Table</h3>
 
-		@foreach (var item in detailPaymentsDatas)
+		@foreach (var item in @ViewBag.detailPaymentsDatas)
 		{
 			<div class="col-md-3">
 				<h4>@item.PaymentName </h4>
@@ -100,17 +69,7 @@ else
 			</div>
 
 		}
-
-
-
-
-
-
 	</div>
-
-
-
-
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -123,7 +82,6 @@ else
 				<td>Description</td>
 				<td>PaymentDate</td>
 				<td>Action</td>
-
 			</tr>
 		</thead>
 		<tbody>

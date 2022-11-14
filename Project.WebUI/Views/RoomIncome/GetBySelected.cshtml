@@ -1,11 +1,8 @@
-﻿@using System.Globalization
-@model List<RoomIncomeWithRoomDto>
+﻿@model List<RoomIncomeWithRoomDto>
 
 @{
 	ViewData["Title"] = "Get By Selected";
-
 	string color = "";
-
 }
 
 
@@ -20,25 +17,13 @@
 else
 {
 
-	DateTime date = Model[0].PaymentDate;
-	string fullMonthName = date.ToString("MMMM", CultureInfo.CreateSpecificCulture("en"));
-	string year = date.Year.ToString();
-
-
-	<h1>@fullMonthName @year </h1>
-	<h3>@date</h3>
+	<h1>@ViewBag.date </h1>
+	
 
 	<h3>Room Rent Incomes</h3>
 	
-
-	var allPaymentsDatas = Model.GroupBy(p => p.Exchange).Select(group => new
-	{
-		Exchange = group.Key,
-		Sum = group.Sum(s => s.Price)
-
-	});
 	<div class="row mt-5">
-		@foreach (var item in allPaymentsDatas)
+		@foreach (var item in ViewBag.allPaymentsDatas)
 		{
 			switch (item.Exchange.ToString())
 			{
@@ -65,12 +50,7 @@ else
 			</ul>
 
 		}
-
 	</div>
-
-
-
-
 
 	<table class="table table-striped">
 		<thead>
