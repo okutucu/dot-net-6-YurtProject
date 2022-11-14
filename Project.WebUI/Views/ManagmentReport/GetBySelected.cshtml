@@ -22,8 +22,17 @@ else
 	<div>
 		<h3  id="dateId">@ViewBag.date</h3>
 	</div>
-
-	<div>
+	if (Model.RoomIncomeWithRoomDtos.Count == 0)
+	{
+		<div class="alert alert-info" role="alert">
+			No data on room rentals were found on the date you entered!  <br>
+			(<span class="text-bold">@ViewBag.date</span>)
+			<br>
+		</div>
+	}
+	else
+	{
+			<div>
 		<h3>Rent Income Chart</h3>
 		<div id="rentIncomeCurrencyChart"></div>
 		<div id="rentIncomePaymentChart"></div>
@@ -119,54 +128,75 @@ else
 		</table>
     </div>
 </div>
+	}
+
+	if (Model.IncomeWithRoomDtos.Count == 0)
+	{
+		<div class="alert alert-info" role="alert">
+			No data on revenues was found on the date you entered!  <br>
+			(<span class="text-bold">@ViewBag.date</span>)
+			<br>
+		</div>
+	}
+	else
+	{
+
+		<div>
+			<h3>Incomes Detail Reports</h3>
+			<div class="row">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<td>Room Name</td>
+							<td>Customer Name</td>
+							<td>Price</td>
+							<td> Exchange</td>
+							<td>Money Of The Day	</td>
+							<td> Payment Method</td>
+							<td> Payment Name</td>
+							<td> Description </td>
+							<td> Payment Date </td>
+							<td>Action</td>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (IncomeWithRoomDto roomIncome in Model.IncomeWithRoomDtos)
+						{
+							<tr>
+								<th>@roomIncome.Room.RoomName</th>
+								<th>@roomIncome.CustomerName</th>
+								<th>@roomIncome.Price</th>
+								<th>@roomIncome.Exchange</th>
+								<th>@roomIncome.MoneyOfTheDay</th>
+								<th>@roomIncome.PaymentMethod</th>
+								<th>@roomIncome.PaymentName</th>
+								<th>@roomIncome.Description</th>
+								<th>@roomIncome.PaymentDate</th>
+								<th>
+									<a class="btn btn-warning" asp-controller="IncomeDetail" asp-action="Update" asp-route-id="@roomIncome.Id">Update</a>
+									<a class="btn btn-danger" asp-controller="IncomeDetail" asp-action="Remove" asp-route-id="@roomIncome.Id">Delete</a>
+								</th>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	}
 
 
-<div>
-	<h3>Incomes Detail Reports</h3>
-	<div class="row">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<td>Room Name</td>
-					<td>Customer Name</td>
-					<td>Price</td>
-					<td> Exchange</td>
-					<td>Money Of The Day	</td>
-					<td> Payment Method</td>
-					<td> Payment Name</td>
-					<td> Description </td>
-					<td> Payment Date </td>
-					<td>Action</td>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (IncomeWithRoomDto roomIncome in Model.IncomeWithRoomDtos)
-				{
-					<tr>
-						<th>@roomIncome.Room.RoomName</th>
-						<th>@roomIncome.CustomerName</th>
-						<th>@roomIncome.Price</th>
-						<th>@roomIncome.Exchange</th>
-						<th>@roomIncome.MoneyOfTheDay</th>
-						<th>@roomIncome.PaymentMethod</th>
-						<th>@roomIncome.PaymentName</th>
-						<th>@roomIncome.Description</th>
-						<th>@roomIncome.PaymentDate</th>
-						<th>
-							<a class="btn btn-warning" asp-controller="IncomeDetail" asp-action="Update" asp-route-id="@roomIncome.Id">Update</a>
-							<a class="btn btn-danger" asp-controller="IncomeDetail" asp-action="Remove" asp-route-id="@roomIncome.Id">Delete</a>
-						</th>
-					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
-</div>
+	if (Model.PaymentDetailWithRoomDtos.Count == 0)
+	{
+		<div class="alert alert-info" role="alert">
+			No data on expenses were found on the date you entered! <br>
+			(<span class="text-bold">@ViewBag.date</span>)
+			<br>
+		</div>
 
-
-
-
-<div>
+	}
+	else
+	{
+		<div>
 	<h3>Payment Detail Reports</h3>
 	<div class="row">
 		<table class="table table-striped">
@@ -207,6 +237,11 @@ else
 		</table>
 	</div>
 </div>
+	}
+
+
+
+
 
 
 

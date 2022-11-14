@@ -113,6 +113,46 @@
                             </div>
                          
                         </div>
+
+                           <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="discountId" asp-for="Discount" />
+                                <label class="form-check-label" for="discountId">
+                                    Discount
+                                </label>
+                            </div>
+                              <div class="form-group col-6">
+                                <div class="d-none" id="discountPriceId">
+                                    <label asp-for="DiscountPrice"></label>
+                                    <input id="discoundPriceInput" type="number" asp-for="DiscountPrice" class="form-control" />
+                                    <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="downPaymentId" asp-for="DownPayment" />
+                                <label class="form-check-label" for="downPaymentId">
+                                    Down Payment
+                                </label>
+                            </div>
+                            <div class="form-group col-6">
+                                <div class="d-none" id="downPaymentPriceId">
+                                    <label asp-for="DownPaymentPrice"></label>
+                                    <input id="downPaymentPriceInput" type="number" asp-for="DownPaymentPrice" class="form-control" />
+                                    <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit"><i class="material-icons f-left material-css">thumb_up</i>  Submit </button>
                             <a asp-action="Index" class="btn btn-danger">
@@ -134,4 +174,35 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+    @section ExtraScripts{
+    <script>
+        $(document).ready(function () {
+
+            let discountPrice = $('#discountPriceId');
+            let downPaymentPrice = $('#downPaymentPriceId');
+            $('#discoundPriceInput').val('0');
+            $('#downPaymentPriceInput').val('0');
+
+
+
+            $("#discountId").on('change', function () {
+                if ($(this).is(':checked')) {
+                    discountPrice.addClass('d-block').removeClass('d-none');
+                } else {
+                    discountPrice.addClass('d-none').removeClass('d-block');
+                    $('#discoundPriceInput').val('0');
+                }
+            });
+            $("#downPaymentId").on('change', function () {
+                if ($(this).is(':checked')) {
+                    downPaymentPrice.addClass('d-block').removeClass('d-none');
+                } else {
+                    downPaymentPrice.addClass('d-none').removeClass('d-block');
+                    $('#downPaymentPriceInput').val('0');
+                }
+            });
+        });
+    </script>
 }

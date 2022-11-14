@@ -13,6 +13,7 @@
 		public string UniversityName { get; set; }
 		public string Description { get; set; }
 		public bool DownPayment { get; set; }
+		// kapora ve discount hangi şartlar altında tutulacak
         public decimal DownPaymentPrice { get; set; }
         public bool Discount { get; set; }
         public decimal DiscountPrice { get; set; }

@@ -57,7 +57,7 @@
                               <div class="form-group col-6">
                                 <div class="d-none" id="lackDetailId">
                                     <label asp-for="LackDetail"></label>
-                                    <input asp-for="LackDetail" class="form-control" />
+                                    <input id="lackDetailInput" asp-for="LackDetail" class="form-control" />
                                 </div>
                             </div>
 
@@ -98,6 +98,7 @@
                     lackDetail.addClass('d-block').removeClass('d-none');
                 } else {
                     lackDetail.addClass('d-none').removeClass('d-block');
+                    $('#lackDetailInput').val('');
                 }
             });
         });
