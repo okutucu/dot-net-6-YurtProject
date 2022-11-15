@@ -1,4 +1,7 @@
-﻿namespace Project.Core.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
+
+namespace Project.Core.Models
 {
 	public class Room : BaseEntity
 	{
@@ -10,10 +13,14 @@
 		public string LackDetail { get; set; }
 		public int? RoomTypeId { get; set; }
 
+		[NotMapped]
+		public IFormFile File  { get; set; }
+		public string FileName { get; set; }
 
 
-		// Relational Properties
-		public IList<Customer> Customers { get; set; }
+
+    // Relational Properties
+		 public IList<Customer> Customers { get; set; }
 		public IList<RoomIncome> RoomIncomes { get; set; }
 		public IList<IncomeDetail> IncomeDetails { get; set; }
 		public IList<PaymentDetail> PaymentDetails { get; set; }
