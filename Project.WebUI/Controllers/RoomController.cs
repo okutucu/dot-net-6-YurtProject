@@ -14,11 +14,13 @@ namespace Project.WebUI.ControllersR
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
 		private readonly IService<RoomType> _roomTypeService;
-		public RoomController(IRoomService roomService, IMapper mapper, IService<RoomType> roomTypeService)
+		private readonly IWebHostEnvironment _env;
+		public RoomController(IRoomService roomService, IMapper mapper, IService<RoomType> roomTypeService, IWebHostEnvironment env)
 		{
 			_roomService = roomService;
 			_mapper = mapper;
 			_roomTypeService = roomTypeService;
+			_env = env;
 		}
 		public async Task<IActionResult> Index()
 		{
@@ -83,7 +85,6 @@ namespace Project.WebUI.ControllersR
 			List<RoomType> roomTypes = _roomTypeService.GetAll().ToList();
 			List<RoomTypeDto> roomTypesDto = _mapper.Map<List<RoomTypeDto>>(roomTypes);
 			ViewBag.roomTypes = new SelectList(roomTypesDto, "Id", "RoomName", room.RoomTypeId);
-
 
 			return View(_mapper.Map<RoomUpdateDto>(room));
 		}

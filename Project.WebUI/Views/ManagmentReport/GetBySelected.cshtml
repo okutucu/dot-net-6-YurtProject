@@ -32,102 +32,57 @@ else
 	}
 	else
 	{
-			<div>
-		<h3>Rent Income Chart</h3>
-		<div id="rentIncomeCurrencyChart"></div>
-		<div id="rentIncomePaymentChart"></div>
-	</div>
-
-
-		var allRentIncomesWithExchange = Model.RoomIncomeWithRoomDtos.GroupBy(p => p.Exchange).Select(group => new
-		{
-		Exchange = group.Key,
-		Sum = group.Sum( s => s.Price)
-		
-		});
-
-
-	var allRentIncomesWithPaymentMethod = from payment in Model.RoomIncomeWithRoomDtos
-										group payment by payment.PaymentMethod into payments
-										select new
-										{
-											PaymentMethod = payments.Key,
-											PaymentDetail = from paymentDetail in payments
-															group paymentDetail by paymentDetail.Exchange into paymentDetailGroup
-															select new 
-															{
-																Exchange = paymentDetailGroup.Key,
-																Sum = paymentDetailGroup.Sum(x => x.Price),
-															}
-										};
-
-		<div class="row">
-			<div class="card col-12">
-				<h4>Kur'a göre grup</h4>
-				@foreach (var item in allRentIncomesWithExchange)
-				{
-				<ul style="background-color:red">
-					<li>Exchange = @item.Exchange</li>
-					<li>Total Price = @item.Sum</li>
-				</ul>
-			}
-			</div>
-		<div class="card col-12">
-			<h4>Ödeme Method'una göre grup</h4>
-
-			@foreach (var item in allRentIncomesWithPaymentMethod)
-			{
-				<h5>@item.PaymentMethod</h5>
-				@foreach (var rentIncomeDetail in item.PaymentDetail)
-				{
-					<ul style="background-color:green">
-						<li>Exchange = @rentIncomeDetail.Exchange</li>
-						<li>Total Price = @rentIncomeDetail.Sum</li>
-					</ul>
-				}
-			}
+		<div>
+			<h3>Rent Income Chart</h3>
+			<div id="rentIncomeCurrencyChart"></div>
+			<canvas id="rentIncomePaymentChart" width="300" height="450"></canvas>
+@*			<div id="rentIncomePaymentChart"></div>*@
 		</div>
+<div>
+			<h3>Rent Income Chart</h3>
+			<div id="rentIncomeCurrencyChart"></div>
+			<div id="rentIncomePaymentChart"></div>
 		</div>
 
 	<div>
-	<h3>Room Rent Reports</h3>
-    <div class="row">
-        <table class="table table-striped">
-			<thead>
-			<tr>
-				<td>Room Name</td>
-				<td>Customer Name</td>
-				<td>Price</td>
-				<td> Exchange</td>
-				<td>Money Of The Day	</td>
-				<td> Payment Method</td>
-				<td> Description </td>
-				<td> Payment Date </td>
-				<td>Action</td>
-			</tr>
-			</thead>
-			<tbody>
-				@foreach (RoomIncomeWithRoomDto roomIncome in Model.RoomIncomeWithRoomDtos)
-				{
+			<h3>Room Rent List </h3>
+			<div class="row">
+			<table class="table table-striped">
+				<thead>
 				<tr>
-						<th>@roomIncome.Room.RoomName</th>
-						<th>@roomIncome.CustomerName</th>
-						<th>@roomIncome.Price</th>
-						<th>@roomIncome.Exchange</th>
-						<th>@roomIncome.MoneyOfTheDay</th>
-						<th>@roomIncome.PaymentMethod</th>
-						<th>@roomIncome.Description</th>
-						<th>@roomIncome.PaymentDate</th>
-						<th>
-							<a class="btn btn-warning" asp-controller="RoomIncome" asp-action="Update" asp-route-id="@roomIncome.Id">Update</a>
-							<a class="btn btn-danger" asp-controller="RoomIncome" asp-action="Remove" asp-route-id="@roomIncome.Id">Delete</a>
-						</th>
+					<td>Room Name</td>
+					<td>Customer Name</td>
+					<td>Price</td>
+					<td> Exchange</td>
+					<td>Money Of The Day	</td>
+					<td> Payment Method</td>
+					<td> Description </td>
+					<td> Payment Date </td>
+					<td>Action</td>
 				</tr>
-				}
-			</tbody>
-		</table>
-    </div>
-</div>
+				</thead>
+				<tbody>
+					@foreach (RoomIncomeWithRoomDto roomIncome in Model.RoomIncomeWithRoomDtos)
+					{
+					<tr>
+							<th>@roomIncome.Room.RoomName</th>
+							<th>@roomIncome.CustomerName</th>
+							<th>@roomIncome.Price</th>
+							<th>@roomIncome.Exchange</th>
+							<th>@roomIncome.MoneyOfTheDay</th>
+							<th>@roomIncome.PaymentMethod</th>
+							<th>@roomIncome.Description</th>
+							<th>@roomIncome.PaymentDate</th>
+							<th>
+								<a class="btn btn-warning" asp-controller="RoomIncome" asp-action="Update" asp-route-id="@roomIncome.Id">Update</a>
+								<a class="btn btn-danger" asp-controller="RoomIncome" asp-action="Remove" asp-route-id="@roomIncome.Id">Delete</a>
+							</th>
+					</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
 	}
 
 	if (Model.IncomeWithRoomDtos.Count == 0)
@@ -140,6 +95,13 @@ else
 	}
 	else
 	{
+
+		<div>
+			<h3>Oher Income Chart</h3>
+			<div id="othertIncomeCurrencyChart"></div>
+			<div id="otherIncomePaymentChart"></div>
+		</div>
+
 
 		<div>
 			<h3>Incomes Detail Reports</h3>
@@ -196,7 +158,16 @@ else
 	}
 	else
 	{
+
 		<div>
+			<h3>Payment Detail Chart</h3>
+			<div id="paymentDetailCurrencyChart"></div>
+			<div id="paymentDetaişPaymentChart"></div>
+		</div>
+
+
+
+	<div>
 	<h3>Payment Detail Reports</h3>
 	<div class="row">
 		<table class="table table-striped">
@@ -248,9 +219,8 @@ else
 @section ExtraScripts {
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
      <script src="~/js/managmentreport.js"></script>
-
-
 	
     }
 
