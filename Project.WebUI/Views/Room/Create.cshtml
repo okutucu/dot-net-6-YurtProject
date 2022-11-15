@@ -23,7 +23,7 @@
     <div class="card-body">
         <div class="row g-5">
             <div class="col-lg-12 col-md-12">
-                <form asp-action="Create" method="post" asp-controller="Room" class="needs-validation" novalidate>
+                <form asp-action="Create" method="post" asp-controller="Room" class="needs-validation" novalidate enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row g-3">
                         <div class="col-6">
@@ -49,8 +49,9 @@
                         </div>
                          <div class="col-6">
                             <div class="form-group">
-                                <label class="form-label" for="upload"> Images </label>
-                                <input type="file" class="form-control" id="upload" />
+                                <label class="form-label" for="upload"> Image </label>
+                                <input asp-for="File"  type="file" class="form-control" id="upload" />
+                                <span asp-validation-for="File" class="text-danger"></span>
                                 
                             </div>
                         </div>

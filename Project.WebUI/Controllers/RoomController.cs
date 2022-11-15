@@ -61,7 +61,23 @@ namespace Project.WebUI.ControllersR
 		{
 			if (ModelState.IsValid)
 			{
-				roomCreateDto.CurrentCapacity = roomCreateDto.Capacity;
+
+				string filePath = Path.Combine(_env.WebRootPath, "resimler");
+				if (!Directory.Exists(filePath))
+				{
+					Directory.CreateDirectory(filePath);
+				}
+
+
+                string fullFileName = Path.Combine(filePath, roomCreateDto.File.FileName);
+
+                using (FileStream fileFlow = new FileStream(fullFileName,FileMode.Create))
+				{
+					await roomCreateDto.File.CopyToAsync(fileFlow);
+                }
+
+				roomCreateDto.FileName = roomCreateDto.File.FileName;
+                roomCreateDto.CurrentCapacity = roomCreateDto.Capacity;
 
 				await _roomService.AddAsync(_mapper.Map<Room>(roomCreateDto));
 				return RedirectToAction(nameof(Index));
