@@ -35,7 +35,6 @@ namespace Project.Service.Services
 		public async Task UpdateByCurrency(PaymentDetailDto paymentDetailDto, decimal currency)
 		{
 			paymentDetailDto.MoneyOfTheDay = currency * paymentDetailDto.Price;
-			//todo control
 			paymentDetailDto.PaymentDate = DateTime.Now;
 
 

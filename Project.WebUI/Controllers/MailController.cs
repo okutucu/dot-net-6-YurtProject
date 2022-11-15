@@ -24,8 +24,6 @@ namespace Project.WebUI.Controllers
         {
             return View();
         }
-
-        //todo redirect popup
         [HttpPost]
         public async Task<IActionResult> SendAMailToTheDebtors(MailDto mailDto)
         {

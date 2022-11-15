@@ -41,7 +41,7 @@ namespace Project.Repository.Configurations
 						Price = 1,
 						CreatedDate = DateTime.Now
 					}
-				//todo tl currency hide and show
+				
 				);
 		}
 	}
