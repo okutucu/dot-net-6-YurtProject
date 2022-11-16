@@ -19,12 +19,12 @@
         public decimal DiscountPrice { get; set; }
 
 
-
-
         public int? RoomId { get; set; }
 
-		//Relational Properties
-		public virtual Room Room { get; set; }
+        //Relational Properties
+
+        public IList<Image> Images { get; set; }
+        public virtual Room Room { get; set; }
 
 	}
 }

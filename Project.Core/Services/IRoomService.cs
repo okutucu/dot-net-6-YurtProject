@@ -8,7 +8,9 @@ namespace Project.Core.Services
 		Task<List<RoomWithCustomerDto>> GetRoomWithCustomerAsync();
 		Task<List<RoomTypeWithRoomDto>> GetRoomWithRoomTypeAsync();
 		Task<RoomWithCustomerDto> GetSingleRoomByIdWithCustomerAsync(int roomId);
-		Task<RoomTypeWithRoomDto> GetSingleRoomByIdWithRoomTypeAsync(int roomId);
+        Task<List<RoomWithImageDto>> GetRoomWithImagesAsync(int roomId);
+
+        Task<RoomTypeWithRoomDto> GetSingleRoomByIdWithRoomTypeAsync(int roomId);
 		Task ReducingRoomCapacityAsync(int roomId);
 		Task<RoomUpdateDto> RoomCapacityAccuracyAsync(RoomUpdateDto roomUpdateDto);
 		Task GetCustomerWithRoomForRoomChangeAsync(int oldRoomId, int newRoomId);

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
+using Project.Service.Utilities.Extensions;
+using Project.WebUI.ViewModel;
 
 namespace Project.WebUI.ControllersR
 {
@@ -61,22 +63,7 @@ namespace Project.WebUI.ControllersR
 		{
 			if (ModelState.IsValid)
 			{
-
-				string filePath = Path.Combine(_env.WebRootPath, "resimler");
-				if (!Directory.Exists(filePath))
-				{
-					Directory.CreateDirectory(filePath);
-				}
-
-
-                string fullFileName = Path.Combine(filePath, roomCreateDto.File.FileName);
-
-                using (FileStream fileFlow = new FileStream(fullFileName,FileMode.Create))
-				{
-					await roomCreateDto.File.CopyToAsync(fileFlow);
-                }
-
-				roomCreateDto.FileName = roomCreateDto.File.FileName;
+				await ImageUpload(roomCreateDto);
                 roomCreateDto.CurrentCapacity = roomCreateDto.Capacity;
 
 				await _roomService.AddAsync(_mapper.Map<Room>(roomCreateDto));
@@ -90,6 +77,32 @@ namespace Project.WebUI.ControllersR
 
             return View(roomCreateDto);
 		}
+
+
+		public async Task ImageUpload(RoomCreateDto roomCreateDto)
+		{
+            string filePath = Path.Combine(_env.WebRootPath,"RoomImages");
+			if (!Directory.Exists(filePath))
+			{
+				Directory.CreateDirectory(filePath);
+			}
+
+            foreach (IFormFile item in roomCreateDto.Files)
+            {
+				string fileExtension = Path.GetExtension(item.FileName);
+				DateTime dateTime = DateTime.Now;
+				string fileName = $"{item.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{fileExtension}";			
+
+                string path = Path.Combine(filePath, fileName);
+                
+				using (FileStream fileFlow = new FileStream(path, FileMode.Create))
+                {
+                    await item.CopyToAsync(fileFlow);
+                }
+
+                roomCreateDto.Images.Add(new Image { FileName = fileName });
+            }
+        }
 
 
 		[ServiceFilter(typeof(NotFoundFilter<Room>))]
@@ -127,9 +140,17 @@ namespace Project.WebUI.ControllersR
 		[ServiceFilter(typeof(NotFoundFilter<Room>))]
 		public async Task<IActionResult> Detail(int id)
 		{
-			RoomWithCustomerDto roomAndCustomerDto = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
+			List<RoomWithImageDto> roomWithImagesDto = await _roomService.GetRoomWithImagesAsync(id);
+            RoomWithCustomerDto roomAndCustomerDto = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
 
-			return View(roomAndCustomerDto);
+			RoomDetail_VM roomDetail = new RoomDetail_VM
+			{
+				roomWithCustomer = roomAndCustomerDto,
+				roomWithImages = roomWithImagesDto
+
+			};
+
+            return View(roomDetail);
 		}
 
 		public async Task<JsonResult> Remove(int id)

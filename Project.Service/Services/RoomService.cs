@@ -65,6 +65,16 @@ namespace Project.Service.Services
 			return roomDto;
 
 		}
+
+		public async Task<List<RoomWithImageDto>> GetRoomWithImagesAsync(int roomId)
+		{
+            List<Room> rooms = await _roomRepository.GetRoomWithImagesAsync(roomId);
+
+            List<RoomWithImageDto> roomsDto = _mapper.Map<List<RoomWithImageDto>>(rooms);
+
+            return roomsDto;
+        }
+
 		public async Task<List<RoomTypeWithRoomDto>> GetRoomWithRoomTypeAsync()
 		{
 			List<Room> rooms = await _roomRepository.GetRoomWithRoomTypeAsync();

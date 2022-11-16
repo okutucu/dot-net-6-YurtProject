@@ -70,6 +70,9 @@ namespace Project.WebUI.Controllers
                                                                           Sum = paymentDetailGroup.Sum(x => x.Price),
                                                                       }
                                                   };
+           
+
+
 
             var allRentIncomes = new
             {

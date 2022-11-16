@@ -15,7 +15,8 @@ $(document).ready(function () {
              google.charts.setOnLoadCallback(function () {
                  drawChartWithRoomRent(result);
              });
-            drawChartRoomRentalincomeByPaymentName(result.allRentIncomesWithPaymentMethod);
+                drawChartRoomRentalincomeByPaymentName(result.allRentIncomesWithPaymentMethod);
+           
         }
     });
     $.ajax({
@@ -40,6 +41,7 @@ $(document).ready(function () {
             google.charts.setOnLoadCallback(function () {
                 drawChartWithPaymentDetail(result);
             });
+   
         }
     });
 
@@ -71,51 +73,91 @@ function drawChartWithRoomRent(result) {
 
 }
 
+
 function drawChartRoomRentalincomeByPaymentName(result) {
 
-    console.log(result)
     var dataArray = [];
     var cashArray = [];
+    var creditCartArray = [];
+    var eftArray = [];
+    var sterlingArray = [];
+
     $.each(result, function (i, obj) {
         dataArray.push(obj.paymentMethod);
     });
 
-    new Chart(document.getElementById("rentIncomePaymentChart"), {
-        type: 'bar',
-        data: {
-            labels: dataArray,
-            datasets: [
-                {
-                    label: "Euro",
-                    backgroundColor: "#3e95cd",
-                    data: [50, 73, 60]
-                },
-                {
-                    label: "Tl",
-                    backgroundColor: "#8e5ea2",
-                    data: [88,  55]
-                },
-                {
-                    label: "Dollar",
-                    backgroundColor: "red",
-                    data: [12, 65]
-                },
-                {
-                    label: "Sterling",
-                    backgroundColor: "yellow",
-                    data: [12, 65]
-                }
-            ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Population growth (millions)'
-            }
-        }
+    console.log(result)
+
+    $.each(result, function (i, obj) {
+        console.log(obj.paymentDetail)
+        $.each(obj.paymentDetail, function (i, payment) {
+
+
+          
+ 
+        });
     });
 
 
+
+
+   
+
+    var options = {
+        series: [{
+            name: 'Euro',
+            data: [44, 55, 57]
+        }, {
+            name: 'Dollar',
+            data: [76, 85, 101]
+        }, {
+            name: 'Sterling',
+            data: [35, 41, 31]
+        }, {
+            name: 'Tl',
+            data: [35, 41, 31]
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: dataArray,
+        },
+        yaxis: {
+            title: {
+                text: '$ (thousands)'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return  val + " rent incomes"
+                }
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#rentIncomePaymentChart"), options);
+    chart.render();
 
 
 }

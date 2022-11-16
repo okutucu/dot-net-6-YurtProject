@@ -18,6 +18,7 @@ namespace Project.Repository.Context
 		public DbSet<Room> Rooms { get; set; }
 		public DbSet<RoomIncome> RoomIncomes { get; set; }
 		public DbSet<AppUser> Users { get; set; }
+		public DbSet<Image> Images { get; set; }
 
 
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

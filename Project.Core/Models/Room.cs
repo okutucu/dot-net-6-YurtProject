@@ -14,16 +14,14 @@ namespace Project.Core.Models
 		public int? RoomTypeId { get; set; }
 
 		[NotMapped]
-		public IFormFile File  { get; set; }
-		public string FileName { get; set; }
+		public IFormFile[] Files  { get; set; }
 
-
-
-    // Relational Properties
-		 public IList<Customer> Customers { get; set; }
+		// Relational Properties
+		public IList<Customer> Customers { get; set; }
 		public IList<RoomIncome> RoomIncomes { get; set; }
 		public IList<IncomeDetail> IncomeDetails { get; set; }
 		public IList<PaymentDetail> PaymentDetails { get; set; }
+		public IList<Image> Images { get; set; } = new List<Image>();
 		public virtual RoomType RoomType { get; set; }
 
 	}
