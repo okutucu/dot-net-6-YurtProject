@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTOs;
+using Project.Core.Enums;
 using Project.Core.Models;
 using Project.Core.Services;
 using Project.WebUI.ViewModel;
@@ -57,20 +58,17 @@ namespace Project.WebUI.Controllers
                              Exchange = exchangeGroup.Key,
                              Sum = exchangeGroup.Sum(s => s.Price)
                          }).ToList();
-            var allRentIncomesWithPaymentMethod = from payment in roomIncomeWithRoomDtos
-                                                  group payment by payment.PaymentMethod.ToString() into payments
-                                                  select new
-                                                  {
-                                                      PaymentMethod = payments.Key,
-                                                      PaymentDetail = from paymentDetail in payments
-                                                                      group paymentDetail by paymentDetail.Exchange.ToString() into paymentDetailGroup
-                                                                      select new
-                                                                      {
-                                                                          Exchange = paymentDetailGroup.Key,
-                                                                          Sum = paymentDetailGroup.Sum(x => x.Price),
-                                                                      }
-                                                  };
-           
+
+
+            var allRentIncomesWithPaymentMethod = roomIncomeWithRoomDtos.GroupBy(
+       x => new { x.PaymentMethod, x.Exchange }
+      ).Select(g => new
+      {
+          PaymentMethod = g.Key.PaymentMethod.ToString(),
+          Exchange = g.Key.Exchange.ToString(),
+          Sum = g.Sum(s => s.Price)
+      }).ToList();
+
 
 
 
@@ -95,19 +93,17 @@ namespace Project.WebUI.Controllers
                                                   Exchange = exchangeGroup.Key,
                                                   Sum = exchangeGroup.Sum(s => s.Price)
                                               }).ToList();
-            var allIncomesDetailWithPaymentMethod = from payment in incomeWithRoomDtos
-                                                  group payment by payment.PaymentMethod.ToString() into payments
-                                                  select new
-                                                  {
-                                                      PaymentMethod = payments.Key,
-                                                      PaymentDetail = from paymentDetail in payments
-                                                                      group paymentDetail by paymentDetail.Exchange.ToString() into paymentDetailGroup
-                                                                      select new
-                                                                      {
-                                                                          Exchange = paymentDetailGroup.Key,
-                                                                          Sum = paymentDetailGroup.Sum(x => x.Price),
-                                                                      }
-                                                  };
+
+
+            var allIncomesDetailWithPaymentMethod = incomeWithRoomDtos.GroupBy(
+       x => new { x.PaymentMethod, x.Exchange }
+      ).Select(g => new
+      {
+          PaymentMethod = g.Key.PaymentMethod.ToString(),
+          Exchange = g.Key.Exchange.ToString(),
+          Sum = g.Sum(s => s.Price)
+      }).ToList();
+
 
             var allIncomesDetail = new
             {
@@ -130,19 +126,15 @@ namespace Project.WebUI.Controllers
                                                     Exchange = exchangeGroup.Key,
                                                     Sum = exchangeGroup.Sum(s => s.Price)
                                                 }).ToList();
-            var allpaymentDetailWithPaymentMethod = from payment in paymentWithRoomDtos
-                                                    group payment by payment.PaymentMethod.ToString() into payments
-                                                    select new
-                                                    {
-                                                        PaymentMethod = payments.Key,
-                                                        PaymentDetail = from paymentDetail in payments
-                                                                        group paymentDetail by paymentDetail.Exchange.ToString() into paymentDetailGroup
-                                                                        select new
-                                                                        {
-                                                                            Exchange = paymentDetailGroup.Key,
-                                                                            Sum = paymentDetailGroup.Sum(x => x.Price),
-                                                                        }
-                                                    };
+
+            var allpaymentDetailWithPaymentMethod = paymentWithRoomDtos.GroupBy(
+                x => new { x.PaymentMethod , x.Exchange}
+               ).Select( g =>  new
+               {
+                   PaymentMethod = g.Key.PaymentMethod.ToString(),
+                   Exchange = g.Key.Exchange.ToString(),
+                   Sum = g.Sum(s => s.Price)
+               }).ToList();
 
             var allPaymentDetail = new
             {

@@ -32,16 +32,22 @@ else
 	}
 	else
 	{
-		<div>
+		<div class="row">
 			<h3>Rent Income Chart</h3>
+			<div class="col-6"  style="background:white">
+				<h3 class="my-2">
+					Currency & Price Chart
+				</h3>
 			<div id="rentIncomeCurrencyChart"></div>
-			<div id="rentIncomePaymentChart" width="300" height="450"></div>
-@*			<div id="rentIncomePaymentChart"></div>*@
-		</div>
-<div>
-			<h3>Rent Income Chart</h3>
-			<div id="rentIncomeCurrencyChart"></div>
+
+			</div>
+			<div class="col-6" style="background:white">
+				<h3 class="my-2">
+					Payment Method & Price Chart
+				</h3>
 			<div id="rentIncomePaymentChart"></div>
+
+			</div>
 		</div>
 
 	<div>
@@ -96,11 +102,24 @@ else
 	else
 	{
 
-		<div>
+		<div class="row">
 			<h3>Oher Income Chart</h3>
-			<div id="othertIncomeCurrencyChart"></div>
-			<div id="otherIncomePaymentChart"></div>
+			<div class="col-6" style="background:white">
+				<h3 class="my-2">
+					Currency & Price Chart
+				</h3>
+				<div id="othertIncomeCurrencyChart"></div>
+
+			</div>
+			<div class="col-6" style="background:white">
+				<h3 class="my-2">
+					Payment Method & Price Chart
+				</h3>
+					<div id="otherIncomePaymentChart"></div>
+
+			</div>
 		</div>
+
 
 
 		<div>
@@ -159,13 +178,24 @@ else
 	else
 	{
 
-		<div>
-			<h3>Payment Detail Chart</h3>
-			<div id="paymentDetailCurrencyChart"></div>
-			<div id="paymentDetaişPaymentChart"></div>
+
+		<div class="row">
+				<h3>Payment Detail Chart</h3>
+			<div class="col-6" style="background:white">
+				<h3 class="my-2">
+					Currency & Price Chart
+				</h3>
+					<div id="paymentDetailCurrencyChart"></div>
+
+			</div>
+			<div class="col-6" style="background:white">
+				<h3 class="my-2">
+					Payment Method & Price Chart
+				</h3>
+						<div  id="paymentDetailPaymentChart"></div>
+
+			</div>
 		</div>
-
-
 
 	<div>
 	<h3>Payment Detail Reports</h3>
@@ -219,8 +249,6 @@ else
 @section ExtraScripts {
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/underscore@1.13.6/underscore-umd-min.js"></script>
-
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
      <script src="~/js/managmentreport.js"></script>
 	

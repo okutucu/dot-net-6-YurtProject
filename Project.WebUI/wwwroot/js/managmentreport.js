@@ -15,7 +15,7 @@ $(document).ready(function () {
              google.charts.setOnLoadCallback(function () {
                  drawChartWithRoomRent(result);
              });
-                drawChartRoomRentalincomeByPaymentName(result.allRentIncomesWithPaymentMethod);
+            drawChartRoomRentallincomeByPaymentName(result.allRentIncomesWithPaymentMethod);
            
         }
     });
@@ -29,6 +29,9 @@ $(document).ready(function () {
             google.charts.setOnLoadCallback(function () {
                 drawChartWithIncomesDetail(result);
             });
+            drawChartIncomeDetailByPaymentName(result.allIncomesDetailWithPaymentMethod);
+
+            
         }
     });
     $.ajax({
@@ -37,10 +40,13 @@ $(document).ready(function () {
         contentType: "application/json",
         url: visualizePaymentResultUrl + date,
         success: function (result) {
+            console.log(result);
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 drawChartWithPaymentDetail(result);
             });
+
+            drawChartRoomPaymentDetailByPaymentName(result.allpaymentDetailWithPaymentMethod)
    
         }
     });
@@ -49,6 +55,7 @@ $(document).ready(function () {
 });
 
 function drawChartWithRoomRent(result) {
+
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Currency');
     data.addColumn('number', 'Total Price');
@@ -74,48 +81,70 @@ function drawChartWithRoomRent(result) {
 }
 
 
-function drawChartRoomRentalincomeByPaymentName(result) {
+function drawChartRoomRentallincomeByPaymentName(result) {
 
-    var dataArray = [];
-    var cashArray = [];
-    var creditCartArray = [];
-    var eftArray = [];
-    var sterlingArray = [];
+    var raw = result,
+        nameIndices = Object.create(null),
+        statusHash = Object.create(null),
+        data = { labels: [], datasets: [] };
 
-    $.each(result, function (i, obj) {
-        dataArray.push(obj.paymentMethod);
-    });
-
-    console.log(result)
-
-    $.each(result, function (i, obj) {
-        console.log(obj.paymentDetail)
-        $.each(obj.paymentDetail, function (i, payment) {
-
-
-          
- 
-        });
+    raw.forEach(function (o) {
+        if (!(o.paymentMethod in nameIndices)) {
+            nameIndices[o.paymentMethod] = data.labels.push(o.paymentMethod) - 1;
+            data.datasets.forEach(function (a) { a.data.push(0); });
+        }
+        if (!statusHash[o.exchange]) {
+            statusHash[o.exchange] = { label: o.exchange, fillcolor: 'f00', data: data.labels.map(function () { return 0; }) };
+            data.datasets.push(statusHash[o.exchange]);
+        }
+        statusHash[o.exchange].data[nameIndices[o.paymentMethod]] = o.sum;
     });
 
 
 
+    let euroArray = [];
+    let tlArray = [];
+    let dollarArray = [];
+    let sterlingArray = [];
 
-   
+    $.each(data.datasets, function (i, obj) {
+        if (obj.label === 'Dollar') {
+            $.each(obj.data, function (k, item) {
+                dollarArray.push(item);
+            });
+        }
+        if (obj.label === 'Tl') {
+            $.each(obj.data, function (k, item) {
+                tlArray.push(item);
+            });
+        }
+        if (obj.label === 'Euro') {
+            $.each(obj.data, function (k, item) {
+                euroArray.push(item);
+            });
+        }
+        if (obj.label === 'Sterling') {
+            $.each(obj.data, function (k, item) {
+                sterlingArray.push(item);
+            });
+        }
+    });
+
+
 
     var options = {
         series: [{
             name: 'Euro',
-            data: [44, 55, 57]
+            data: euroArray
         }, {
             name: 'Dollar',
-            data: [76, 85, 101]
+            data: dollarArray
         }, {
             name: 'Sterling',
-            data: [35, 41, 31]
+            data: sterlingArray
         }, {
             name: 'Tl',
-            data: [35, 41, 31]
+            data: tlArray
         }],
         chart: {
             type: 'bar',
@@ -137,11 +166,11 @@ function drawChartRoomRentalincomeByPaymentName(result) {
             colors: ['transparent']
         },
         xaxis: {
-            categories: dataArray,
+            categories: data.labels,
         },
         yaxis: {
             title: {
-                text: '$ (thousands)'
+                text: 'Rent & Price (sum)'
             }
         },
         fill: {
@@ -150,7 +179,7 @@ function drawChartRoomRentalincomeByPaymentName(result) {
         tooltip: {
             y: {
                 formatter: function (val) {
-                    return  val + " rent incomes"
+                    return val + " Payment Detail"
                 }
             }
         }
@@ -161,6 +190,10 @@ function drawChartRoomRentalincomeByPaymentName(result) {
 
 
 }
+
+
+
+
 
 
 function drawChartWithIncomesDetail(result) {
@@ -188,11 +221,123 @@ function drawChartWithIncomesDetail(result) {
 
 }
 
+function drawChartIncomeDetailByPaymentName(result) {
+    var raw = result,
+        nameIndices = Object.create(null),
+        statusHash = Object.create(null),
+        data = { labels: [], datasets: [] };
+
+    raw.forEach(function (o) {
+        if (!(o.paymentMethod in nameIndices)) {
+            nameIndices[o.paymentMethod] = data.labels.push(o.paymentMethod) - 1;
+            data.datasets.forEach(function (a) { a.data.push(0); });
+        }
+        if (!statusHash[o.exchange]) {
+            statusHash[o.exchange] = { label: o.exchange, fillcolor: 'f00', data: data.labels.map(function () { return 0; }) };
+            data.datasets.push(statusHash[o.exchange]);
+        }
+        statusHash[o.exchange].data[nameIndices[o.paymentMethod]] = o.sum;
+    });
+
+
+
+    let euroArray = [];
+    let tlArray = [];
+    let dollarArray = [];
+    let sterlingArray = [];
+
+    $.each(data.datasets, function (i, obj) {
+        if (obj.label === 'Dollar') {
+            $.each(obj.data, function (k, item) {
+                dollarArray.push(item);
+            });
+        }
+        if (obj.label === 'Tl') {
+            $.each(obj.data, function (k, item) {
+                tlArray.push(item);
+            });
+        }
+        if (obj.label === 'Euro') {
+            $.each(obj.data, function (k, item) {
+                euroArray.push(item);
+            });
+        }
+        if (obj.label === 'Sterling') {
+            $.each(obj.data, function (k, item) {
+                sterlingArray.push(item);
+            });
+        }
+    });
+
+
+
+    var options = {
+        series: [{
+            name: 'Euro',
+            data: euroArray
+        }, {
+            name: 'Dollar',
+            data: dollarArray
+        }, {
+            name: 'Sterling',
+            data: sterlingArray
+        }, {
+            name: 'Tl',
+            data: tlArray
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: data.labels,
+        },
+        yaxis: {
+            title: {
+                text: 'Rent & Price (sum)'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + " Payment Detail"
+                }
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#otherIncomePaymentChart"), options);
+    chart.render();
+ 
+}
+
+
 function drawChartWithPaymentDetail(result) {
+
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Currency');
     data.addColumn('number', 'Total Price');
     var dataArray = [];
+
+   
 
     $.each(result.allPaymentDetailWithExchange, function (i, obj) {
         dataArray.push([obj.exchange, obj.sum]);
@@ -211,7 +356,116 @@ function drawChartWithPaymentDetail(result) {
 
     columnChart.draw(data, columnChartOptions);
 
+
 }
 
 
+function drawChartRoomPaymentDetailByPaymentName(result) {
+
+
+    var raw = result ,
+        nameIndices = Object.create(null),
+        statusHash = Object.create(null),
+        data = { labels: [], datasets: [] };
+
+    raw.forEach(function (o) {
+        if (!(o.paymentMethod in nameIndices)) {
+            nameIndices[o.paymentMethod] = data.labels.push(o.paymentMethod) - 1;
+            data.datasets.forEach(function (a) { a.data.push(0); });
+        }
+        if (!statusHash[o.exchange]) {
+            statusHash[o.exchange] = { label: o.exchange, fillcolor: 'f00', data: data.labels.map(function () { return 0; }) };
+            data.datasets.push(statusHash[o.exchange]);
+        }
+        statusHash[o.exchange].data[nameIndices[o.paymentMethod]] = o.sum;
+    });
+
+
+
+    let euroArray = [];
+    let tlArray = [];
+    let dollarArray = [];
+    let sterlingArray = [];
+
+    $.each(data.datasets, function (i, obj) {
+        if (obj.label === 'Dollar') {
+            $.each(obj.data, function (k, item) {
+                dollarArray.push(item);
+            });
+        }
+        if (obj.label === 'Tl') {
+            $.each(obj.data, function (k, item) {
+                tlArray.push(item);
+            });
+        }
+        if (obj.label === 'Euro') {
+            $.each(obj.data, function (k, item) {
+                euroArray.push(item);
+            });
+        }
+        if (obj.label === 'Sterling') {
+            $.each(obj.data, function (k, item) {
+                sterlingArray.push(item);
+            });
+        }
+    });
+
+ 
+
+    var options = {
+        series: [{
+            name: 'Euro',
+            data: euroArray
+        }, {
+            name: 'Dollar',
+            data: dollarArray
+        }, {
+            name: 'Sterling',
+            data: sterlingArray
+        }, {
+            name: 'Tl',
+            data: tlArray
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: data.labels,
+        },
+        yaxis: {
+            title: {
+                text: 'Rent & Price (sum)'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val + " Payment Detail"
+                }
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#paymentDetailPaymentChart"), options);
+    chart.render();
+}
 
