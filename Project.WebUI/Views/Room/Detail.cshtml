@@ -1,6 +1,4 @@
-﻿@using Project.Core.Models
-@using Project.WebUI.ViewModel
-@model RoomDetail_VM
+﻿@model RoomWithCustomerDto
 
 @{
     ViewData["Title"] = "Detail";
@@ -9,28 +7,19 @@
 <h1>Detail</h1>
 
 <ul>
-    <li>Room Name : @Model.roomWithCustomer.RoomName</li>
-    <li>Room Dept : @Model.roomWithCustomer.Debt</li>
-    <li>Room Capacity : @Model.roomWithCustomer.Capacity</li>
-    <li>Room Current Capacity  : @Model.roomWithCustomer.CurrentCapacity</li>
-    <li>Room Lack :  @Model.roomWithCustomer.Lack</li>
-    <li>Room LackDetail :  @Model.roomWithCustomer.LackDetail</li>
-    <li>Room Images : 
-        @foreach (RoomWithImageDto item in Model.roomWithImages)
-        {
-            @foreach (Image image in item.Images)
-            {
-             <img style="width:100px" height="100px" src="~/RoomImages/@image.FileName" />
-            }
-        }
-
-    </li>
+    <li>Room Name : @Model.RoomName</li>
+    <li>Room Dept : @Model.Debt</li>
+    <li>Room Capacity : @Model.Capacity</li>
+    <li>Room Current Capacity  : @Model.CurrentCapacity</li>
+    <li>Room Lack :  @Model.Lack</li>
+    <li>Room LackDetail :  @Model.LackDetail</li>
+ 
 </ul>
 
 
 <div class="container">
     <div class="row">
-        @foreach (CustomerDto customer in Model.roomWithCustomer.Customers)
+        @foreach (CustomerDto customer in Model.Customers)
         {
             <div class="col-md-6">
                 <p> FullName :  @customer.FullName </p>

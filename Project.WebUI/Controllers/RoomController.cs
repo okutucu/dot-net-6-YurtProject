@@ -63,7 +63,7 @@ namespace Project.WebUI.ControllersR
 		{
 			if (ModelState.IsValid)
 			{
-				await ImageUpload(roomCreateDto);
+				//await ImageUpload(roomCreateDto);
                 roomCreateDto.CurrentCapacity = roomCreateDto.Capacity;
 
 				await _roomService.AddAsync(_mapper.Map<Room>(roomCreateDto));
@@ -79,30 +79,30 @@ namespace Project.WebUI.ControllersR
 		}
 
 
-		public async Task ImageUpload(RoomCreateDto roomCreateDto)
-		{
-            string filePath = Path.Combine(_env.WebRootPath,"RoomImages");
-			if (!Directory.Exists(filePath))
-			{
-				Directory.CreateDirectory(filePath);
-			}
+		//public async Task ImageUpload(RoomCreateDto roomCreateDto)
+		//{
+  //          string filePath = Path.Combine(_env.WebRootPath,"RoomImages");
+		//	if (!Directory.Exists(filePath))
+		//	{
+		//		Directory.CreateDirectory(filePath);
+		//	}
 
-            foreach (IFormFile item in roomCreateDto.Files)
-            {
-				string fileExtension = Path.GetExtension(item.FileName);
-				DateTime dateTime = DateTime.Now;
-				string fileName = $"{item.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{fileExtension}";			
+  //          foreach (IFormFile item in roomCreateDto.Files)
+  //          {
+		//		string fileExtension = Path.GetExtension(item.FileName);
+		//		DateTime dateTime = DateTime.Now;
+		//		string fileName = $"{item.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{fileExtension}";			
 
-                string path = Path.Combine(filePath, fileName);
+  //              string path = Path.Combine(filePath, fileName);
                 
-				using (FileStream fileFlow = new FileStream(path, FileMode.Create))
-                {
-                    await item.CopyToAsync(fileFlow);
-                }
+		//		using (FileStream fileFlow = new FileStream(path, FileMode.Create))
+  //              {
+  //                  await item.CopyToAsync(fileFlow);
+  //              }
 
-                roomCreateDto.Images.Add(new Image { FileName = fileName });
-            }
-        }
+  //              roomCreateDto.Images.Add(new Image { FileName = fileName });
+  //          }
+  //      }
 
 
 		[ServiceFilter(typeof(NotFoundFilter<Room>))]
@@ -140,17 +140,10 @@ namespace Project.WebUI.ControllersR
 		[ServiceFilter(typeof(NotFoundFilter<Room>))]
 		public async Task<IActionResult> Detail(int id)
 		{
-			List<RoomWithImageDto> roomWithImagesDto = await _roomService.GetRoomWithImagesAsync(id);
+			
             RoomWithCustomerDto roomAndCustomerDto = await _roomService.GetSingleRoomByIdWithCustomerAsync(id);
 
-			RoomDetail_VM roomDetail = new RoomDetail_VM
-			{
-				roomWithCustomer = roomAndCustomerDto,
-				roomWithImages = roomWithImagesDto
-
-			};
-
-            return View(roomDetail);
+            return View(roomAndCustomerDto);
 		}
 
 		public async Task<JsonResult> Remove(int id)

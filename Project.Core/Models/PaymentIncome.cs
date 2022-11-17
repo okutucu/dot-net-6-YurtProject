@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Project.Core.Enums;
 
 namespace Project.Core.Models
@@ -16,5 +18,9 @@ namespace Project.Core.Models
         public decimal MoneyOfTheDay { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string Description { get; set; }
+
+        [NotMapped]
+        public IFormFile[] Files { get; set; }
+
     }
 }

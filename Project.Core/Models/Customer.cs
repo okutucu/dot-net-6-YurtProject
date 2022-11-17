@@ -1,4 +1,7 @@
-﻿namespace Project.Core.Models
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Project.Core.Models
 {
 	public class Customer : BaseEntity
 	{
@@ -18,12 +21,16 @@
         public bool Discount { get; set; }
         public decimal DiscountPrice { get; set; }
 
+        [NotMapped]
+        public IFormFile[] Files { get; set; }
+
+
 
         public int? RoomId { get; set; }
 
         //Relational Properties
 
-        public IList<Image> Images { get; set; }
+        public IList<Image> Images { get; set; } = new List<Image>();
         public virtual Room Room { get; set; }
 
 	}

@@ -9,12 +9,16 @@ namespace Project.Core.Models
 	public class Image : BaseEntity
 	{
 		public string FileName { get; set; }
-        public int RoomId { get; set; }
+        public int? RoomId { get; set; }
+        public int? IncomeDetailId { get; set; }
+        public int? PaymentDetailId { get; set; }
         public int? CustomerId { get; set; }
 
 
         // Relational Properties
-        public Room Room { get; set; }
+        public RoomIncome Room { get; set; }
+        public IncomeDetail IncomeDetail { get; set; }
+        public PaymentDetail PaymentDetail { get; set; }
         public Customer Customer { get; set; }
 
 

@@ -12,11 +12,6 @@ namespace Project.Core.Repositories
 		Task<Room> GetSingleRoomByIdWithRoomIncomesAsync(int roomId);
 		Task<Room> ReducingRoomCapacity(int roomId);
 		Task<Room> RoomCapacityAccuracy(int roomId);
-		Task<List<Room>> GetRoomWithImagesAsync(int roomId);
-
-
-
-
 
     }
 }

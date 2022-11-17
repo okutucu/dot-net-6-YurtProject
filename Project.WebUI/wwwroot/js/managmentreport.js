@@ -54,6 +54,8 @@ $(document).ready(function () {
 
 });
 
+
+
 function drawChartWithRoomRent(result) {
 
     var data = new google.visualization.DataTable();
@@ -79,7 +81,6 @@ function drawChartWithRoomRent(result) {
     columnChart.draw(data, columnChartOptions);
 
 }
-
 
 function drawChartRoomRentallincomeByPaymentName(result) {
 
@@ -190,11 +191,6 @@ function drawChartRoomRentallincomeByPaymentName(result) {
 
 
 }
-
-
-
-
-
 
 function drawChartWithIncomesDetail(result) {
     var data = new google.visualization.DataTable();

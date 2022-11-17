@@ -12,8 +12,8 @@ using Project.Repository.Context;
 namespace Project.Repository.Migrations
 {
     [DbContext(typeof(YurtDbContext))]
-    [Migration("20221013114027_mig_PaymentDateAdded")]
-    partial class mig_PaymentDateAdded
+    [Migration("20221117132900_mig_InitalCreate")]
+    partial class mig_InitalCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,107 @@ namespace Project.Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Project.Core.Models.AppUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasMaxLength(15)
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2001),
+                            Password = "$2a$11$duwCurvE3jgMwulwGGDEQuiiH4aFewiWV0QatVk89MUfAYeN0Agk6",
+                            Role = 1,
+                            UpdatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2061),
+                            UserName = "superadmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2074),
+                            Password = "$2a$11$g2zIGBC5wZm2o8MpIfrpIOK38IndaIEAunV7MHk8owDXtTVS7rmc2",
+                            Role = 2,
+                            UpdatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2077),
+                            UserName = "admin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2080),
+                            Password = "$2a$11$gyGJjl8o8mOEjJEYp4R9Pe58GQcq/ZxB.NcsfbttaIUl/iabDktJ2",
+                            Role = 3,
+                            UpdatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2227),
+                            UserName = "user"
+                        });
+                });
+
+            modelBuilder.Entity("Project.Core.Models.AppUserDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Identity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.ToTable("AppUserDetail");
+                });
 
             modelBuilder.Entity("Project.Core.Models.Customer", b =>
                 {
@@ -41,6 +142,18 @@ namespace Project.Repository.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("Discount")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("DiscountPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("DownPayment")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("DownPaymentPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(50)
@@ -70,7 +183,7 @@ namespace Project.Repository.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
                     b.Property<string>("UniversityName")
@@ -84,40 +197,6 @@ namespace Project.Repository.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Customers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(2022, 10, 13, 14, 40, 27, 168, DateTimeKind.Local).AddTicks(4293),
-                            Depart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "UK",
-                            Email = "o@kutucu.com",
-                            EntryDate = new DateTime(2022, 10, 13, 14, 40, 27, 168, DateTimeKind.Local).AddTicks(4284),
-                            FullName = "Oğuzhan Kutucu",
-                            IdentityNo = "1234567",
-                            Phone = "05353073235",
-                            RelativeNameSurname = "Kaan Kutucu",
-                            RelativePhone = "5555555",
-                            RoomId = 1,
-                            UpdatedDate = new DateTime(2022, 10, 13, 14, 40, 27, 168, DateTimeKind.Local).AddTicks(4294)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(2022, 10, 13, 14, 40, 27, 168, DateTimeKind.Local).AddTicks(4302),
-                            Depart = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "UK",
-                            Email = "k@kutucu.com",
-                            EntryDate = new DateTime(2022, 10, 13, 14, 40, 27, 168, DateTimeKind.Local).AddTicks(4301),
-                            FullName = "Kaan Kutucu",
-                            IdentityNo = "12345267",
-                            Phone = "5555555",
-                            RelativeNameSurname = "Oğuzhan Kutucu",
-                            RelativePhone = "05353073235",
-                            RoomId = 1,
-                            UpdatedDate = new DateTime(2022, 10, 13, 14, 40, 27, 168, DateTimeKind.Local).AddTicks(4303)
-                        });
                 });
 
             modelBuilder.Entity("Project.Core.Models.ExchangeRate", b =>
@@ -150,24 +229,73 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 10, 13, 14, 40, 27, 167, DateTimeKind.Local).AddTicks(6902),
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6670),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 10, 13, 14, 40, 27, 167, DateTimeKind.Local).AddTicks(6915),
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6732),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 10, 13, 14, 40, 27, 167, DateTimeKind.Local).AddTicks(6917),
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6750),
                             ExchangeName = "Sterling",
                             Price = 10m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6757),
+                            ExchangeName = "Tl",
+                            Price = 1m
                         });
+                });
+
+            modelBuilder.Entity("Project.Core.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IncomeDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PaymentDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("IncomeDetailId");
+
+                    b.HasIndex("PaymentDetailId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Project.Core.Models.IncomeDetail", b =>
@@ -180,6 +308,9 @@ namespace Project.Repository.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)
@@ -206,15 +337,15 @@ namespace Project.Repository.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("RoomName")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("IncomeDetails");
                 });
@@ -230,6 +361,9 @@ namespace Project.Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -255,10 +389,15 @@ namespace Project.Repository.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("PaymentDetails");
                 });
@@ -277,11 +416,16 @@ namespace Project.Repository.Migrations
                     b.Property<DateTime>("Depart")
                         .HasColumnType("date");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EntryDate")
                         .HasColumnType("date");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -293,10 +437,18 @@ namespace Project.Repository.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<string>("RelativeNameSurname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelativePhone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("RoomName")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("UniversityName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -334,51 +486,22 @@ namespace Project.Repository.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("RoomName")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("RoomType")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int?>("RoomTypeId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms");
+                    b.HasIndex("RoomTypeId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Capacity = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrentCapacity = 0,
-                            Debt = 0m,
-                            Lack = true,
-                            LackDetail = "TV is broken",
-                            Price = 1300m,
-                            RoomName = "1000",
-                            RoomType = "Economy"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Capacity = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CurrentCapacity = 2,
-                            Debt = 0m,
-                            Lack = false,
-                            Price = 1500m,
-                            RoomName = "1001",
-                            RoomType = "Luxery"
-                        });
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Project.Core.Models.RoomIncome", b =>
@@ -391,6 +514,9 @@ namespace Project.Repository.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasMaxLength(150)
@@ -426,7 +552,7 @@ namespace Project.Repository.Migrations
                     b.ToTable("RoomIncomes");
                 });
 
-            modelBuilder.Entity("Project.Core.Models.User", b =>
+            modelBuilder.Entity("Project.Core.Models.RoomType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -437,63 +563,97 @@ namespace Project.Repository.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<decimal>("IncreasedPrice")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Email")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RoomName")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Identity")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("RoomType");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.AppUserDetail", b =>
+                {
+                    b.HasOne("Project.Core.Models.AppUser", "AppUser")
+                        .WithOne("AppUserDetail")
+                        .HasForeignKey("Project.Core.Models.AppUserDetail", "AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Project.Core.Models.Customer", b =>
                 {
                     b.HasOne("Project.Core.Models.Room", "Room")
                         .WithMany("Customers")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoomId");
 
                     b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.Image", b =>
+                {
+                    b.HasOne("Project.Core.Models.Customer", "Customer")
+                        .WithMany("Images")
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("Project.Core.Models.IncomeDetail", "IncomeDetail")
+                        .WithMany("Images")
+                        .HasForeignKey("IncomeDetailId");
+
+                    b.HasOne("Project.Core.Models.PaymentDetail", "PaymentDetail")
+                        .WithMany("Images")
+                        .HasForeignKey("PaymentDetailId");
+
+                    b.HasOne("Project.Core.Models.RoomIncome", "Room")
+                        .WithMany("Images")
+                        .HasForeignKey("RoomId");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("IncomeDetail");
+
+                    b.Navigation("PaymentDetail");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.IncomeDetail", b =>
+                {
+                    b.HasOne("Project.Core.Models.Room", "Room")
+                        .WithMany("IncomeDetails")
+                        .HasForeignKey("RoomId");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.PaymentDetail", b =>
+                {
+                    b.HasOne("Project.Core.Models.Room", "Room")
+                        .WithMany("PaymentDetails")
+                        .HasForeignKey("RoomId");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.Room", b =>
+                {
+                    b.HasOne("Project.Core.Models.RoomType", "RoomType")
+                        .WithMany("Rooms")
+                        .HasForeignKey("RoomTypeId");
+
+                    b.Navigation("RoomType");
                 });
 
             modelBuilder.Entity("Project.Core.Models.RoomIncome", b =>
@@ -505,11 +665,45 @@ namespace Project.Repository.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("Project.Core.Models.AppUser", b =>
+                {
+                    b.Navigation("AppUserDetail");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.Customer", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.IncomeDetail", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.PaymentDetail", b =>
+                {
+                    b.Navigation("Images");
+                });
+
             modelBuilder.Entity("Project.Core.Models.Room", b =>
                 {
                     b.Navigation("Customers");
 
+                    b.Navigation("IncomeDetails");
+
+                    b.Navigation("PaymentDetails");
+
                     b.Navigation("RoomIncomes");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.RoomIncome", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("Project.Core.Models.RoomType", b =>
+                {
+                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }
