@@ -16,5 +16,10 @@ namespace Project.Repository.Repositories
             return await _context.Customers.Include(c => c.Room).ToListAsync();
 
         }
+
+        public async Task<Customer> GetSingleCustomeByIdWithImagesAsync(int customerId)
+        {
+            return await _context.Customers.Include(c => c.Images).Where( c => c.Id == customerId).AsNoTracking().SingleOrDefaultAsync();
+        }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Project.Repository.Migrations
 {
-    public partial class mig_InitalCreate : Migration
+    public partial class mig_InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -260,7 +260,7 @@ namespace Project.Repository.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RoomId = table.Column<int>(type: "int", nullable: true),
+                    RoomIncomeId = table.Column<int>(type: "int", nullable: true),
                     IncomeDetailId = table.Column<int>(type: "int", nullable: true),
                     PaymentDetailId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
@@ -286,8 +286,8 @@ namespace Project.Repository.Migrations
                         principalTable: "PaymentDetails",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Images_RoomIncomes_RoomId",
-                        column: x => x.RoomId,
+                        name: "FK_Images_RoomIncomes_RoomIncomeId",
+                        column: x => x.RoomIncomeId,
                         principalTable: "RoomIncomes",
                         principalColumn: "Id");
                 });
@@ -297,9 +297,9 @@ namespace Project.Repository.Migrations
                 columns: new[] { "Id", "CreatedDate", "Password", "Role", "UpdatedDate", "UserName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2001), "$2a$11$duwCurvE3jgMwulwGGDEQuiiH4aFewiWV0QatVk89MUfAYeN0Agk6", 1, new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2061), "superadmin" },
-                    { 2, new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2074), "$2a$11$g2zIGBC5wZm2o8MpIfrpIOK38IndaIEAunV7MHk8owDXtTVS7rmc2", 2, new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2077), "admin" },
-                    { 3, new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2080), "$2a$11$gyGJjl8o8mOEjJEYp4R9Pe58GQcq/ZxB.NcsfbttaIUl/iabDktJ2", 3, new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2227), "user" }
+                    { 1, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1540), "$2a$11$rmLHaT8Bt4GpnpPfMRPvveP.WTIRtjSpb7UmW7zDOltgFyybz6Wcy", 1, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1586), "superadmin" },
+                    { 2, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1599), "$2a$11$K1e4DxfrifUCEXL7zpQ29umdt9yag/0GXzwKyM2Uj0XqIWT2ZwbWa", 2, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1602), "admin" },
+                    { 3, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1605), "$2a$11$z59MYMaFyb6iXlXUq0I6i.TAG8jkDzkIVtmgtsg7NXhRHxEgly5pO", 3, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1648), "user" }
                 });
 
             migrationBuilder.InsertData(
@@ -307,10 +307,10 @@ namespace Project.Repository.Migrations
                 columns: new[] { "Id", "CreatedDate", "ExchangeName", "Price", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6670), "Dollar", 10m, null },
-                    { 2, new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6732), "Euro", 10m, null },
-                    { 3, new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6750), "Sterling", 10m, null },
-                    { 4, new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6757), "Tl", 1m, null }
+                    { 1, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3599), "Dollar", 10m, null },
+                    { 2, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3646), "Euro", 10m, null },
+                    { 3, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3657), "Sterling", 10m, null },
+                    { 4, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3661), "Tl", 1m, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -340,9 +340,9 @@ namespace Project.Repository.Migrations
                 column: "PaymentDetailId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_RoomId",
+                name: "IX_Images_RoomIncomeId",
                 table: "Images",
-                column: "RoomId");
+                column: "RoomIncomeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IncomeDetails_RoomId",

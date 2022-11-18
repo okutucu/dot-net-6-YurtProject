@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
+using Project.Service.Utilities.Extensions;
 
 namespace Project.WebUI.Controllers
 {
@@ -15,24 +16,27 @@ namespace Project.WebUI.Controllers
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
 		private readonly IRecordService _recordService;
-		private readonly IMailService _mailService;
+        private readonly IWebHostEnvironment _env;
 
-		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IMailService mailService)
+		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IWebHostEnvironment env)
 		{
 			_customerService = customerService;
 			_mapper = mapper;
 			_roomService = roomService;
 			_recordService = recordService;
-			_mailService = mailService;
+			_env = env;
 		}
-
-
 		public async Task<IActionResult> Index()
 		{
 			return View(await _customerService.GetCustomerWithRoomAsync());
 		}
 
-		public async Task<IActionResult> Create()
+        public async Task<IActionResult> Detail(int id)
+        {
+            CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(id);
+            return View(customer);
+        } 
+        public async Task<IActionResult> Create()
 		{
 			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
 
@@ -48,11 +52,11 @@ namespace Project.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				await ImageUpload(customerDto);
 				await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
 				await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
 
-				//await _mailService.SendMailAsync(customerDto.Email, "Sinemis Student Dormitory Registration Information", "<strong> Your dormitory registration has been carried out successfully. We wish you a nice day. </strong>");
 				return RedirectToAction(nameof(Index));
 			}
 
@@ -64,6 +68,34 @@ namespace Project.WebUI.Controllers
 
 			return View(customerDto);
 		}
+
+		public async Task ImageUpload(CustomerDto customerDto)
+		{
+			string filePath = Path.Combine($"{_env.WebRootPath}/img", "CustomerImages");
+			if (!Directory.Exists(filePath))
+			{
+				Directory.CreateDirectory(filePath);
+			}
+
+			foreach (IFormFile item in customerDto.Files)
+			{
+				string fileExtension = Path.GetExtension(item.FileName);
+				DateTime dateTime = DateTime.Now;
+				string fileName = $"{item.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{fileExtension}";
+
+				string path = Path.Combine(filePath, fileName);
+
+				using (FileStream fileFlow = new FileStream(path, FileMode.Create))
+				{
+					await item.CopyToAsync(fileFlow);
+				}
+
+                customerDto.Images.Add(new Image { FileName = fileName });
+			}
+		}
+
+	
+
 
 		[ServiceFilter(typeof(NotFoundFilter<Customer>))]
 		public async Task<IActionResult> Update(int id)

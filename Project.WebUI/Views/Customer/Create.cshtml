@@ -23,7 +23,7 @@
     <div class="card-body">
         <div class="row g-5">
             <div class="col-md-12 col-lg-12">
-                <form asp-controller="Customer" asp-action="Create"  class="needs-validation" novalidate="">
+                <form asp-controller="Customer" asp-action="Create"  class="needs-validation" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row g-3">
                         <div class="col-6">
@@ -80,7 +80,7 @@
                                 <input id="relativeFullName" asp-for="RelativeNameSurname" placeholder="Please Enter Relative Name Surname" class="form-control" />
                                 <span asp-validation-for="RelativeNameSurname" class="text-danger"></span>
                             </div>
-                        </div>
+                        </div>  
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="RelativePhoneNumber" class="form-label">Relative Phone Number<span class="text-muted">(Optional)</span></label>
@@ -88,15 +88,13 @@
                                 <span asp-validation-for="RelativePhone" class="text-danger"></span>
                             </div>
                         </div>
-
-                           <div class="col-6">
+                        <div class="col-6">
                             <div class="form-group">
                                 <label for="universityName" class="form-label">University Name<span class="text-muted">(Optional)</span></label>
                                 <input asp-for="UniversityName" id="universityName" class="form-control"  placeholder="Plase Enter University Name"/>
                                 <span asp-validation-for="UniversityName" class="text-danger"></span>
                             </div>
                         </div>
-
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="description" class="form-label">Description<span class="text-muted">(Optional)</span></label>
@@ -104,7 +102,6 @@
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
                         </div>
-                        
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="roomName" class="form-label">Room Name  <span class="text-muted">(Required)</span> </label>
@@ -113,8 +110,15 @@
                             </div>
                          
                         </div>
-
-                           <div class="col-12">
+                         <div class="col-6">
+                            <div class="form-group">
+                                <label class="form-label" for="upload"> Image </label>
+                                <input asp-for="Files"  type="file" class="form-control" id="upload"  multiple/>
+                                <span asp-validation-for="Files" class="text-danger"></span>
+                                
+                            </div>
+                        </div>
+                         <div class="col-12">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="discountId" asp-for="Discount" />
                                 <label class="form-check-label" for="discountId">
@@ -132,7 +136,6 @@
 
 
                         </div>
-
                         <div class="col-12">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="downPaymentId" asp-for="DownPayment" />

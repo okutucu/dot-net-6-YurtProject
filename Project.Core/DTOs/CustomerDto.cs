@@ -1,4 +1,7 @@
-﻿namespace Project.Core.DTOs
+﻿using Microsoft.AspNetCore.Http;
+using Project.Core.Models;
+
+namespace Project.Core.DTOs
 {
 	public class CustomerDto : BaseDto
 	{
@@ -16,8 +19,10 @@
         public decimal DownPaymentPrice { get; set; }
         public bool Discount { get; set; }
         public decimal DiscountPrice { get; set; }
+        public IFormFile[] Files { get; set; }
         public int RoomId { get; set; }
+        public IList<Image> Images { get; set; } = new List<Image>();
 
-	}
+    }
 
 }

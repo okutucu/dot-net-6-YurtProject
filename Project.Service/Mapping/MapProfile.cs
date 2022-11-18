@@ -10,6 +10,7 @@ namespace Project.Service.Mapping
 		{
 			CreateMap<Customer, CustomerDto>().ReverseMap();
 			CreateMap<Customer, CustomerListDto>();
+			CreateMap<Customer, CustomerWithImagesDto>();
 
 
 

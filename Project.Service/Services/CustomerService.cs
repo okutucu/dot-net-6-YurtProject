@@ -26,5 +26,12 @@ namespace Project.Service.Services
 			return customersDto;
 		}
 
+		public async Task<CustomerWithImagesDto> GetSingleCustomeByIdWithImagesAsync(int customerId)
+		{
+            Customer customer = await _customerRepository.GetSingleCustomeByIdWithImagesAsync(customerId);
+            CustomerWithImagesDto customerDto = _mapper.Map<CustomerWithImagesDto>(customer);
+
+			return customerDto;
+        }
 	}
 }

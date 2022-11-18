@@ -57,28 +57,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2001),
-                            Password = "$2a$11$duwCurvE3jgMwulwGGDEQuiiH4aFewiWV0QatVk89MUfAYeN0Agk6",
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1540),
+                            Password = "$2a$11$rmLHaT8Bt4GpnpPfMRPvveP.WTIRtjSpb7UmW7zDOltgFyybz6Wcy",
                             Role = 1,
-                            UpdatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2061),
+                            UpdatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1586),
                             UserName = "superadmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2074),
-                            Password = "$2a$11$g2zIGBC5wZm2o8MpIfrpIOK38IndaIEAunV7MHk8owDXtTVS7rmc2",
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1599),
+                            Password = "$2a$11$K1e4DxfrifUCEXL7zpQ29umdt9yag/0GXzwKyM2Uj0XqIWT2ZwbWa",
                             Role = 2,
-                            UpdatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2077),
+                            UpdatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1602),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2080),
-                            Password = "$2a$11$gyGJjl8o8mOEjJEYp4R9Pe58GQcq/ZxB.NcsfbttaIUl/iabDktJ2",
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1605),
+                            Password = "$2a$11$z59MYMaFyb6iXlXUq0I6i.TAG8jkDzkIVtmgtsg7NXhRHxEgly5pO",
                             Role = 3,
-                            UpdatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 879, DateTimeKind.Local).AddTicks(2227),
+                            UpdatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1648),
                             UserName = "user"
                         });
                 });
@@ -227,28 +227,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6670),
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3599),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6732),
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3646),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6750),
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3657),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 28, 59, 289, DateTimeKind.Local).AddTicks(6757),
+                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3661),
                             ExchangeName = "Tl",
                             Price = 1m
                         });
@@ -277,7 +277,7 @@ namespace Project.Repository.Migrations
                     b.Property<int?>("PaymentDetailId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int?>("RoomIncomeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
@@ -291,7 +291,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("PaymentDetailId");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("RoomIncomeId");
 
                     b.ToTable("Images");
                 });
@@ -614,9 +614,9 @@ namespace Project.Repository.Migrations
                         .WithMany("Images")
                         .HasForeignKey("PaymentDetailId");
 
-                    b.HasOne("Project.Core.Models.RoomIncome", "Room")
+                    b.HasOne("Project.Core.Models.RoomIncome", "RoomIncome")
                         .WithMany("Images")
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("RoomIncomeId");
 
                     b.Navigation("Customer");
 
@@ -624,7 +624,7 @@ namespace Project.Repository.Migrations
 
                     b.Navigation("PaymentDetail");
 
-                    b.Navigation("Room");
+                    b.Navigation("RoomIncome");
                 });
 
             modelBuilder.Entity("Project.Core.Models.IncomeDetail", b =>

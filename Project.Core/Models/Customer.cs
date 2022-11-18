@@ -24,8 +24,6 @@ namespace Project.Core.Models
         [NotMapped]
         public IFormFile[] Files { get; set; }
 
-
-
         public int? RoomId { get; set; }
 
         //Relational Properties

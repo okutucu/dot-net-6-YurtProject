@@ -1,0 +1,29 @@
+﻿@using Project.Core.Models
+@model CustomerWithImagesDto
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<h4>@Model.FullName Detail</h4>
+
+
+<div class="container">
+    <div class="row">
+
+        <p> FullName :  @Model.FullName </p>
+        <p> Phone :  @Model.Phone </p>
+         <p> Email :  @Model.Email </p>
+            <p> Entry Date :  @Model.EntryDate </p>
+                <p> Depart Date :  @Model.Depart </p>
+        <p> Description :  @Model.Description </p>
+                <p> RelativeNameSurname :  @Model.RelativeNameSurname </p>
+                <p> RelativePhone :  @Model.RelativePhone </p>
+        @foreach (Image item in Model.Images)
+        {
+                    <img style="width:100px" height="100px" src="~/img/CustomerImages/@item.FileName" />
+                }
+            </div>
+ 
+    </div>
+</div>
