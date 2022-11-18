@@ -57,28 +57,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1540),
-                            Password = "$2a$11$rmLHaT8Bt4GpnpPfMRPvveP.WTIRtjSpb7UmW7zDOltgFyybz6Wcy",
+                            CreatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5427),
+                            Password = "$2a$11$4aPdFAdtLl3PSfM6/D8HQeb6.dPhtECyTwZpY24ueweCSAuzLic0C",
                             Role = 1,
-                            UpdatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1586),
+                            UpdatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5496),
                             UserName = "superadmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1599),
-                            Password = "$2a$11$K1e4DxfrifUCEXL7zpQ29umdt9yag/0GXzwKyM2Uj0XqIWT2ZwbWa",
+                            CreatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5507),
+                            Password = "$2a$11$Xdpx/ZAvrc/CCp2rkZrpCuisjdRgWqJaosRaa34lRsryacQzn5FrW",
                             Role = 2,
-                            UpdatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1602),
+                            UpdatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5509),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1605),
-                            Password = "$2a$11$z59MYMaFyb6iXlXUq0I6i.TAG8jkDzkIVtmgtsg7NXhRHxEgly5pO",
+                            CreatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5512),
+                            Password = "$2a$11$5rXRdPEDA/zq7kC5HxBkru/01dcH7DE0sRrooSk4vHx4hITXKKw42",
                             Role = 3,
-                            UpdatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1648),
+                            UpdatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5557),
                             UserName = "user"
                         });
                 });
@@ -227,28 +227,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3599),
+                            CreatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9615),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3646),
+                            CreatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9660),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3657),
+                            CreatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9672),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3661),
+                            CreatedDate = new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9676),
                             ExchangeName = "Tl",
                             Price = 1m
                         });

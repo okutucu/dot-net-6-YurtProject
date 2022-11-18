@@ -1,7 +1,9 @@
-﻿@model Project.Core.DTOs.CustomerDto
+﻿@using Project.Core.Models
+@model Project.Core.DTOs.CustomerWithImagesDto
 
 @{
     ViewData["Title"] = "Update";
+
 }
 
 
@@ -15,6 +17,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">Update Customer</li>
+            
         </ol>
     </nav>
 </div>
@@ -24,7 +27,7 @@
     <div class="card-body">
         <div class="row g-5">
             <div class="col-md-12 col-lg-12">
-                <form asp-controller="Customer" asp-action="Update" class="needs-validation" novalidate="">
+                <form asp-controller="Customer" asp-action="Update" class="needs-validation" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input  type="hidden" asp-for="Id"/>
 
@@ -114,7 +117,6 @@
                                 <select id="roomName" asp-for="RoomId" asp-items="ViewBag.rooms" class="form-control" aria-label="Default select example"> </select>
                                 <span asp-validation-for="RoomId" class="text-danger"></span>
                             </div>
-
                         </div>
                         <div class="col-6">
                             <div class="form-group">
@@ -124,6 +126,13 @@
 
                             </div>
                         </div>
+                        <div class="col-6">
+                                                @foreach (Image item in Model.Images)
+                                                {
+                                                      <img style="width:100px" height="100px" src="~/img/CustomerImages/@item.FileName" />
+                                                 }
+                        </div>
+                       
 
                         <div class="col-12">
                             <div class="form-check">

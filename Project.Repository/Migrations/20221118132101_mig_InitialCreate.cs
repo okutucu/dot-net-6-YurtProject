@@ -297,9 +297,9 @@ namespace Project.Repository.Migrations
                 columns: new[] { "Id", "CreatedDate", "Password", "Role", "UpdatedDate", "UserName" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1540), "$2a$11$rmLHaT8Bt4GpnpPfMRPvveP.WTIRtjSpb7UmW7zDOltgFyybz6Wcy", 1, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1586), "superadmin" },
-                    { 2, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1599), "$2a$11$K1e4DxfrifUCEXL7zpQ29umdt9yag/0GXzwKyM2Uj0XqIWT2ZwbWa", 2, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1602), "admin" },
-                    { 3, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1605), "$2a$11$z59MYMaFyb6iXlXUq0I6i.TAG8jkDzkIVtmgtsg7NXhRHxEgly5pO", 3, new DateTime(2022, 11, 17, 15, 44, 11, 704, DateTimeKind.Local).AddTicks(1648), "user" }
+                    { 1, new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5427), "$2a$11$4aPdFAdtLl3PSfM6/D8HQeb6.dPhtECyTwZpY24ueweCSAuzLic0C", 1, new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5496), "superadmin" },
+                    { 2, new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5507), "$2a$11$Xdpx/ZAvrc/CCp2rkZrpCuisjdRgWqJaosRaa34lRsryacQzn5FrW", 2, new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5509), "admin" },
+                    { 3, new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5512), "$2a$11$5rXRdPEDA/zq7kC5HxBkru/01dcH7DE0sRrooSk4vHx4hITXKKw42", 3, new DateTime(2022, 11, 18, 15, 21, 0, 865, DateTimeKind.Local).AddTicks(5557), "user" }
                 });
 
             migrationBuilder.InsertData(
@@ -307,10 +307,10 @@ namespace Project.Repository.Migrations
                 columns: new[] { "Id", "CreatedDate", "ExchangeName", "Price", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3599), "Dollar", 10m, null },
-                    { 2, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3646), "Euro", 10m, null },
-                    { 3, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3657), "Sterling", 10m, null },
-                    { 4, new DateTime(2022, 11, 17, 15, 44, 11, 101, DateTimeKind.Local).AddTicks(3661), "Tl", 1m, null }
+                    { 1, new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9615), "Dollar", 10m, null },
+                    { 2, new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9660), "Euro", 10m, null },
+                    { 3, new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9672), "Sterling", 10m, null },
+                    { 4, new DateTime(2022, 11, 18, 15, 21, 0, 357, DateTimeKind.Local).AddTicks(9676), "Tl", 1m, null }
                 });
 
             migrationBuilder.CreateIndex(

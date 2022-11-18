@@ -28,7 +28,7 @@ namespace Project.WebUI.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
-			return View(await _customerService.GetCustomerWithRoomAsync());
+            return View(await _customerService.GetCustomerWithRoomAsync());
 		}
 
         public async Task<IActionResult> Detail(int id)
@@ -52,7 +52,7 @@ namespace Project.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				await ImageUpload(customerDto);
+				await ImageUpload(customerDto, customerDto.Files, "CustomerImages");
 				await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
 				await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
@@ -69,45 +69,78 @@ namespace Project.WebUI.Controllers
 			return View(customerDto);
 		}
 
-		public async Task ImageUpload(CustomerDto customerDto)
+		public async Task<IList<Image>> ImageUpload(CustomerDto customerDto,IFormFile[] formFiles, string folderName)
 		{
-			string filePath = Path.Combine($"{_env.WebRootPath}/img", "CustomerImages");
+			string filePath = Path.Combine($"{_env.WebRootPath}/img", folderName);
 			if (!Directory.Exists(filePath))
 			{
 				Directory.CreateDirectory(filePath);
 			}
 
-			foreach (IFormFile item in customerDto.Files)
+			foreach (IFormFile item in formFiles)
 			{
 				string fileExtension = Path.GetExtension(item.FileName);
 				DateTime dateTime = DateTime.Now;
-				string fileName = $"{item.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{fileExtension}";
+				string fullFileName = $"{item.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{fileExtension}";
 
-				string path = Path.Combine(filePath, fileName);
+				string path = Path.Combine(filePath, fullFileName);
 
 				using (FileStream fileFlow = new FileStream(path, FileMode.Create))
 				{
 					await item.CopyToAsync(fileFlow);
 				}
+				 
+                customerDto.Images.Add(new Image { FileName = fullFileName });
+			}
 
-                customerDto.Images.Add(new Image { FileName = fileName });
+			return customerDto.Images;
+		}
+
+
+		public bool ImageDelete(IList<Image> pictureNames, string folderName)
+		{
+            string filePath = Path.Combine($"{_env.WebRootPath}/img", folderName);
+
+            int counter = 0;
+
+            foreach (var item in pictureNames)
+			{
+                string path = Path.Combine(filePath, item.FileName);
+
+                if (System.IO.File.Exists(path))
+				{
+					System.IO.File.Delete(path);
+					counter++;
+                }
+			}
+
+			if (counter != 0)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 
-	
+
+
 
 
 		[ServiceFilter(typeof(NotFoundFilter<Customer>))]
 		public async Task<IActionResult> Update(int id)
 		{
 			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
-			Customer customer = await _customerService.GetByIdAsync(id);
 
-			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+            CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(id);
+    
+
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
 			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customer.RoomId);
 
-			return View(_mapper.Map<CustomerDto>(customer));
+			return View(customer);
 		}
 
 		[HttpPost]
@@ -115,19 +148,35 @@ namespace Project.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				Customer customer = await _customerService.GetByIdAsync(customerDto.Id);
-				if (customerDto.RoomId == customer.RoomId)
+                CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(customerDto.Id);
+
+                bool isNewPictureUploaded = false;
+				IList<Image> oldCustomerPictures = customer.Images;
+
+				if (customerDto.Files != null)
+				{
+                    customerDto.Images = await ImageUpload(customerDto, customerDto.Files, "CustomerImages");
+					isNewPictureUploaded = true;
+                }
+
+                if (customerDto.RoomId == customer.RoomId)
 				{
 					await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
-					return RedirectToAction(nameof(Index));
 				}
 				else
 				{
 					await _roomService.GetCustomerWithRoomForRoomChangeAsync((int)customer.RoomId, customerDto.RoomId);
 					await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
-					return RedirectToAction(nameof(Index));
 				}
-			}
+
+
+				if (isNewPictureUploaded)
+				{
+					ImageDelete(oldCustomerPictures, "CustomerImages");
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
 
 			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
