@@ -1,5 +1,5 @@
 ﻿@using Project.Core.Models
-@model Project.Core.DTOs.CustomerWithImagesDto
+@model Project.Core.DTOs.CustomerDto
 
 @{
     ViewData["Title"] = "Update";
@@ -11,6 +11,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active" aria-current="page"> You can update the customer named  @Model.FullName from this page. </li>
+            <li>İD :  @Model.RoomId</li>
         </ol>
     </nav>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">

@@ -95,8 +95,6 @@ namespace Project.WebUI.Controllers
 
 			return customerDto.Images;
 		}
-
-
 		public bool ImageDelete(IList<Image> pictureNames, string folderName)
 		{
             string filePath = Path.Combine($"{_env.WebRootPath}/img", folderName);
@@ -132,15 +130,17 @@ namespace Project.WebUI.Controllers
 		public async Task<IActionResult> Update(int id)
 		{
 			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
-
-            CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(id);
-    
-
             List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customer.RoomId);
+            CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(id);
+            Customer customersss = await _customerService.GetByIdAsync(id);
+    
 
-			return View(customer);
+           
+
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customersss.RoomId);
+
+			return View(_mapper.Map<CustomerDto>(customersss));
 		}
 
 		[HttpPost]

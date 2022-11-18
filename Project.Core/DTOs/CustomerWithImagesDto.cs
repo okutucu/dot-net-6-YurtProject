@@ -25,7 +25,7 @@ namespace Project.Core.DTOs
         public bool Discount { get; set; }
         public decimal DiscountPrice { get; set; }
         public IFormFile[] Files { get; set; }
-        public int? RoomId { get; set; }
+        public int RoomId { get; set; }
         public List<Image> Images { get; set; }
     }
 }
