@@ -130,18 +130,15 @@ namespace Project.WebUI.Controllers
 		public async Task<IActionResult> Update(int id)
 		{
 			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0).ToList();
-            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
+			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-            CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(id);
-            Customer customersss = await _customerService.GetByIdAsync(id);
-    
+			Customer customer = await _customerService.GetByIdAsync(id);
 
-           
+			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customer.RoomId);
 
-			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customersss.RoomId);
-
-			return View(_mapper.Map<CustomerDto>(customersss));
+			return View(_mapper.Map<CustomerDto>(customer));
 		}
+
 
 		[HttpPost]
 		public async Task<IActionResult> Update(CustomerDto customerDto)
