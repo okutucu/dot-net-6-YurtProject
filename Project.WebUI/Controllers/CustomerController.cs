@@ -133,12 +133,14 @@ namespace Project.WebUI.Controllers
 		[ServiceFilter(typeof(NotFoundFilter<Customer>))]
 		public async Task<IActionResult> Update(int id)
 		{
-			List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0 || r.Id == id).ToList();
-			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
 			Customer customer = await _customerService.GetByIdAsync(id);
+            List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0 || r.Id == customer.RoomId).ToList();
+            List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customer.RoomId);
+
+
+            ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customer.RoomId);
 
 			return View(_mapper.Map<CustomerDto>(customer));
 		}
