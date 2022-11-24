@@ -12,6 +12,5 @@ namespace Project.Core.Models
 
         // Relational Properties
         public virtual Room Room { get; set; }
-        public IList<Image> Images { get; set; } = new List<Image>();
     }
 }

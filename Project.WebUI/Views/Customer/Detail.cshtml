@@ -19,7 +19,7 @@
         <p> Description :  @Model.Description </p>
                 <p> RelativeNameSurname :  @Model.RelativeNameSurname </p>
                 <p> RelativePhone :  @Model.RelativePhone </p>
-        @foreach (Image item in Model.Images)
+        @foreach (CustomerImage item in Model.CustomerImages)
         {
                     <img style="width:100px" height="100px" src="~/img/CustomerImages/@item.FileName" />
                 }

@@ -5,12 +5,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
-using Project.Service.Utilities.Extensions;
-using Project.WebUI.ViewModel;
 
 namespace Project.WebUI.ControllersR
 {
-    [Authorize]
+	[Authorize]
     public class RoomController : Controller
 	{
 		private readonly IRoomService _roomService;

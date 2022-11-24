@@ -26,6 +26,6 @@ namespace Project.Core.DTOs
         public decimal DiscountPrice { get; set; }
         public IFormFile[] Files { get; set; }
         public int RoomId { get; set; }
-        public List<Image> Images { get; set; }
+        public List<CustomerImage> CustomerImages { get; set; }
     }
 }
