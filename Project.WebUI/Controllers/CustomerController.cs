@@ -6,6 +6,7 @@ using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
 using Project.Service.Utilities.Extensions;
+using Project.WebUI.Helpers.Abstract;
 
 namespace Project.WebUI.Controllers
 {
@@ -17,6 +18,7 @@ namespace Project.WebUI.Controllers
 		private readonly IMapper _mapper;
 		private readonly IRecordService _recordService;
         private readonly IWebHostEnvironment _env;
+		private readonly IFileHelpers _fileHelpers; 
 
 		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IWebHostEnvironment env)
 		{
@@ -131,24 +133,6 @@ namespace Project.WebUI.Controllers
 
 		public async Task<IActionResult> Upload()
 		{
-            string uploadPath = Path.Combine(_env.WebRootPath, "resource/gencay-images");
-            if (!Directory.Exists(uploadPath))
-            {
-                Directory.CreateDirectory(uploadPath);
-            }
-          
-
-			foreach (IFormFile file in Request.Form.Files)
-			{
-                DateTime dateTime = DateTime.Now;
-                string fullPath = $"{file.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{Path.GetExtension(file.FileName)}";
-
-				using FileStream fileStream = new(fullPath, FileMode.Create, FileAccess.Write, FileShare.None, 1024*1024, useAsync : false);
-                await file.CopyToAsync(fileStream);
-				await fileStream.FlushAsync();
-
-            }
-
             return Ok();
 		}
 
