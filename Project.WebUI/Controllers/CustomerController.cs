@@ -129,6 +129,31 @@ namespace Project.WebUI.Controllers
 
 
 
+		public async Task<IActionResult> Upload()
+		{
+            string uploadPath = Path.Combine(_env.WebRootPath, "resource/gencay-images");
+            if (!Directory.Exists(uploadPath))
+            {
+                Directory.CreateDirectory(uploadPath);
+            }
+          
+
+			foreach (IFormFile file in Request.Form.Files)
+			{
+                DateTime dateTime = DateTime.Now;
+                string fullPath = $"{file.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{Path.GetExtension(file.FileName)}";
+
+				using FileStream fileStream = new(fullPath, FileMode.Create, FileAccess.Write, FileShare.None, 1024*1024, useAsync : false);
+                await file.CopyToAsync(fileStream);
+				await fileStream.FlushAsync();
+
+            }
+
+            return Ok();
+		}
+
+
+
 
 		[ServiceFilter(typeof(NotFoundFilter<Customer>))]
 		public async Task<IActionResult> Update(int id)
