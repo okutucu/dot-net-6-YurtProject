@@ -6,6 +6,6 @@ namespace Project.Core.Services
     {
         Task<List<(string fileNames, string path)>> UploadAsync(string path, IFormFileCollection files);
         Task<bool> CopyFileAsync(string path, IFormFile file);
-        Task<string> FileRenameAsync(string fileName);
+        Task<string> FileRenameAsync(string fileName, string name);
     }
 }

@@ -29,10 +29,10 @@ namespace Project.Service.Services
             }
         }
 
-        public async Task<string> FileRenameAsync(string fileName)
+        public async Task<string> FileRenameAsync(string fileName, string name)
         {
             DateTime dateTime = DateTime.Now;
-            string fullPath = $"{fileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{Path.GetExtension(fileName)}";
+            string fullPath = $"{name}_{dateTime.FullDateAndtimeStringWithUnderscore()}{Path.GetExtension(fileName)}";
 
             return fullPath;
         }
@@ -49,7 +49,7 @@ namespace Project.Service.Services
 
             foreach (IFormFile file in files)
             {
-                string fileNewName = await FileRenameAsync(file.FileName);
+                string fileNewName = await FileRenameAsync(file.FileName, Path.GetFileNameWithoutExtension(file.FileName));
                 bool result = await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
                 datas.Add((fileNewName, $"{path}\\{fileNewName}"));
                 results.Add(result);
