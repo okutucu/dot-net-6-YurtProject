@@ -17,16 +17,15 @@ namespace Project.WebUI.Controllers
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
 		private readonly IRecordService _recordService;
-        private readonly IWebHostEnvironment _env;
-		private readonly IFileHelpers _fileHelpers; 
+		private readonly IFileService _fileService;
 
-		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IWebHostEnvironment env)
+		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IFileService fileService)
 		{
 			_customerService = customerService;
 			_mapper = mapper;
 			_roomService = roomService;
 			_recordService = recordService;
-			_env = env;
+			_fileService = fileService;
 		}
 		public async Task<IActionResult> Index()
 		{
@@ -133,6 +132,7 @@ namespace Project.WebUI.Controllers
 
 		public async Task<IActionResult> Upload()
 		{
+			await _fileService.UploadAsync("customer-images", Request.Form.Files);
             return Ok();
 		}
 

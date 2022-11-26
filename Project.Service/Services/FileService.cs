@@ -1,18 +1,19 @@
-﻿using Project.Core.DTOs;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Project.Core.Services;
 using Project.Service.Utilities.Extensions;
-using Project.WebUI.Helpers.Abstract;
 
-namespace Project.WebUI.Helpers
+namespace Project.Service.Services
 {
-	public class FileHelpers : IFileHelpers
-	{
-		private readonly IWebHostEnvironment _env;
+    public class FileService : IFileService
+    {
 
-		public FileHelpers(IWebHostEnvironment env)
-		{
-			_env = env;
-		}
+        private readonly IWebHostEnvironment _env;
 
+        public FileService(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
         public async Task<bool> CopyFileAsync(string path, IFormFile file)
         {
             try
@@ -37,7 +38,7 @@ namespace Project.WebUI.Helpers
         }
 
         public async Task<List<(string fileNames, string path)>> UploadAsync(string path, IFormFileCollection files)
-		{
+        {
             string uploadPath = Path.Combine(_env.WebRootPath, path);
             if (!Directory.Exists(uploadPath))
                 Directory.CreateDirectory(uploadPath);
@@ -49,8 +50,8 @@ namespace Project.WebUI.Helpers
             foreach (IFormFile file in files)
             {
                 string fileNewName = await FileRenameAsync(file.FileName);
-                bool result = await CopyFileAsync($"{uploadPath}\\{fileNewName}",file);
-                datas.Add((fileNewName,$"{uploadPath}\\{fileNewName}"));
+                bool result = await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
+                datas.Add((fileNewName, $"{uploadPath}\\{fileNewName}"));
                 results.Add(result);
             }
 
@@ -60,5 +61,5 @@ namespace Project.WebUI.Helpers
             // todo exceptionsss
             return null;
         }
-	}
+    }
 }
