@@ -55,5 +55,13 @@ namespace Project.Service.Services
 		{
 			return _repository.Where(exp);
 		}
+
+		public async Task<List<T>> AddRangeAsync(List<T> entity)
+		{
+            await _repository.AddRangeAsync(entity);
+            await _unitOfWok.CommitAsync();
+
+            return entity;
+        }
 	}
 }

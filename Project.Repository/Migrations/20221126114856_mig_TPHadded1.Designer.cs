@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Repository.Context;
 
@@ -11,9 +12,10 @@ using Project.Repository.Context;
 namespace Project.Repository.Migrations
 {
     [DbContext(typeof(YurtDbContext))]
-    partial class YurtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221126114856_mig_TPHadded1")]
+    partial class mig_TPHadded1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,28 +59,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 26, 14, 0, 25, 92, DateTimeKind.Local).AddTicks(6131),
-                            Password = "$2a$11$/cH5tZjng/9077WBAimKYuWhQEn9QhkAOGJu/ZZi3nSh5m53Nxle.",
+                            CreatedDate = new DateTime(2022, 11, 26, 13, 48, 55, 711, DateTimeKind.Local).AddTicks(4125),
+                            Password = "$2a$11$kewjWNPSDAlQ0EPVehBEG..Mm6goQQ9HDh/qbYldS4SeBjShyQk7u",
                             Role = 1,
-                            UpdatedDate = new DateTime(2022, 11, 26, 14, 0, 25, 92, DateTimeKind.Local).AddTicks(6201),
+                            UpdatedDate = new DateTime(2022, 11, 26, 13, 48, 55, 711, DateTimeKind.Local).AddTicks(4184),
                             UserName = "superadmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 26, 14, 0, 25, 92, DateTimeKind.Local).AddTicks(6213),
-                            Password = "$2a$11$/qZFXB9asYeGsO5eQ0EpuOAq7aub6umOjhCEHQfFJyNpRtn/gj9oO",
+                            CreatedDate = new DateTime(2022, 11, 26, 13, 48, 55, 711, DateTimeKind.Local).AddTicks(4195),
+                            Password = "$2a$11$/N3dQvQtBOy8nvL.yUaFfOG7Mr3AAdiI36bQwyOb.au57NxtZtxRC",
                             Role = 2,
-                            UpdatedDate = new DateTime(2022, 11, 26, 14, 0, 25, 92, DateTimeKind.Local).AddTicks(6216),
+                            UpdatedDate = new DateTime(2022, 11, 26, 13, 48, 55, 711, DateTimeKind.Local).AddTicks(4197),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 26, 14, 0, 25, 92, DateTimeKind.Local).AddTicks(6220),
-                            Password = "$2a$11$VQlYIr3xWiDkWG4F71f.6.xRpsGzC8aev0Yv/iQQJrQ6hfoirobyO",
+                            CreatedDate = new DateTime(2022, 11, 26, 13, 48, 55, 711, DateTimeKind.Local).AddTicks(4200),
+                            Password = "$2a$11$QD8EjPpDCvBy0SH24.oH3.ggMzc8HG6ryQat1Ap3CmzxFXgA.GNQ.",
                             Role = 3,
-                            UpdatedDate = new DateTime(2022, 11, 26, 14, 0, 25, 92, DateTimeKind.Local).AddTicks(6590),
+                            UpdatedDate = new DateTime(2022, 11, 26, 13, 48, 55, 711, DateTimeKind.Local).AddTicks(4263),
                             UserName = "user"
                         });
                 });
@@ -227,28 +229,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 26, 14, 0, 24, 557, DateTimeKind.Local).AddTicks(3138),
+                            CreatedDate = new DateTime(2022, 11, 26, 13, 48, 54, 878, DateTimeKind.Local).AddTicks(8343),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 26, 14, 0, 24, 557, DateTimeKind.Local).AddTicks(3197),
+                            CreatedDate = new DateTime(2022, 11, 26, 13, 48, 54, 878, DateTimeKind.Local).AddTicks(8418),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 26, 14, 0, 24, 557, DateTimeKind.Local).AddTicks(3206),
+                            CreatedDate = new DateTime(2022, 11, 26, 13, 48, 54, 878, DateTimeKind.Local).AddTicks(8441),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 11, 26, 14, 0, 24, 557, DateTimeKind.Local).AddTicks(3211),
+                            CreatedDate = new DateTime(2022, 11, 26, 13, 48, 54, 878, DateTimeKind.Local).AddTicks(8452),
                             ExchangeName = "Tl",
                             Price = 1m
                         });
@@ -573,25 +575,25 @@ namespace Project.Repository.Migrations
                     b.HasDiscriminator().HasValue("CustomerImageFile");
                 });
 
-            modelBuilder.Entity("Project.Core.Models.OtherIncomeImageFile", b =>
+            modelBuilder.Entity("Project.Core.Models.OtherIncomeFile", b =>
                 {
                     b.HasBaseType("Project.Core.Models.File");
 
-                    b.HasDiscriminator().HasValue("OtherIncomeImageFile");
+                    b.HasDiscriminator().HasValue("OtherIncomeFile");
                 });
 
-            modelBuilder.Entity("Project.Core.Models.PaymentImageFile", b =>
+            modelBuilder.Entity("Project.Core.Models.PaymentFile", b =>
                 {
                     b.HasBaseType("Project.Core.Models.File");
 
-                    b.HasDiscriminator().HasValue("PaymentImageFile");
+                    b.HasDiscriminator().HasValue("PaymentFile");
                 });
 
-            modelBuilder.Entity("Project.Core.Models.RoomIncomesImageFile", b =>
+            modelBuilder.Entity("Project.Core.Models.RoomIncomesFile", b =>
                 {
                     b.HasBaseType("Project.Core.Models.File");
 
-                    b.HasDiscriminator().HasValue("RoomIncomesImageFile");
+                    b.HasDiscriminator().HasValue("RoomIncomesFile");
                 });
 
             modelBuilder.Entity("Project.Core.Models.AppUserDetail", b =>

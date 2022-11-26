@@ -21,9 +21,9 @@ namespace Project.Repository.Context
 		public DbSet<AppUser> Users { get; set; }
 		public DbSet<File> Files { get; set; }
 		public DbSet<CustomerImageFile> CustomerImageFiles { get; set; }
-		public DbSet<RoomIncomesFile> RoomIncomesFiles { get; set; }
-		public DbSet<OtherIncomeFile> OtherIncomeFiles { get; set; }
-		public DbSet<PaymentFile> PaymentFiles { get; set; }
+		public DbSet<RoomIncomesImageFile> RoomIncomesFiles { get; set; }
+		public DbSet<OtherIncomeImageFile> OtherIncomeFiles { get; set; }
+		public DbSet<PaymentImageFile> PaymentFiles { get; set; }
 
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{

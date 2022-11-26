@@ -22,6 +22,12 @@ namespace Project.Repository.Repositories
 			await _dbSet.AddAsync(entity);
 		}
 
+		public async Task<bool> AddRangeAsync(List<T> model)
+		{
+            await _dbSet.AddRangeAsync(model);
+			return true;
+        }
+
 		public async Task<bool> AnyAsync(Expression<Func<T, bool>> exp)
 		{
 			return await _dbSet.AnyAsync(exp);

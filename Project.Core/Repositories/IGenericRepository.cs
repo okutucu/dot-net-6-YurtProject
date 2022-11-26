@@ -13,6 +13,7 @@ namespace Project.Core.Repositories
 		void Update(T entity);
 		void Remove(T entity);
         T Default(Expression<Func<T, bool>> exp);
+        Task<bool> AddRangeAsync(List<T> model);
 
     }
 }

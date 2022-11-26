@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.Core.Models
 {
-    public class RoomIncomesFile : File
+    public class OtherIncomeImageFile : File
     {
     }
 }

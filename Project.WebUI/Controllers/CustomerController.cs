@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
+using Project.Core.Repositories;
 using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
@@ -16,14 +17,16 @@ namespace Project.WebUI.Controllers
 		private readonly IMapper _mapper;
 		private readonly IRecordService _recordService;
 		private readonly IFileService _fileService;
+		private readonly ICustomerImageFileService _customerImageFileService;
 
-		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IFileService fileService)
+		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IFileService fileService, ICustomerImageFileService customerImageFileService )
 		{
 			_customerService = customerService;
 			_mapper = mapper;
 			_roomService = roomService;
 			_recordService = recordService;
-			_fileService = fileService;
+			_fileService = fileService; 
+			_customerImageFileService = customerImageFileService;
 		}
 		public async Task<IActionResult> Index()
 		{
@@ -53,7 +56,7 @@ namespace Project.WebUI.Controllers
 			{
 				if (customerDto.Files != null)
 				{
-                
+					await Upload();
                 }
 				await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
@@ -71,10 +74,13 @@ namespace Project.WebUI.Controllers
 			return View(customerDto);
 		}
 
-
 		public async Task<IActionResult> Upload()
 		{
-			await _fileService.UploadAsync("customer-images", Request.Form.Files);
+			var datas = await _fileService.UploadAsync("resource/customer-images", Request.Form.Files);
+			await _customerImageFileService.AddRangeAsync(datas.Select(d => new CustomerImageFile() {
+			FileName = d.fileNames,
+			Path = d.path
+			}).ToList());
             return Ok();
 		}
 
