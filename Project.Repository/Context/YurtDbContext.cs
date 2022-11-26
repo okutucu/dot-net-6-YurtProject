@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.Models;
+using File = Project.Core.Models.File;
 
 namespace Project.Repository.Context
 {
@@ -18,8 +19,11 @@ namespace Project.Repository.Context
 		public DbSet<Room> Rooms { get; set; }
 		public DbSet<RoomIncome> RoomIncomes { get; set; }
 		public DbSet<AppUser> Users { get; set; }
-		public DbSet<CustomerImage> CustomerImages { get; set; }
-
+		public DbSet<File> Files { get; set; }
+		public DbSet<CustomerImageFile> CustomerImageFiles { get; set; }
+		public DbSet<RoomIncomesFile> RoomIncomesFiles { get; set; }
+		public DbSet<OtherIncomeFile> OtherIncomeFiles { get; set; }
+		public DbSet<PaymentFile> PaymentFiles { get; set; }
 
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{

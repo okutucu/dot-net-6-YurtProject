@@ -7,8 +7,6 @@ namespace Project.Core.Services
     {
         Task<List<CustomerListDto>> GetCustomerWithRoomAsync();
 
-        Task<CustomerWithImagesDto> GetSingleCustomeByIdWithImagesAsync(int customerId);
-
 
     }
 }

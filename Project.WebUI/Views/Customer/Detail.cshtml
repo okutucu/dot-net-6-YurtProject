@@ -1,5 +1,4 @@
-﻿@using Project.Core.Models
-@model CustomerWithImagesDto
+﻿@*
 
 @{
     ViewData["Title"] = "Detail";
@@ -19,10 +18,11 @@
         <p> Description :  @Model.Description </p>
                 <p> RelativeNameSurname :  @Model.RelativeNameSurname </p>
                 <p> RelativePhone :  @Model.RelativePhone </p>
-        @foreach (CustomerImage item in Model.CustomerImages)
+       @foreach (CustomerImage item in Model.CustomerImages)
         {
                     <img style="width:100px" height="100px" src="~/img/CustomerImages/@item.FileName" />
                 }
  
     </div>
 </div>
+*@

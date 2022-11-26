@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
-using Project.Service.Utilities.Extensions;
-using Project.WebUI.Helpers.Abstract;
 
 namespace Project.WebUI.Controllers
 {
@@ -34,8 +32,8 @@ namespace Project.WebUI.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-            CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(id);
-            return View(customer);
+           
+            return View();
         } 
         public async Task<IActionResult> Create()
 		{
@@ -55,7 +53,7 @@ namespace Project.WebUI.Controllers
 			{
 				if (customerDto.Files != null)
 				{
-                   await ImageUpload(customerDto, customerDto.Files, "CustomerImages");
+                
                 }
 				await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
@@ -72,62 +70,6 @@ namespace Project.WebUI.Controllers
 
 			return View(customerDto);
 		}
-
-		public async Task<IList<CustomerImage>> ImageUpload(CustomerDto customerDto,IFormFile[] formFiles, string folderName)
-		{
-			string filePath = Path.Combine($"{_env.WebRootPath}/img", folderName);
-			if (!Directory.Exists(filePath))
-			{
-				Directory.CreateDirectory(filePath);
-			}
-
-			foreach (IFormFile item in formFiles)
-			{
-				string fileExtension = Path.GetExtension(item.FileName);
-				DateTime dateTime = DateTime.Now;
-				string fullFileName = $"{item.FileName}_{dateTime.FullDateAndtimeStringWithUnderscore()}{fileExtension}";
-
-				string path = Path.Combine(filePath, fullFileName);
-
-				using (FileStream fileFlow = new FileStream(path, FileMode.Create))
-				{
-					await item.CopyToAsync(fileFlow);
-				}
-				 
-                customerDto.CustomerImages.Add(new CustomerImage { FileName = fullFileName });
-			}
-
-			return customerDto.CustomerImages;
-		}
-
-		public bool ImageDelete(IList<CustomerImage> pictureNames, string folderName)
-		{
-            string filePath = Path.Combine($"{_env.WebRootPath}/img", folderName);
-
-            int counter = 0;
-
-            foreach (var item in pictureNames)
-			{
-                string path = Path.Combine(filePath, item.FileName);
-
-                if (System.IO.File.Exists(path))
-				{
-					System.IO.File.Delete(path);
-					counter++;
-                }
-			}
-
-			if (counter != 0)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-
 
 
 		public async Task<IActionResult> Upload()
@@ -160,17 +102,9 @@ namespace Project.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-                CustomerWithImagesDto customer = await _customerService.GetSingleCustomeByIdWithImagesAsync(customerDto.Id);
+                Customer customer = await _customerService.GetByIdAsync(customerDto.Id);
 
-                bool isNewPictureUploaded = false;
-				IList<CustomerImage> oldCustomerPictures = customer.CustomerImages;
-
-				if (customerDto.Files != null)
-				{
-                    customerDto.CustomerImages = await ImageUpload(customerDto, customerDto.Files, "CustomerImages");
-					isNewPictureUploaded = true;
-                }
-
+		
                 if (customerDto.RoomId == customer.RoomId)
 				{
 					await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
@@ -180,12 +114,6 @@ namespace Project.WebUI.Controllers
 					await _roomService.GetCustomerWithRoomForRoomChangeAsync((int)customer.RoomId, customerDto.RoomId);
 					await _customerService.UpdateAsync(_mapper.Map<Customer>(customerDto));
 				}
-
-
-				if (isNewPictureUploaded)
-				{
-					ImageDelete(oldCustomerPictures, "CustomerImages");
-                }
 
                 return RedirectToAction(nameof(Index));
             }

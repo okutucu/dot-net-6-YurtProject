@@ -25,7 +25,6 @@ namespace Project.Core.Models
         public int? RoomId { get; set; }
 
         //Relational Properties
-        public IList<CustomerImage> CustomerImages { get; set; } = new List<CustomerImage>();
         public virtual Room Room { get; set; }
 
 	}
