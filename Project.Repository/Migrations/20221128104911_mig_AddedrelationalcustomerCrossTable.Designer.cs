@@ -12,8 +12,8 @@ using Project.Repository.Context;
 namespace Project.Repository.Migrations
 {
     [DbContext(typeof(YurtDbContext))]
-    [Migration("20221126144520_mig_AddedStorages")]
-    partial class mig_AddedStorages
+    [Migration("20221128104911_mig_AddedrelationalcustomerCrossTable")]
+    partial class mig_AddedrelationalcustomerCrossTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,21 @@ namespace Project.Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("CustomerCustomerImageFile", b =>
+                {
+                    b.Property<int>("CustomerImageFilesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CustomerImageFilesId", "CustomersId");
+
+                    b.HasIndex("CustomersId");
+
+                    b.ToTable("CustomerCustomerImageFile");
+                });
 
             modelBuilder.Entity("Project.Core.Models.AppUser", b =>
                 {
@@ -59,28 +74,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2468),
-                            Password = "$2a$11$liQ9LsmElIjrCyQbsDbiBerfvI48bJyQzG9Tef/JR6M5AtpHHrsJu",
+                            CreatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 729, DateTimeKind.Local).AddTicks(4860),
+                            Password = "$2a$11$6.1NhhQ.IJLM.geodBTAper6qewZ/MzzykZaLPFRoy3z6.Oh8gMCS",
                             Role = 1,
-                            UpdatedDate = new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2531),
+                            UpdatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 729, DateTimeKind.Local).AddTicks(4914),
                             UserName = "superadmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2549),
-                            Password = "$2a$11$gBxOOE1fijo/GCJ/arFNEOUwmtbiuvV92RsJov64ezTODPKjewqy2",
+                            CreatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 729, DateTimeKind.Local).AddTicks(4924),
+                            Password = "$2a$11$BJXiFsn8LdEs3MskFa66c.Ml7iuLfbwc3r6kGvS.JOu0JxBVrOr.u",
                             Role = 2,
-                            UpdatedDate = new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2551),
+                            UpdatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 729, DateTimeKind.Local).AddTicks(4930),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2555),
-                            Password = "$2a$11$n7aLtlkclbCWfLqbtvC6suh5WIENg6r7iVsFqzK4NNt0Is/6LsHii",
+                            CreatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 729, DateTimeKind.Local).AddTicks(4933),
+                            Password = "$2a$11$Qfd52wt4Q.MVv7N1LapJ5uEWNQir60d.Q/h0saUA.RMIYLyVjeoOi",
                             Role = 3,
-                            UpdatedDate = new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2704),
+                            UpdatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 729, DateTimeKind.Local).AddTicks(4984),
                             UserName = "user"
                         });
                 });
@@ -229,28 +244,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 11, 26, 16, 45, 18, 860, DateTimeKind.Local).AddTicks(9994),
+                            CreatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 180, DateTimeKind.Local).AddTicks(3603),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 11, 26, 16, 45, 18, 861, DateTimeKind.Local).AddTicks(39),
+                            CreatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 180, DateTimeKind.Local).AddTicks(3667),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 11, 26, 16, 45, 18, 861, DateTimeKind.Local).AddTicks(50),
+                            CreatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 180, DateTimeKind.Local).AddTicks(3678),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 11, 26, 16, 45, 18, 861, DateTimeKind.Local).AddTicks(54),
+                            CreatedDate = new DateTime(2022, 11, 28, 12, 49, 10, 180, DateTimeKind.Local).AddTicks(3683),
                             ExchangeName = "Tl",
                             Price = 1m
                         });
@@ -275,9 +290,6 @@ namespace Project.Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Path")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Storage")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -597,6 +609,21 @@ namespace Project.Repository.Migrations
                     b.HasBaseType("Project.Core.Models.File");
 
                     b.HasDiscriminator().HasValue("RoomIncomesImageFile");
+                });
+
+            modelBuilder.Entity("CustomerCustomerImageFile", b =>
+                {
+                    b.HasOne("Project.Core.Models.CustomerImageFile", null)
+                        .WithMany()
+                        .HasForeignKey("CustomerImageFilesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project.Core.Models.Customer", null)
+                        .WithMany()
+                        .HasForeignKey("CustomersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Project.Core.Models.AppUserDetail", b =>

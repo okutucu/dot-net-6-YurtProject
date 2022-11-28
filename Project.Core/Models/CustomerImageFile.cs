@@ -8,5 +8,6 @@ namespace Project.Core.Models
 {
     public class CustomerImageFile : File
     {
+        public IList<Customer> Customers { get; set; }
     }
 }

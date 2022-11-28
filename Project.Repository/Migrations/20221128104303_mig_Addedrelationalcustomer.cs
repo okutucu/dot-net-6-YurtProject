@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Project.Repository.Migrations
 {
-    public partial class mig_AddedStorages : Migration
+    public partial class mig_Addedrelationalcustomer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,49 +20,49 @@ namespace Project.Repository.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 columns: new[] { "CreatedDate", "Password", "UpdatedDate" },
-                values: new object[] { new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2468), "$2a$11$liQ9LsmElIjrCyQbsDbiBerfvI48bJyQzG9Tef/JR6M5AtpHHrsJu", new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2531) });
+                values: new object[] { new DateTime(2022, 11, 28, 12, 43, 3, 57, DateTimeKind.Local).AddTicks(9267), "$2a$11$mppsQkqSZfkTGRDOgFR7uuhCHs9ZmVNpTE4g8OnqyYEQm8vi1Uadm", new DateTime(2022, 11, 28, 12, 43, 3, 57, DateTimeKind.Local).AddTicks(9321) });
 
             migrationBuilder.UpdateData(
                 table: "AppUsers",
                 keyColumn: "Id",
                 keyValue: 2,
                 columns: new[] { "CreatedDate", "Password", "UpdatedDate" },
-                values: new object[] { new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2549), "$2a$11$gBxOOE1fijo/GCJ/arFNEOUwmtbiuvV92RsJov64ezTODPKjewqy2", new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2551) });
+                values: new object[] { new DateTime(2022, 11, 28, 12, 43, 3, 57, DateTimeKind.Local).AddTicks(9336), "$2a$11$fdnuVP5o.15dEinla0Ogl.W5Tr3lrhI4ksj.SDFgNhglUZeLA4ri.", new DateTime(2022, 11, 28, 12, 43, 3, 57, DateTimeKind.Local).AddTicks(9339) });
 
             migrationBuilder.UpdateData(
                 table: "AppUsers",
                 keyColumn: "Id",
                 keyValue: 3,
                 columns: new[] { "CreatedDate", "Password", "UpdatedDate" },
-                values: new object[] { new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2555), "$2a$11$n7aLtlkclbCWfLqbtvC6suh5WIENg6r7iVsFqzK4NNt0Is/6LsHii", new DateTime(2022, 11, 26, 16, 45, 19, 591, DateTimeKind.Local).AddTicks(2704) });
+                values: new object[] { new DateTime(2022, 11, 28, 12, 43, 3, 57, DateTimeKind.Local).AddTicks(9343), "$2a$11$mnglthGlZQ4GQmZmP4WlxeNZ49Axu09Md3KkwI75M/ikF7sH5fR.m", new DateTime(2022, 11, 28, 12, 43, 3, 57, DateTimeKind.Local).AddTicks(9416) });
 
             migrationBuilder.UpdateData(
                 table: "ExchangeRates",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "CreatedDate",
-                value: new DateTime(2022, 11, 26, 16, 45, 18, 860, DateTimeKind.Local).AddTicks(9994));
+                value: new DateTime(2022, 11, 28, 12, 43, 2, 437, DateTimeKind.Local).AddTicks(9277));
 
             migrationBuilder.UpdateData(
                 table: "ExchangeRates",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "CreatedDate",
-                value: new DateTime(2022, 11, 26, 16, 45, 18, 861, DateTimeKind.Local).AddTicks(39));
+                value: new DateTime(2022, 11, 28, 12, 43, 2, 437, DateTimeKind.Local).AddTicks(9332));
 
             migrationBuilder.UpdateData(
                 table: "ExchangeRates",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "CreatedDate",
-                value: new DateTime(2022, 11, 26, 16, 45, 18, 861, DateTimeKind.Local).AddTicks(50));
+                value: new DateTime(2022, 11, 28, 12, 43, 2, 437, DateTimeKind.Local).AddTicks(9343));
 
             migrationBuilder.UpdateData(
                 table: "ExchangeRates",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "CreatedDate",
-                value: new DateTime(2022, 11, 26, 16, 45, 18, 861, DateTimeKind.Local).AddTicks(54));
+                value: new DateTime(2022, 11, 28, 12, 43, 2, 437, DateTimeKind.Local).AddTicks(9349));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

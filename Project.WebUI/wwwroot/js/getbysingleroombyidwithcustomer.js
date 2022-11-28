@@ -1,7 +1,7 @@
 
     $(document).ready(function () {
 
-        let id = $("#roomId").val();
+     let id = $("#roomId").val();
     let roomWithCustomerUrl = "/Room/GetBySingleRoomByIdWithCustomer/";
 
     $.get(roomWithCustomerUrl + id, function (response) {

@@ -20,12 +20,11 @@ namespace Project.Core.Models
         public decimal DownPaymentPrice { get; set; }
         public bool Discount { get; set; }
         public decimal DiscountPrice { get; set; }
-        [NotMapped]
-        public IFormFile[] Files { get; set; }
         public int? RoomId { get; set; }
 
         //Relational Properties
         public virtual Room Room { get; set; }
+		public IList<CustomerImageFile> CustomerImageFiles { get; set; }
 
 	}
 }

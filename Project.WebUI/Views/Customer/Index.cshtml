@@ -3,6 +3,7 @@
 	ViewData["Title"] = "Index";
 }
 
+<div id="modalPlaceHolder" aria-hidden="true"></div>
 <a asp-controller="Customer" asp-action="Create"> New Customer</a>
 <table class="table table-striped">
 	<thead>
@@ -39,8 +40,59 @@
 					<a class="btn btn-warning" asp-controller="Customer" asp-action="Update" asp-route-id="@customer.Id">Update	</a>
 					<a class="btn btn-danger" asp-controller="Customer" asp-action="Remove" asp-route-id="@customer.Id">Delete	</a>
 					<a class="btn btn-info" asp-controller="Customer" asp-action="Detail" asp-route-id="@customer.Id">Detail	</a>
+					<a  class="btn btn-primary btnUpload" data-id="@customer.Id">Images </a>
 				</th>
 		</tr>
 		}
 	</tbody>
 </table>
+
+
+
+@section ExtraScripts{
+
+	<script>
+		$(document).ready(function () {
+
+			const placeHolderDiv = $('#modalPlaceHolder');
+			const url = "/Customer/Upload/";
+			
+			$(document).on('click','.btnUpload', function (event) {
+				event.preventDefault();
+				const id = $(this).attr('data-id');
+
+				$.get(url,{id : id})
+				.done(function(data) {
+						placeHolderDiv.html(data);
+						placeHolderDiv.find('.modal').modal('show');
+				})
+				.fail(function(){
+					console.log("bir hata oluştu");
+				});
+
+				$(document).on('click', '#btnFileUpload', function (event) {
+					event.preventDefault();
+
+					const url = "/Customer/Upload?=";
+					console.log(id)
+
+					$.post(url, { id: id })
+						.done(function (data) {
+							placeHolderDiv.find('.modal').modal('hide');
+						})
+						.fail(function () {
+							console.log("bir hata oluştu");
+						});
+
+				});
+
+			});
+
+
+		
+
+		});
+
+
+	</script>
+}

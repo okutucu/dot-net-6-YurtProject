@@ -54,10 +54,6 @@ namespace Project.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				if (customerDto.Files != null)
-				{
-					await Upload();
-                }
 				await _roomService.ReducingRoomCapacityAsync(customerDto.RoomId);
 
 				await _customerService.AddAsync(_mapper.Map<Customer>(customerDto));
@@ -74,15 +70,29 @@ namespace Project.WebUI.Controllers
 			return View(customerDto);
 		}
 
+		public async Task<IActionResult> Upload(int id)
+		{
+			
+
+			return PartialView("_CustomerImagePartialView");
+		}
+
+
+		[HttpPost]
 		public async Task<IActionResult> Upload()
 		{
-			var datas = await _fileService.UploadAsync("resource/customer-images", Request.Form.Files);
+			List<(string fileName , string path)> datas = await _fileService.UploadAsync("resource/customer-images", Request.Form.Files);
+
+			Customer customer = await _customerService.GetByIdAsync(id);
 
 			await _customerImageFileService.AddRangeAsync(datas.Select(d => new CustomerImageFile()
 			{
 				FileName = d.fileName,
-				Path = d.path,
-			}).ToList()); ;
+				Path = d.path, 
+				Customers = new List<Customer>() { customer}
+			}).ToList());
+
+			
 			return Ok();
 		}
 
