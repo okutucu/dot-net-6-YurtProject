@@ -19,10 +19,11 @@ namespace Project.WebUI.Modules
 
 			builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
 			builder.RegisterGeneric(typeof(Service<>)).As(typeof(IService<>)).InstancePerLifetimeScope();
-
 			builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
 
-			Assembly webAssembly = Assembly.GetExecutingAssembly();
+            
+
+            Assembly webAssembly = Assembly.GetExecutingAssembly();
 			Assembly repoAssembly = Assembly.GetAssembly(typeof(YurtDbContext));
 			Assembly serviceAssembly = Assembly.GetAssembly(typeof(MapProfile));
 

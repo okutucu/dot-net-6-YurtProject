@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Project.Core.Services;
+using Project.Core.Abstractions.File;
 using Project.Service.Utilities.Extensions;
 
 namespace Project.Service.Services
@@ -14,6 +14,10 @@ namespace Project.Service.Services
         {
             _env = env;
         }
+
+
+
+
         public async Task<bool> CopyFileAsync(string path, IFormFile file)
         {
             try
@@ -29,6 +33,7 @@ namespace Project.Service.Services
             }
         }
 
+     
         public async Task<string> FileRenameAsync(string fileName, string name)
         {
             DateTime dateTime = DateTime.Now;
@@ -37,7 +42,7 @@ namespace Project.Service.Services
             return fullPath;
         }
 
-        public async Task<List<(string fileNames, string path)>> UploadAsync(string path, IFormFileCollection files)
+        public async Task<List<(string fileName, string path)>> UploadAsync(string path, IFormFileCollection files)
         {
             string uploadPath = Path.Combine(_env.WebRootPath, path);
             if (!Directory.Exists(uploadPath))
@@ -58,8 +63,15 @@ namespace Project.Service.Services
             if (results.TrueForAll(r => r.Equals(true)))
                 return datas;
 
-            // todo exceptionsss
+
             return null;
         }
+
+
+        public Task DeleteAsync(string path, string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

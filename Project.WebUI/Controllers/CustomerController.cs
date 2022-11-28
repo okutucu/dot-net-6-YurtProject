@@ -2,31 +2,31 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Project.Core.Abstractions.File;
 using Project.Core.DTOs;
 using Project.Core.Models;
-using Project.Core.Repositories;
 using Project.Core.Services;
 
 namespace Project.WebUI.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class CustomerController : Controller
 	{
 		private readonly ICustomerService _customerService;
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
 		private readonly IRecordService _recordService;
-		private readonly IFileService _fileService;
 		private readonly ICustomerImageFileService _customerImageFileService;
+		private readonly IFileService _fileService;
 
-		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IFileService fileService, ICustomerImageFileService customerImageFileService )
+		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, ICustomerImageFileService customerImageFileService, IFileService fileService)
 		{
 			_customerService = customerService;
 			_mapper = mapper;
 			_roomService = roomService;
 			_recordService = recordService;
-			_fileService = fileService; 
 			_customerImageFileService = customerImageFileService;
+			_fileService = fileService;
 		}
 		public async Task<IActionResult> Index()
 		{
@@ -77,11 +77,13 @@ namespace Project.WebUI.Controllers
 		public async Task<IActionResult> Upload()
 		{
 			var datas = await _fileService.UploadAsync("resource/customer-images", Request.Form.Files);
-			await _customerImageFileService.AddRangeAsync(datas.Select(d => new CustomerImageFile() {
-			FileName = d.fileNames,
-			Path = d.path
-			}).ToList());
-            return Ok();
+
+			await _customerImageFileService.AddRangeAsync(datas.Select(d => new CustomerImageFile()
+			{
+				FileName = d.fileName,
+				Path = d.path,
+			}).ToList()); ;
+			return Ok();
 		}
 
 
