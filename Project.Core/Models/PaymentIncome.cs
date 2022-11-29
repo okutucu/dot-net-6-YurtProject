@@ -22,5 +22,8 @@ namespace Project.Core.Models
         [NotMapped]
         public IFormFile[] Files { get; set; }
 
+      
+
+
     }
 }

@@ -8,7 +8,6 @@ namespace Project.Repository.Configurations
 	{
 		public void Configure(EntityTypeBuilder<PaymentDetail> builder)
 		{
-			builder.Property(p => p.PaymentName).IsRequired().HasMaxLength(20);
 			builder.Property(p => p.Price).IsRequired().HasColumnType("decimal(18,2)");
 			builder.Property(p => p.MoneyOfTheDay).IsRequired().HasColumnType("decimal(18,2)");
 			builder.Property(p => p.PaymentDate).HasColumnType("date");

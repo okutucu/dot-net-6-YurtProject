@@ -63,5 +63,11 @@ namespace Project.Service.Services
 
             return entity;
         }
-	}
+
+		public async Task<T> GetByNoTrackIdAsync(int id)
+		{
+            return await _repository.GetByNoTrackIdAsync(id);
+
+        }
+    }
 }

@@ -14,15 +14,17 @@ namespace Project.WebUI.Controllers
 		private readonly IIncomeDetailService _incomeDetailService;
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
-		private readonly IExchangeRateService _exchangeRateService;
+        private readonly IService<PaymentName> _paymentNameService;
+        private readonly IExchangeRateService _exchangeRateService;
 
 
-		public IncomeDetailController(IIncomeDetailService incomeDetailService, IMapper mapper, IExchangeRateService exchangeRateService, IRoomService roomService)
+		public IncomeDetailController(IIncomeDetailService incomeDetailService, IMapper mapper, IExchangeRateService exchangeRateService, IRoomService roomService, IService<PaymentName> paymentNameService)
 		{
 			_incomeDetailService = incomeDetailService;
 			_mapper = mapper;
 			_exchangeRateService = exchangeRateService;
 			_roomService = roomService;
+			_paymentNameService = paymentNameService;
 		}
 
 
@@ -44,7 +46,7 @@ namespace Project.WebUI.Controllers
 
             });
             ViewBag.detailPaymentsDatas = from payment in incomeDetailDtos
-                                          group payment by payment.PaymentName into payments
+                                          group payment by payment.PaymentName.Name into payments
                                       select new
                                       {
                                           PaymentName = payments.Key,
@@ -63,7 +65,14 @@ namespace Project.WebUI.Controllers
 
 		public async Task<IActionResult> Create()
 		{
-			List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<PaymentName> paymentNames = _paymentNameService.GetAll().ToList();
+
+            List<PaymentNameDto> paymentNamesDto = _mapper.Map<List<PaymentNameDto>>(paymentNames);
+
+            ViewBag.paymentNames = new SelectList(paymentNamesDto, "Id", "Name");
+
+            List<Room> rooms = _roomService.GetAll().ToList();
 
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
@@ -82,7 +91,13 @@ namespace Project.WebUI.Controllers
 				return RedirectToAction(nameof(Index));
 			}
 
-			List<Room> rooms = _roomService.GetAll().ToList();
+
+            List<PaymentName> paymentNames = _paymentNameService.GetAll().ToList();
+
+            List<PaymentNameDto> paymentNamesDto = _mapper.Map<List<PaymentNameDto>>(paymentNames);
+
+            ViewBag.paymentNames = new SelectList(paymentNamesDto, "Id", "Name");
+            List<Room> rooms = _roomService.GetAll().ToList();
 
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
@@ -91,14 +106,26 @@ namespace Project.WebUI.Controllers
 			return View(incomeDetailDto);
 		}
 
+
+
 		[ServiceFilter(typeof(NotFoundFilter<IncomeDetail>))]
 		public async Task<IActionResult> Update(int id)
 		{
-			List<Room> rooms = _roomService.GetAll().ToList();
+
+            IncomeDetail incomeDetail = await _incomeDetailService.GetByNoTrackIdAsync(id);
+
+            List<PaymentName> paymentNames = _paymentNameService.GetAll().ToList();
+
+            List<PaymentNameDto> paymentNamesDto = _mapper.Map<List<PaymentNameDto>>(paymentNames);
+
+            ViewBag.paymentNames = new SelectList(paymentNamesDto, "Id", "Name",incomeDetail.PaymentNameId);
+
+
+            List<Room> rooms = _roomService.GetAll().ToList();
 
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-			IncomeDetail incomeDetail = await _incomeDetailService.GetByIdAsync(id);
+			
 
 			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", incomeDetail.Id);
 
@@ -117,12 +144,15 @@ namespace Project.WebUI.Controllers
 			}
 
 			List<Room> rooms = _roomService.GetAll().ToList();
-
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
-
 			ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", incomeDetailDto.Id);
 
-			return View(incomeDetailDto);
+
+            List<PaymentName> paymentNames = _paymentNameService.GetAll().ToList();
+            List<PaymentNameDto> paymentNamesDto = _mapper.Map<List<PaymentNameDto>>(paymentNames);
+            ViewBag.paymentNames = new SelectList(paymentNamesDto, "Id", "Name", incomeDetailDto.PaymentNameId);
+
+            return View(incomeDetailDto);
 		}
 
 		[ServiceFilter(typeof(NotFoundFilter<IncomeDetail>))]

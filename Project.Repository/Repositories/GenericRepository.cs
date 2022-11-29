@@ -48,7 +48,13 @@ namespace Project.Repository.Repositories
 			return await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
 		}
 
-		public void Remove(T entity)
+		public async Task<T> GetByNoTrackIdAsync(int id)
+		{
+            return await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+
+        }
+
+        public void Remove(T entity)
 		{
 			_dbSet.Remove(entity);
 		}

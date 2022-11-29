@@ -7,20 +7,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form asp-action="Upload" id="upload-form">
+              <form asp-action="Upload" id="upload-form" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="form-label" for="upload"> Image </label>
-                            <input  type="file" class="form-control" id="upload" multiple />
+                            <input  type="file" class="form-control" id="files" multiple />
                             <span  class="text-danger"></span>
                         </div>
               </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a type="submit" class="btn btn-primary" id="btnFileUpload">Save changes</a>
+                <button type="submit" class="btn btn-primary" id="btnFileUpload">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-
-

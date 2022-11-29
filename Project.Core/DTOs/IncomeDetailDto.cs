@@ -4,7 +4,6 @@ namespace Project.Core.DTOs
 {
 	public class IncomeDetailDto : PaymentIncomeDto
     {
-        public PaymentName PaymentName { get; set; }
-
+        public int PaymentNameId { get; set; }
     }
 }

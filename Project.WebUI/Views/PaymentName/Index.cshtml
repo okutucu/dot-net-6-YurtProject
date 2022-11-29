@@ -1,0 +1,28 @@
+﻿@model List<PaymentNameDto>
+
+<a asp-controller="Paymentname" asp-action="Create" class="btn btn-outline-primary"> Create Payment Name <i class="material-icons f-left material-css">add_box</i></a>
+
+<table class="table table-striped">
+	<thead>
+	<tr>
+		<td>Payment Name</td>
+		<td>Action</td>
+		
+	</tr>
+	</thead>
+	<tbody>
+		@foreach (PaymentNameDto paymentName in Model)
+		{
+		<tr>
+				<th>@paymentName.Name</th>
+
+				<th>
+					
+					<a class="btn btn-warning" asp-controller="PaymentName" asp-action="Update" asp-route-id="@paymentName.Id">Update	</a>
+				<a class="btn btn-danger" asp-controller="PaymentName" asp-action="Remove" asp-route-id="@paymentName.Id">Delete	</a>	
+				</th>
+				
+		</tr>
+		}
+	</tbody>
+</table>

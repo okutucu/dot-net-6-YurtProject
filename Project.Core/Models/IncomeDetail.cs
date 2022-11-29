@@ -6,10 +6,13 @@ namespace Project.Core.Models
 {
 	public class IncomeDetail : PaymentIncome
     {
-        public PaymentName PaymentName { get; set; }
         public int? RoomId { get; set; }
+        public int? PaymentNameId { get; set; }
 
 		// Relational Properties
 		public virtual Room Room { get; set; }
+
+        public PaymentName PaymentName { get; set; }
+
     }
 }

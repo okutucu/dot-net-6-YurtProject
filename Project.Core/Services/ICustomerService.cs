@@ -6,6 +6,7 @@ namespace Project.Core.Services
     public interface ICustomerService : IService<Customer>
     {
         Task<List<CustomerListDto>> GetCustomerWithRoomAsync();
+        Task<Customer> GetSingleCustomerWithImageAsync(int id);
 
 
     }

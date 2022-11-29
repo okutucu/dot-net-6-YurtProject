@@ -6,6 +6,7 @@ using Project.Core.Abstractions.File;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
+using Project.WebUI.ViewModel;
 
 namespace Project.WebUI.Controllers
 {
@@ -35,8 +36,16 @@ namespace Project.WebUI.Controllers
 
         public async Task<IActionResult> Detail(int id)
         {
-           
-            return View();
+
+            Customer customer = await _customerService.GetSingleCustomerWithImageAsync(id);
+
+            CustomerWithImage_VM customerWithImage_VM = new()
+            {
+                Customer = customer,
+                CustomerImageFile = customer.CustomerImageFiles
+            };
+
+            return View(customerWithImage_VM);
         } 
         public async Task<IActionResult> Create()
 		{
@@ -70,20 +79,27 @@ namespace Project.WebUI.Controllers
 			return View(customerDto);
 		}
 
+		[HttpGet]
 		public async Task<IActionResult> Upload(int id)
 		{
-			
+			Customer customer = await _customerService.GetSingleCustomerWithImageAsync(id);
 
-			return PartialView("_CustomerImagePartialView");
+			CustomerWithImage_VM customerWithImage_VM = new()
+			{
+				Customer = customer,
+				CustomerImageFile = customer.CustomerImageFiles
+			};
+
+			return PartialView("_CustomerImagePartialView", customerWithImage_VM);
 		}
 
 
 		[HttpPost]
-		public async Task<IActionResult> Upload()
+		public async Task<JsonResult> Upload(string id)
 		{
 			List<(string fileName , string path)> datas = await _fileService.UploadAsync("resource/customer-images", Request.Form.Files);
 
-			Customer customer = await _customerService.GetByIdAsync(id);
+			Customer customer = await _customerService.GetByNoTrackIdAsync(int.Parse(id));
 
 			await _customerImageFileService.AddRangeAsync(datas.Select(d => new CustomerImageFile()
 			{
@@ -93,7 +109,7 @@ namespace Project.WebUI.Controllers
 			}).ToList());
 
 			
-			return Ok();
+			return Json("Your transaction has been completed successfully");
 		}
 
 

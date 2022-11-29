@@ -6,6 +6,7 @@ namespace Project.Core.Services
 	public interface IService<T> where T : BaseEntity
 	{
 		Task<T> GetByIdAsync(int id);
+		Task<T> GetByNoTrackIdAsync(int id);
 		IQueryable<T> GetAll();
 		IQueryable<T> Where(Expression<Func<T, bool>> exp);
 		Task<bool> AnyAsync(Expression<Func<T, bool>> exp);

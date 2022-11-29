@@ -24,8 +24,10 @@ namespace Project.Repository.Context
 		public DbSet<RoomIncomesImageFile> RoomIncomesFiles { get; set; }
 		public DbSet<OtherIncomeImageFile> OtherIncomeFiles { get; set; }
 		public DbSet<PaymentImageFile> PaymentFiles { get; set; }
+		public DbSet<PaymentName> PaymentNames { get; set; }
 
-		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{
 
 			foreach (var item in ChangeTracker.Entries())

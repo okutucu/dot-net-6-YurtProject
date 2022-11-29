@@ -16,12 +16,14 @@ namespace Project.WebUI.Controllers
 		private readonly IMapper _mapper;
 		private readonly IExchangeRateService _exchangeRateService;
 
+
 		public RoomIncomeController(IRoomService roomService, IMapper mapper, IRoomIncomeService roomIncomeService, IExchangeRateService exchangeRateService)
 		{
 			_roomService = roomService;
 			_mapper = mapper;
 			_roomIncomeService = roomIncomeService;
 			_exchangeRateService = exchangeRateService;
+
 		}
 
 		public IActionResult Index()
@@ -49,6 +51,8 @@ namespace Project.WebUI.Controllers
 		}
 		public IActionResult Create()
 		{
+
+
 
             List<Room> rooms = _roomService.GetAll().ToList();
 

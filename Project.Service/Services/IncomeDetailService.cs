@@ -112,7 +112,7 @@ namespace Project.Service.Services
 		{
 			incomeDetailDto.MoneyOfTheDay = currency * incomeDetailDto.Price;
 			incomeDetailDto.PaymentDate = DateTime.Now;
-
+			
 
 			_incomeDetailRepository.Update(_mapper.Map<IncomeDetail>(incomeDetailDto));
 			await _unitOfWok.CommitAsync();

@@ -1,28 +1,55 @@
-﻿@*
+﻿@using Project.Core.Models
+@model Project.WebUI.ViewModel.CustomerWithImage_VM
+
 
 @{
     ViewData["Title"] = "Detail";
 }
 
-<h4>@Model.FullName Detail</h4>
+<h4>@Model.Customer.FullName Detail</h4>
 
 
-<div class="container">
+
+
+<div>
     <div class="row">
 
-        <p> FullName :  @Model.FullName </p>
-        <p> Phone :  @Model.Phone </p>
-         <p> Email :  @Model.Email </p>
-            <p> Entry Date :  @Model.EntryDate </p>
-                <p> Depart Date :  @Model.Depart </p>
-        <p> Description :  @Model.Description </p>
-                <p> RelativeNameSurname :  @Model.RelativeNameSurname </p>
-                <p> RelativePhone :  @Model.RelativePhone </p>
-       @foreach (CustomerImage item in Model.CustomerImages)
-        {
-                    <img style="width:100px" height="100px" src="~/img/CustomerImages/@item.FileName" />
-                }
- 
+        <p> FullName :  @Model.Customer.FullName </p>
+        <p> Phone :  @Model.Customer.Phone </p>
+        <p> Email :  @Model.Customer.Email </p>
+        <p> EntryDate :  @Model.Customer.EntryDate </p>
+        <p> Depart :  @Model.Customer.Depart </p>
+        <p> Description :  @Model.Customer.Description </p>
+        <p> RelativeNameSurname :  @Model.Customer.RelativeNameSurname </p>
+        <p> RelativePhone :  @Model.Customer.RelativePhone </p>
+
     </div>
+
 </div>
-*@
+
+
+    @if (Model.CustomerImageFile.Count == 0)
+    {
+        <div class="alert alert-info" role="alert">
+           Customer image not found !  <br>
+            <a asp-action="Index" class="alert-link">Click</a>  to go back.
+        </div>
+    }
+    else
+    {
+        @foreach (CustomerImageFile item in Model.CustomerImageFile)
+        {
+            <div class="card" style="width: 18rem;">
+                <img style="width:100px" height="100px" src="~/img/CustomerImages/@item.FileName" />
+                <div class="card-body">
+                    <h5 class="card-title">@item.FileName</h5>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+
+        }
+
+    }
+    
+
+   

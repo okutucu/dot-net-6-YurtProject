@@ -56,10 +56,12 @@
 
 			const placeHolderDiv = $('#modalPlaceHolder');
 			const url = "/Customer/Upload/";
+			let id;
 			
 			$(document).on('click','.btnUpload', function (event) {
 				event.preventDefault();
-				const id = $(this).attr('data-id');
+				 id= $(this).attr('data-id');
+				 console.log(id)
 
 				$.get(url,{id : id})
 				.done(function(data) {
@@ -73,17 +75,30 @@
 				$(document).on('click', '#btnFileUpload', function (event) {
 					event.preventDefault();
 
-					const url = "/Customer/Upload?=";
-					console.log(id)
+						var $file = document.getElementById('files'),
+						$formData = new FormData();
 
-					$.post(url, { id: id })
-						.done(function (data) {
+						if ($file.files.length > 0) {
+						   for (var i = 0; i < $file.files.length; i++) {
+							  $formData.append('file-' + i, $file.files[i]);
+						   }
+						}
+					const form = $('#upload-form');
+					const url = "/Customer/Upload?id=";
+
+					$.ajax({
+						url: url + id,
+						type: 'POST',
+						data: $formData,
+						dataType: 'json',
+						contentType: false,
+						processData: false,
+						success: function (data) {
 							placeHolderDiv.find('.modal').modal('hide');
-						})
-						.fail(function () {
-							console.log("bir hata oluştu");
-						});
-
+							console.log(data)
+						}
+					});
+			
 				});
 
 			});
