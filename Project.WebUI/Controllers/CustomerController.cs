@@ -123,8 +123,6 @@ namespace Project.WebUI.Controllers
             List<Room> rooms = _roomService.Where(r => r.CurrentCapacity > 0 || r.Id == customer.RoomId).ToList();
             List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
 
-
-
             ViewBag.rooms = new SelectList(roomsDto, "Id", "RoomName", customer.RoomId);
 
 			return View(_mapper.Map<CustomerDto>(customer));

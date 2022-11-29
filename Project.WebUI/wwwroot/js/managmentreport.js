@@ -5,6 +5,11 @@ $(document).ready(function () {
     let visualizeIncomesResultUrl = "/ManagmentReport/VisualizeOtherIncomesResult?selectedDate=";
     let visualizePaymentResultUrl = "/ManagmentReport/VisualizePaymentResult?selectedDate=";
 
+    var totalSumRent;
+    var totalSumIncome;
+    var totalSumPayment;
+
+
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -14,9 +19,13 @@ $(document).ready(function () {
             google.charts.load('current', { 'packages': ['corechart'] });
              google.charts.setOnLoadCallback(function () {
                  drawChartWithRoomRent(result);
+
+                 
              });
             drawChartRoomRentallincomeByPaymentName(result.allRentIncomesWithPaymentMethod);
-           
+          
+            
+         
         }
     });
     $.ajax({
@@ -28,9 +37,13 @@ $(document).ready(function () {
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 drawChartWithIncomesDetail(result);
+               
+
             });
             drawChartIncomeDetailByPaymentName(result.allIncomesDetailWithPaymentMethod);
 
+
+        
             
         }
     });
@@ -40,7 +53,6 @@ $(document).ready(function () {
         contentType: "application/json",
         url: visualizePaymentResultUrl + date,
         success: function (result) {
-            console.log(result);
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 drawChartWithPaymentDetail(result);
@@ -51,6 +63,9 @@ $(document).ready(function () {
         }
     });
 
+
+    console.log(totalSumRent)
+    console.log(totalSumIncome)
 
 });
 
@@ -81,7 +96,6 @@ function drawChartWithRoomRent(result) {
     columnChart.draw(data, columnChartOptions);
 
 }
-
 function drawChartRoomRentallincomeByPaymentName(result) {
 
     var raw = result,
@@ -216,7 +230,6 @@ function drawChartWithIncomesDetail(result) {
     columnChart.draw(data, columnChartOptions);
 
 }
-
 function drawChartIncomeDetailByPaymentName(result) {
     var raw = result,
         nameIndices = Object.create(null),
@@ -354,8 +367,6 @@ function drawChartWithPaymentDetail(result) {
 
 
 }
-
-
 function drawChartRoomPaymentDetailByPaymentName(result) {
 
 

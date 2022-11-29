@@ -61,13 +61,13 @@ namespace Project.WebUI.Controllers
 
 
             var allRentIncomesWithPaymentMethod = roomIncomeWithRoomDtos.GroupBy(
-       x => new { x.PaymentMethod, x.Exchange }
-      ).Select(g => new
-      {
-          PaymentMethod = g.Key.PaymentMethod.ToString(),
-          Exchange = g.Key.Exchange.ToString(),
-          Sum = g.Sum(s => s.Price)
-      }).ToList();
+                   x => new { x.PaymentMethod, x.Exchange }
+                  ).Select(g => new
+                  {
+                      PaymentMethod = g.Key.PaymentMethod.ToString(),
+                      Exchange = g.Key.Exchange.ToString(),
+                      Sum = g.Sum(s => s.Price)
+                  }).ToList();
 
 
 
