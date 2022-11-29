@@ -13,7 +13,7 @@ namespace Project.Repository.Repositories
 
 		public async Task<List<PaymentDetail>> GetPaymentWithRoomAsync()
 		{
-            return await _context.PaymentDetails.Include(i => i.Room).ToListAsync();
+            return await _context.PaymentDetails.Include(i => i.PaymentName).Include(i => i.Room).ToListAsync();
 
         }
     }

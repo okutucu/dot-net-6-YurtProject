@@ -21,16 +21,17 @@
                 <span asp-validation-for="RoomId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="PaymentNameId"></label>
+                <select asp-for="PaymentNameId" asp-items="ViewBag.paymentNames" class="form-control"> </select>
+                <span asp-validation-for="PaymentNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CustomerName" class="control-label"></label>
                 <select id="customerName" asp-for="CustomerName" class="form-control"></select>
 
                 <span asp-validation-for="CustomerName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="PaymentName" class="control-label"></label>
-                <select asp-for="PaymentName" asp-items="Html.GetEnumSelectList<PaymentName>()" class="form-control"></select>
-                <span asp-validation-for="PaymentName" class="text-danger"></span>
-            </div>
+          
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />

@@ -97,6 +97,7 @@ namespace Project.WebUI.Controllers
             List<PaymentNameDto> paymentNamesDto = _mapper.Map<List<PaymentNameDto>>(paymentNames);
 
             ViewBag.paymentNames = new SelectList(paymentNamesDto, "Id", "Name");
+
             List<Room> rooms = _roomService.GetAll().ToList();
 
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);

@@ -8,6 +8,7 @@ namespace Project.Core.DTOs
 {
     public class PaymentDetailWithRoomDto : PaymentDetailDto
     {
+        public PaymentNameDto PaymentName { get; set; }
         public RoomDto Room { get; set; }
     }
 }

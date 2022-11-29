@@ -1,6 +1,4 @@
-﻿using System;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Repositories;

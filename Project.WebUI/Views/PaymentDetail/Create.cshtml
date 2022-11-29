@@ -14,9 +14,9 @@
         <form asp-action="Create" method="post" asp-controller="PaymentDetail">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="PaymentName" class="control-label"></label>
-                <select asp-for="PaymentName" asp-items="Html.GetEnumSelectList<PaymentName>()" class="form-control"></select>
-                <span asp-validation-for="PaymentName" class="text-danger"></span>
+                <label asp-for="PaymentNameId"></label>
+                <select asp-for="PaymentNameId" asp-items="ViewBag.paymentNames" class="form-control"> </select>
+                <span asp-validation-for="PaymentNameId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RoomId"></label>

@@ -16,13 +16,16 @@ namespace Project.WebUI.Controllers
         private readonly IPaymentDetailService _paymentDetailService;
 		private readonly IExchangeRateService _exchangeRateService;
 		private readonly IMapper _mapper;
+        private readonly IService<PaymentName> _paymentNameService;
 
-		public PaymentDetailController(IPaymentDetailService paymentDetailService, IMapper mapper, IExchangeRateService exchangeRateService, IRoomService roomService)
+
+		public PaymentDetailController(IPaymentDetailService paymentDetailService, IMapper mapper, IExchangeRateService exchangeRateService, IRoomService roomService, IService<PaymentName> paymentNameService)
 		{
 			_paymentDetailService = paymentDetailService;
 			_mapper = mapper;
 			_exchangeRateService = exchangeRateService;
 			_roomService = roomService;
+			_paymentNameService = paymentNameService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -43,7 +46,7 @@ namespace Project.WebUI.Controllers
 
             });
             ViewBag.detailPaymentsDatas = from payment in paymentDetailDtos
-                                          group payment by payment.PaymentName into payments
+                                          group payment by payment.PaymentName.Name into payments
                                           select new
                                           {
                                               PaymentName = payments.Key,
@@ -60,6 +63,12 @@ namespace Project.WebUI.Controllers
 
         public IActionResult Create()
 		{
+            List<PaymentName> paymentNames = _paymentNameService.GetAll().ToList();
+
+            List<PaymentNameDto> paymentNamesDto = _mapper.Map<List<PaymentNameDto>>(paymentNames);
+
+            ViewBag.paymentNames = new SelectList(paymentNamesDto, "Id", "Name");
+
             List<Room> rooms = _roomService.GetAll().ToList();
 
             List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
@@ -77,6 +86,14 @@ namespace Project.WebUI.Controllers
 				await _paymentDetailService.AddByCurrency(paymentDetailDto, currency.Price);
 				return RedirectToAction(nameof(Index));
 			}
+
+
+            List<PaymentName> paymentNames = _paymentNameService.GetAll().ToList();
+
+            List<PaymentNameDto> paymentNamesDto = _mapper.Map<List<PaymentNameDto>>(paymentNames);
+
+            ViewBag.paymentNames = new SelectList(paymentNamesDto, "Id", "Name");
+
             List<Room> rooms = _roomService.GetAll().ToList();
 
             List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
