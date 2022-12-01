@@ -119,7 +119,7 @@ namespace Project.WebUI.Controllers
         {
             List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
             var allPaymentDetailWithExchange = (from exchange in paymentWithRoomDtos
-                                                group exchange by exchange.Exchange.ToString()
+                                        group exchange by exchange.Exchange.ToString()
                                  into exchangeGroup
                                                 select new
                                                 {

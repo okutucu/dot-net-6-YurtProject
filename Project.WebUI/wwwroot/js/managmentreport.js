@@ -5,9 +5,9 @@ $(document).ready(function () {
     let visualizeIncomesResultUrl = "/ManagmentReport/VisualizeOtherIncomesResult?selectedDate=";
     let visualizePaymentResultUrl = "/ManagmentReport/VisualizePaymentResult?selectedDate=";
 
-    var totalSumRent;
-    var totalSumIncome;
-    var totalSumPayment;
+    var rentSumArr = [];
+    var incomesSumArr = [];
+    var paymentSumArr = [];
 
 
     $.ajax({
@@ -19,13 +19,11 @@ $(document).ready(function () {
             google.charts.load('current', { 'packages': ['corechart'] });
              google.charts.setOnLoadCallback(function () {
                  drawChartWithRoomRent(result);
-
-                 
+                 $.each(result.allRentIncomesWithExchange, function (i, obj) {
+                     rentSumArr.push([obj.exchange, obj.sum]);
+                 });
              });
             drawChartRoomRentallincomeByPaymentName(result.allRentIncomesWithPaymentMethod);
-          
-            
-         
         }
     });
     $.ajax({
@@ -37,14 +35,12 @@ $(document).ready(function () {
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 drawChartWithIncomesDetail(result);
-               
+                $.each(result.allIncomesDetailWithExchange, function (i, obj) {
+                    incomesSumArr.push([obj.exchange, obj.sum]);
+                });
 
             });
             drawChartIncomeDetailByPaymentName(result.allIncomesDetailWithPaymentMethod);
-
-
-        
-            
         }
     });
     $.ajax({
@@ -56,16 +52,14 @@ $(document).ready(function () {
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 drawChartWithPaymentDetail(result);
-            });
+                $.each(result.allPaymentDetailWithExchange, function (i, obj) {
+                    paymentSumArr.push([obj.exchange, obj.sum]);
+                });
 
+            });
             drawChartRoomPaymentDetailByPaymentName(result.allpaymentDetailWithPaymentMethod)
-   
         }
     });
-
-
-    console.log(totalSumRent)
-    console.log(totalSumIncome)
 
 });
 
