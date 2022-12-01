@@ -36,6 +36,8 @@ namespace Project.WebUI.Controllers
             List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await  _paymentDetailService.DailyOrMonthly(selectedDate);
             List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.DailyOrMonthly(selectedDate);
 
+
+
             SingleRoomReports_VM singleRoomReports_VM = new SingleRoomReports_VM
             {
                 IncomeWithRoomDtos = incomeWithRoomDtos,
@@ -143,6 +145,58 @@ namespace Project.WebUI.Controllers
             };
 
             return Json(allPaymentDetail);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> VisualizeAllPaymentResult(string selectedDate)
+       {
+            List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
+            var incomesExchange = (from exchange in incomeWithRoomDtos
+                                                group exchange by exchange.Exchange.ToString()
+                                into exchangeGroup
+                                                select new
+                                                {
+                                                    PaymentType = "Total Incomes",
+                                                    Exchange = exchangeGroup.Key,
+                                                    Sum = exchangeGroup.Sum(s => s.Price)
+                                                }).ToList();
+
+
+            List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
+
+            var paymentExchange = (from exchange in paymentWithRoomDtos
+                                                group exchange by exchange.Exchange.ToString()
+                             into exchangeGroup
+                                                select new
+                                                {
+                                                    PaymentType = "Total Payment",
+                                                    Exchange = exchangeGroup.Key,
+                                                    Sum = exchangeGroup.Sum(s => s.Price)
+                                                }).ToList();
+
+
+            List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.DailyOrMonthly(selectedDate);
+
+            var rentExchange = (from exchange in roomIncomeWithRoomDtos
+                                              group exchange by exchange.Exchange.ToString()
+                                into exchangeGroup
+                                              select new
+                                              {
+                                                  PaymentType = "Total Incomes",
+                                                  Exchange = exchangeGroup.Key,
+                                                  Sum = exchangeGroup.Sum(s => s.Price)
+                                              }).ToList();
+
+
+            var allIncomesAndPayments = new
+            {
+                paymentExchange,
+                rentExchange,
+                incomesExchange
+
+            };
+
+            return Json(allIncomesAndPayments);
         }
 
 

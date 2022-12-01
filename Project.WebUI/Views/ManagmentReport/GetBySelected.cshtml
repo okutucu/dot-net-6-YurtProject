@@ -22,6 +22,89 @@ else
 	<div>
 		<h3  id="dateId">@ViewBag.date</h3>
 	</div>
+
+	<div class="row">
+			<h3>All Income</h3>
+		<div class="d-flex justify-content-start flex-wrap">
+			<div class="card bg-primary  m-2" style="width:290px">
+				<span class="card-icon">
+					<lord-icon src="https://cdn.lordicon.com/cjieiyzp.json"
+						   trigger="hover"
+						   colors="primary:#fff,secondary:#fff"
+						   class="position-absolute">
+					</lord-icon>
+				</span>
+				<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+				<div class="card-content ms-5">
+					<div class="card-header" >Total Rent Incomes</div>
+					<hr class="my-0 ms-2">
+					<div class="card-body" id="totalIncome">
+					</div>
+				</div>
+			</div>
+
+			<div class="card bg-b-pink  m-2" style="width:290px">
+				<span class="card-icon">
+					<lord-icon src="https://cdn.lordicon.com/rgyftmhc.json"
+						   trigger="hover"
+						   colors="primary:#fff,secondary:#fff"
+						   class="position-absolute">
+					</lord-icon>
+				</span>
+				<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+				<div class="card-content ms-5">
+					<div class="card-header">Total Payments Count</div>
+					<hr class="my-0 ms-2">
+					<div class="card-body" id="totalPayment">
+
+					</div>
+				</div>
+			</div>
+			<div class="card bg-success  m-2" style="width:290px">
+				<span class="card-icon">
+					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+					<lord-icon src="https://cdn.lordicon.com/huwchbks.json"
+						   trigger="hover"
+						   colors="primary:#fff,secondary:#fff"
+						   class="position-absolute">
+						>
+					</lord-icon>
+				</span>
+				<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+				<div class="card-content ms-5">
+					<div class="card-header">Total Remaining Balance</div>
+					<hr class="my-0 ms-2">
+					<div class="card-body" id="totalBalance">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+			<div class="col-6"  style="background:white">
+				<h3 class="my-2">
+					Currency & Price Chart
+				</h3>
+
+
+			<div id="allIncomeCurrencyChart"></div>
+
+			</div>
+			<div class="col-6" style="background:white">
+				<h3 class="my-2">
+					Payment Method & Price Chart
+				</h3>
+			<div id="#"></div>
+
+			</div>
+		</div>
+
+
+
+
+
 	if (Model.RoomIncomeWithRoomDtos.Count == 0)
 	{
 		<div class="alert alert-info" role="alert">
