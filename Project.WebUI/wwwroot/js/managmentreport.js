@@ -13,6 +13,7 @@ $(document).ready(function () {
         url: visualizeAllPaymentResult + date,
         success: function (dataAllPayment) {
             drawChartAllIncomes(dataAllPayment);
+            getTotalBalance(dataAllPayment);
         }
     });
 
@@ -30,6 +31,7 @@ $(document).ready(function () {
         }
     });
 
+
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -44,6 +46,7 @@ $(document).ready(function () {
         }
     });
 
+
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -57,7 +60,6 @@ $(document).ready(function () {
             drawChartRoomPaymentDetailByPaymentName(result.allpaymentDetailWithPaymentMethod);
         }
     });
-
 
 
     
@@ -473,33 +475,15 @@ function drawChartRoomPaymentDetailByPaymentName(result) {
 }
 
 
-
-
 function drawChartAllIncomes(dataAllPayment) {
 
-
-    var sumAllArray = [];
-    //todo
-
-
-    sumAllArray = $.merge(dataAllPayment.incomesExchange, dataAllPayment.rentExchange);
-
-    var totalIncomesArray = [];
-    var totalPaymentArray = [];
-    totalIncomesArray = sumAllArray;
-    totalIncomesArray = dataAllPayment.paymentExchange;
-
-    console.log(totalIncomesArray);
-    console.log(totalPaymentArray);
-
-
+    var sumAllArray = $.merge($.merge([], dataAllPayment.incomesExchange), dataAllPayment.rentExchange);
     let response = [];
 
     const process = () =>
         sumAllArray.forEach((r) => {
             const found = response.find(
-                (a) =>
-                    
+                (a) =>  
                     a.exchange == r.exchange
             );
             if (found) {
@@ -510,9 +494,8 @@ function drawChartAllIncomes(dataAllPayment) {
      });
     process();
 
-    
-    var chartSumAllArray = [];
-    chartSumAllArray = $.merge(sumAllArray, dataAllPayment.paymentExchange);
+    var chartSumAllArray = $.merge($.merge([], sumAllArray), dataAllPayment.paymentExchange);
+
 
 
     var raw = chartSumAllArray,
@@ -597,16 +580,22 @@ function drawChartAllIncomes(dataAllPayment) {
 
     var chart = new ApexCharts(document.querySelector("#allIncomeCurrencyChart"), options);
     chart.render();
+
 }
 
 
-function getTotalBalance(chartSumArray) {
 
-    let totalBalanceDiv = $("#totalBalance");
-    
+
+function getTotalBalance(dataAllPayment) {
+
+    var allIncomesArray = $.merge($.merge([], dataAllPayment.incomesExchange), dataAllPayment.rentExchange);
+    var allPaymentArray = $.merge([], dataAllPayment.paymentExchange);
+    var allTotalBalanceArray = $.merge($.merge([], allIncomesArray), allPaymentArray);
+
+   
 
     var helper = {};
-    var result = chartSumArray.reduce(function (r, o) {
+    var result = allTotalBalanceArray.reduce(function (r, o) {
         var key = o.paymentType + '-' + o.exchange;
 
         if (!helper[key]) {
@@ -619,20 +608,69 @@ function getTotalBalance(chartSumArray) {
     }, []);
 
 
-
-
     result.sort(function (a, b) {
         if (a.exchange > b.exchange) { return 1 }
         if (a.exchange < b.exchange) { return -1 }
         return 0;
     });
 
+    compare(allIncomesArray, result)
+
+    if (allIncomesArray.length == 0) {
+        $("#totalIncome").append(` <p> Veri Yok</p> `)
+    }
+
 
     $.each(result, function (i, obj) {
-        if (obj.paymentType === "Total Incomes") 
+        if (obj.paymentType === "Total Incomes")
+        {
             $("#totalIncome").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        }
         else if (obj.paymentType === "Total Payment")
             $("#totalPayment").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
     });
+
+
+}
+
+
+function compare(allIncomesArray, result) {
+    console.log(allIncomesArray)
+    console.log(result)
+
+    var helper = {};
+     allIncomesArray.reduce(function (r, o) {
+        var key = o.paymentType + '-' + o.exchange;
+
+        if (!helper[key]) {
+            helper[key] = Object.assign({}, o);
+            r.push(helper[key]);
+        } else {
+            helper[key].sum += o.sum;
+        }
+        return r;
+    }, []);
+
+    var helper1 = {};
+
+    //todo mantýk hatasý var!
+    var newResult = result.reduce(function (r, o) {
+        var key = o.exchange;
+
+        if (!helper1[key]) {
+            helper1[key] = Object.assign({}, o); // create a copy of o
+            r.push(helper1[key]);
+        } else {
+            helper1[key].sum -= o.sum;
+        }
+
+        return r;
+    }, []);
+
+   
+    $.each(newResult, function (i, obj) {
+        $("#totalBalance").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+    });
+
 
 }
