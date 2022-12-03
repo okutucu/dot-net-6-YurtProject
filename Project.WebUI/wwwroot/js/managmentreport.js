@@ -515,9 +515,6 @@ function drawChartAllIncomes(dataAllPayment) {
         statusHash[o.paymentType].data[nameIndices[o.exchange]] += o.sum;
     });
 
-
-
-
     let incomesArray = [];
     let paymentsArray = [];
 
@@ -534,6 +531,7 @@ function drawChartAllIncomes(dataAllPayment) {
             });
         }
     });
+
 
 
     var options = {
@@ -588,11 +586,12 @@ function drawChartAllIncomes(dataAllPayment) {
 
 function getTotalBalance(dataAllPayment) {
 
+
+
     var allIncomesArray = $.merge($.merge([], dataAllPayment.incomesExchange), dataAllPayment.rentExchange);
     var allPaymentArray = $.merge([], dataAllPayment.paymentExchange);
     var allTotalBalanceArray = $.merge($.merge([], allIncomesArray), allPaymentArray);
 
-   
 
     var helper = {};
     var result = allTotalBalanceArray.reduce(function (r, o) {
@@ -614,7 +613,9 @@ function getTotalBalance(dataAllPayment) {
         return 0;
     });
 
-    compare(allIncomesArray, result)
+
+
+    compare(allIncomesArray, allPaymentArray)
 
     if (allIncomesArray.length == 0) {
         $("#totalIncome").append(` <p> Veri Yok</p> `)
@@ -634,12 +635,10 @@ function getTotalBalance(dataAllPayment) {
 }
 
 
-function compare(allIncomesArray, result) {
-    console.log(allIncomesArray)
-    console.log(result)
+function compare(allIncomesArray, allPaymentArray) {
 
     var helper = {};
-     allIncomesArray.reduce(function (r, o) {
+    var totalIncomeResult = allIncomesArray.reduce(function (r, o) {
         var key = o.paymentType + '-' + o.exchange;
 
         if (!helper[key]) {
@@ -651,26 +650,49 @@ function compare(allIncomesArray, result) {
         return r;
     }, []);
 
+
+    $.each(totalIncomeResult, function (i, obj) {
+        delete obj['paymentType'];
+       
+    });
+    $.each(allPaymentArray, function (i, obj) {
+        obj['sum'] = (obj.sum * -1);
+        delete obj['paymentType'];
+        
+    });
+
+    var totalBalanceArray = $.merge($.merge([], totalIncomeResult), allPaymentArray);
+
+ 
     var helper1 = {};
 
     //todo mantýk hatasý var!
-    var newResult = result.reduce(function (r, o) {
+    var newResult = totalBalanceArray.reduce(function (r, o) {
         var key = o.exchange;
 
         if (!helper1[key]) {
             helper1[key] = Object.assign({}, o); // create a copy of o
             r.push(helper1[key]);
         } else {
-            helper1[key].sum -= o.sum;
+            helper1[key].sum += o.sum;
         }
 
         return r;
     }, []);
+ 
 
-   
+    newResult.sort(function (a, b) {
+        if (a.exchange > b.exchange) { return 1 }
+        if (a.exchange < b.exchange) { return -1 }
+        return 0;
+    });
+ 
+  
+
     $.each(newResult, function (i, obj) {
         $("#totalBalance").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
     });
 
 
+   
 }
