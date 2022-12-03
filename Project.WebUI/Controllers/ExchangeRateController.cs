@@ -38,5 +38,20 @@ namespace Project.WebUI.Controllers
 			await _exchangeRateService.CurrencyUpdate(dollar, euro, sterling);
 			return RedirectToAction(nameof(Index));
 		}
-	}
+
+        [HttpGet]
+        public async Task<JsonResult> GetByName(string exchangeCurrency)
+        {
+            ExchangeRate currency = await _exchangeRateService.GetByIdAsync(int.Parse(exchangeCurrency));
+
+			var newCurrency = new
+			{
+                currencyPrice = currency.Price,
+				currencyName = currency.ExchangeName
+			};
+
+			return Json(newCurrency);
+        }
+
+    }
 }

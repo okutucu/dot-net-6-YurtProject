@@ -2,8 +2,23 @@
 $(document).ready(function () {
 
     let id = $("#roomId").val();
+    let exchangeCurrency = $("#exchangeCurrency").val();
+
     let url = "/Room/GetByDebt/";
     let roomWithCustomerUrl = "/Room/GetBySingleRoomByIdWithCustomer/";
+    let exchangeUrl = "/ExchangeRate/GetByName?exchangeCurrency=";
+
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json",
+        url: exchangeUrl + exchangeCurrency,
+        success: function (data) {
+            remainingDebt(data);
+            $('#debtCurrencyDb').html(data.currencyPrice);
+        }
+    });
 
     $.get(url, { id: id }, function (data) {
         $("#debt").html(data);
@@ -29,6 +44,10 @@ $(document).ready(function () {
         id = $("#roomId").val();
         $.get(url, { id: id }, function (data) {
             $("#debt").html(data);
+            $('#priceInput').val(0);
+            $('#priceText').text(0);
+            $('#debtCurrency').text($("#debt").text());
+
             $.get(roomWithCustomerUrl + id, function (response) {
                 $('#customerName').empty();
 
@@ -49,4 +68,47 @@ $(document).ready(function () {
 
         })
     });
+
+    $("#exchangeCurrency").change(function () {
+
+        exchangeCurrency = $("#exchangeCurrency").val();
+        $.ajax({
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            url: exchangeUrl + exchangeCurrency,
+            success: function (data) {
+                remainingDebtChange(data);
+            }
+        });
+    });
+
+
+    function remainingDebt(data) {
+        priceInput.onkeyup = function () {
+            let totalPrice = $("#debt").text();
+            $("#priceText").html(`${data.currencyPrice * priceInput.value} TL`);
+            $("#debtCurrency").html(`${totalPrice - (data.currencyPrice * priceInput.value) } TL`);
+        }
+    }
+
+    function remainingDebtChange(data) {
+        $('#debtCurrencyDb').html(data.currencyPrice);
+
+        let totalPrice = $("#debt").text();
+        let priceInputVal = $("#priceInput").val();
+        $("#priceText").html(`${data.currencyPrice * priceInputVal} TL`);
+
+        $("#debtCurrency").html(`${totalPrice - (data.currencyPrice * priceInputVal)} TL`);
+
+        priceInput.onkeyup = function () {
+            let totalPrice = $("#debt").text();
+            $("#priceText").html(`${data.currencyPrice * priceInput.value} TL`);
+            $("#debtCurrency").html(`${totalPrice - (data.currencyPrice * priceInput.value)} TL`);
+        }
+    }
+
+    
+
+
 });

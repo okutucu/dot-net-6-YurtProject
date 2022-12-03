@@ -52,8 +52,6 @@ namespace Project.WebUI.Controllers
 		public IActionResult Create()
 		{
 
-
-
             List<Room> rooms = _roomService.GetAll().ToList();
 
 			List<RoomDto> roomsDto = _mapper.Map<List<RoomDto>>(rooms);
