@@ -83,7 +83,7 @@ $(document).ready(function () {
         });
     });
 
-
+    
     function remainingDebt(data) {
         priceInput.onkeyup = function () {
             let totalPrice = $("#debt").text();
