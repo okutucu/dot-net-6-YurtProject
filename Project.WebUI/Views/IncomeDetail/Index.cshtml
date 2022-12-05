@@ -11,13 +11,18 @@
 
 <form class="mt-2" asp-controller="IncomeDetail" asp-action="GetBySelected" method="get">
 
-    <div class="card">
+     <div class="card">
         <div class="card-body">
-            <div class="my-2">
-                <a href="#" class="btn btn-outline-warning">Add New +</a>
-            </div>
             <div class="row" id="paymentSection">
-                <div class="col-6">
+                <div class="col-4">
+                    <input type="datetime-local" name="selectedDate" class="form-control" id="normalDate">
+                    <div class="form-check">
+                        <input id="normalChecked" type="radio" name="checkedPayment"
+                               class="form-check-input">
+                        <label for="normalChecked" class="form-check-label">Daily</label>
+                    </div>
+                </div>
+                <div class="col-4">
                     <input id="monthly" type="month" name="selectedDate" class="form-control">
                     <div class="form-check">
                         <input id="monthlyChecked" name="checkedPayment" type="radio"
@@ -25,12 +30,13 @@
                         <label for="monthlyChecked" class="form-check-label">Monthly</label>
                     </div>
                 </div>
-                <div class="col-6">
-                    <input type="datetime-local" name="selectedDate" class="form-control" id="normalDate">
+                
+                <div class="col-4">
+                    <input type="text" class="form-control" name="selectedDate" disabled id="yearly" placeholder="----">
                     <div class="form-check">
-                        <input id="normalChecked" type="radio" name="checkedPayment"
+                        <input id="yearlyChecked" type="radio" name="checkedPayment"
                                class="form-check-input">
-                        <label for="normalChecked" class="form-check-label">Daily</label>
+                        <label for="yearlyChecked" class="form-check-label">Yearly</label>
                     </div>
                 </div>
             </div>
@@ -47,7 +53,11 @@
 
 
 
-
-@section ExtraScripts {
-<script src="~/js/montlyordaily.js"></script>
+@section ExtraCss{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
     }
+    @section ExtraScripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/js/montlyordaily.js"></script>
+
+}

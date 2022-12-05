@@ -33,11 +33,42 @@ namespace Project.WebUI.Controllers
 			return View();
 		}
 
-		public async Task<IActionResult> GetBySelected(string selectedDate)
+        [HttpGet]
+        public async Task<JsonResult> VisualizePaymentResult(string selectedDate)
+        {
+            List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
+            var allDataWithExchange = (from exchange in paymentWithRoomDtos
+                                                group exchange by exchange.Exchange.ToString()
+                                 into exchangeGroup
+                                                select new
+                                                {
+                                                    Exchange = exchangeGroup.Key,
+                                                    Sum = exchangeGroup.Sum(s => s.Price)
+                                                }).ToList();
+
+            var allDataWithPaymentMethod = paymentWithRoomDtos.GroupBy(
+                x => new { x.PaymentMethod, x.Exchange }
+               ).Select(g => new
+               {
+                   PaymentMethod = g.Key.PaymentMethod.ToString(),
+                   Exchange = g.Key.Exchange.ToString(),
+                   Sum = g.Sum(s => s.Price)
+               }).ToList();
+
+            var allPaymentDetail = new
+            {
+                allDataWithExchange,
+                allDataWithPaymentMethod
+            };
+
+            return Json(allPaymentDetail);
+        }
+
+        public async Task<IActionResult> GetBySelected(string selectedDate)
 		{
 			List<PaymentDetailWithRoomDto> paymentDetailDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
-
-			ViewBag.date = selectedDate;
+            ViewBag.url = "/PaymentDetail/VisualizePaymentResult?selectedDate=";
+            ViewBag.date = selectedDate;
 
             ViewBag.allPaymentsDatas = paymentDetailDtos.GroupBy(p => p.Exchange).Select(group => new
             {

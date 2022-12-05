@@ -36,7 +36,8 @@ namespace Project.WebUI.Controllers
 		{
 			List<RoomIncomeWithRoomDto> roomDetailsDto = await _roomIncomeService.DailyOrMonthly(selectedDate);
 
-			ViewBag.date = selectedDate;
+            ViewBag.url = "/RoomIncome/VisualizeRoomRentResult?selectedDate=";
+            ViewBag.date = selectedDate;
             ViewBag.allPaymentsDatas = roomDetailsDto.GroupBy(p => p.Exchange).Select(group => new
             {
                 Exchange = group.Key,
@@ -48,7 +49,41 @@ namespace Project.WebUI.Controllers
 
 		}
 
-    
+
+        [HttpGet]
+        public async Task<JsonResult> VisualizeRoomRentResult(string selectedDate)
+        {
+            List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.DailyOrMonthly(selectedDate);
+            var allDataWithExchange = (from exchange in roomIncomeWithRoomDtos
+                                              group exchange by exchange.Exchange.ToString()
+                                 into exchangeGroup
+                                              select new
+                                              {
+                                                  Exchange = exchangeGroup.Key,
+                                                  Sum = exchangeGroup.Sum(s => s.Price)
+                                              }).ToList();
+
+
+            var allDataWithPaymentMethod = roomIncomeWithRoomDtos.GroupBy(
+                   x => new { x.PaymentMethod, x.Exchange }
+                  ).Select(g => new
+                  {
+                      PaymentMethod = g.Key.PaymentMethod.ToString(),
+                      Exchange = g.Key.Exchange.ToString(),
+                      Sum = g.Sum(s => s.Price)
+                  }).ToList();
+
+
+
+
+            var allRentIncomes = new
+            {
+                allDataWithExchange,
+                allDataWithPaymentMethod
+            };
+
+            return Json(allRentIncomes);
+        }
 
         public IActionResult Create()
 		{

@@ -14,9 +14,26 @@
 }
 else
 {
-	<h1>@ViewBag.date </h1>
+	<h1 id="dateId">@ViewBag.date </h1>
 
-	<h3>Room Rent Incomes</h3>
+		<div class="row">
+		<h3>All Rent Income  Exchange Chart</h3>
+		<div class="col-6" style="background:white">
+			<h3 class="my-2">
+				Currency & Price Chart
+			</h3>
+			<div id="allDataWithExchange"></div>
+
+		</div>
+		<div class="col-6" style="background:white">
+			<h3 class="my-2">
+				All Rent Income Payment Method & Price Chart
+			</h3>
+			<div id="allDataWithPaymentMethod"></div>
+
+		</div>
+	</div>
+
 	
 	<div class="row mt-5">
 		@foreach (var item in ViewBag.allPaymentsDatas)
@@ -83,6 +100,17 @@ else
 			}
 		</tbody>
 	</table>
+
+
+		<div id="serviceUrl" aria-hidden="true" data-url="@ViewBag.url"></div>
+
+	
+@section ExtraScripts {
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	  <script src="~/js/payments.js"></script>
+    }
 }
 
 

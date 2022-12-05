@@ -36,7 +36,9 @@ namespace Project.WebUI.Controllers
 
 		public async Task<IActionResult> GetBySelected(string selectedDate)
 		{
-			ViewBag.date = selectedDate;
+            ViewBag.url = "/IncomeDetail/VisualizeOtherIncomesResult?selectedDate=";
+
+            ViewBag.date = selectedDate;
 			List<IncomeWithRoomDto> incomeDetailDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
 
             ViewBag.allPaymentsDatas = incomeDetailDtos.GroupBy(p => p.Exchange).Select(group => new
@@ -63,7 +65,41 @@ namespace Project.WebUI.Controllers
 
 		}
 
-		public async Task<IActionResult> Create()
+
+
+        [HttpGet]
+        public async Task<JsonResult> VisualizeOtherIncomesResult(string selectedDate)
+        {
+            List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
+            var allDataWithExchange = (from exchange in incomeWithRoomDtos
+                                                group exchange by exchange.Exchange.ToString()
+                                 into exchangeGroup
+                                                select new
+                                                {
+                                                    Exchange = exchangeGroup.Key,
+                                                    Sum = exchangeGroup.Sum(s => s.Price)
+                                                }).ToList();
+
+
+            var allDataWithPaymentMethod = incomeWithRoomDtos.GroupBy(
+       x => new { x.PaymentMethod, x.Exchange }
+      ).Select(g => new
+      {
+          PaymentMethod = g.Key.PaymentMethod.ToString(),
+          Exchange = g.Key.Exchange.ToString(),
+          Sum = g.Sum(s => s.Price)
+      }).ToList();
+
+
+            var allIncomesDetail = new
+            {
+                allDataWithExchange,
+                allDataWithPaymentMethod
+            };
+
+            return Json(allIncomesDetail);
+        }
+        public async Task<IActionResult> Create()
 		{
 
             List<PaymentName> paymentNames = _paymentNameService.GetAll().ToList();
