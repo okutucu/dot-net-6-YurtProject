@@ -10,10 +10,10 @@ $(document).ready(function () {
         url: serviceUrl + date,
         success: function (result) {
             google.charts.load('current', { 'packages': ['corechart'] });
-             google.charts.setOnLoadCallback(function () {
-                 drawChartWithCurrencyChart(result.allDataWithExchange);
-                 console.log(result)
-             });
+            google.charts.setOnLoadCallback(function () {
+                drawChartWithCurrencyChart(result.allDataWithExchange);
+                console.log(result) 
+            });
             drawChartWithCurrencyChartByPaymentName(result.allDataWithPaymentMethod);
         }
     });

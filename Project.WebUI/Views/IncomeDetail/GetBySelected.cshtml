@@ -11,16 +11,30 @@
 
 	<div class="alert alert-info" role="alert">
 		No data found for the date you entered !  <br>
-		<a asp-action="Index" class="alert-link">Click</a>  to go back.
+		<a asp-action="Index" class="alert-link">"Click</a>  to go back.
 	</div>
 }
 else
 {
 
-	<h1>@ViewBag.date </h1>
+	<h3 id="dateId">@ViewBag.date</h3>
+	<div class="row">
+		<h3>All Payment Chart</h3>
+		<div class="col-6" style="background:white">
+			<h3 class="my-2">
+				Currency & Price Chart
+			</h3>
+			<div id="allDataWithExchange"></div>
 
-	<h3>All Incomes</h3>
+		</div>
+		<div class="col-6" style="background:white">
+			<h3 class="my-2">
+				Payment Method & Price Chart
+			</h3>
+			<div id="allDataWithPaymentMethod"></div>
 
+		</div>
+	</div>
 	
 	<div class="row mt-5">
 		@foreach (var item in @ViewBag.allPaymentsDatas)
@@ -107,6 +121,16 @@ else
 			}
 		</tbody>
 	</table>
+
+
+	<div id="serviceUrl" aria-hidden="true" data-url="@ViewBag.url"></div>
+
+	@section ExtraScripts {
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="~/js/payments.js"></script>
+    }
 }
 
 
