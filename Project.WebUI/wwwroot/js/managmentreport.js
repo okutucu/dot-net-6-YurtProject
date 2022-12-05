@@ -5,6 +5,20 @@ $(document).ready(function () {
     let visualizeIncomesResultUrl = "/ManagmentReport/VisualizeOtherIncomesResult?selectedDate=";
     let visualizePaymentResultUrl = "/ManagmentReport/VisualizePaymentResult?selectedDate=";
     let visualizeAllPaymentResult = "/ManagmentReport/VisualizeAllPaymentResult?selectedDate=";
+    let visualizeAllPaymentWithPaymentNameResult = "/ManagmentReport/VisualizeAllPaymentWithPaymentMethodResult?selectedDate=";
+
+
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json",
+        url: visualizeAllPaymentWithPaymentNameResult + date,
+        success: function (dataResult) {
+            drawChartRoomAllPaymentWithPaymentName(dataResult);
+            drawChartRoomAllPaymentDetailWithPaymentName(dataResult.paymentExchangeWithPaymentName);
+        }
+    });
+
 
     $.ajax({
         type: "GET",
@@ -14,6 +28,7 @@ $(document).ready(function () {
         success: function (dataAllPayment) {
             drawChartAllIncomes(dataAllPayment);
             getTotalBalance(dataAllPayment);
+            
         }
     });
 
@@ -31,7 +46,6 @@ $(document).ready(function () {
         }
     });
 
-
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -46,7 +60,6 @@ $(document).ready(function () {
         }
     });
 
-
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -57,7 +70,7 @@ $(document).ready(function () {
             google.charts.setOnLoadCallback(function () {
                 drawChartWithPaymentDetail(result);
             });
-            drawChartRoomPaymentDetailByPaymentName(result.allpaymentDetailWithPaymentMethod);
+            drawChartPaymentDetailByPaymentName(result.allpaymentDetailWithPaymentMethod);
         }
     });
 
@@ -364,7 +377,7 @@ function drawChartWithPaymentDetail(result) {
 
 
 }
-function drawChartRoomPaymentDetailByPaymentName(result) {
+function drawChartPaymentDetailByPaymentName(result) {
 
 
     var raw = result ,
@@ -477,6 +490,7 @@ function drawChartRoomPaymentDetailByPaymentName(result) {
 
 function drawChartAllIncomes(dataAllPayment) {
 
+
     var sumAllArray = $.merge($.merge([], dataAllPayment.incomesExchange), dataAllPayment.rentExchange);
     let response = [];
 
@@ -514,6 +528,7 @@ function drawChartAllIncomes(dataAllPayment) {
         }
         statusHash[o.paymentType].data[nameIndices[o.exchange]] += o.sum;
     });
+
 
     let incomesArray = [];
     let paymentsArray = [];
@@ -582,6 +597,271 @@ function drawChartAllIncomes(dataAllPayment) {
 }
 
 
+function drawChartRoomAllPaymentWithPaymentName(dataResult) {
+
+
+    var sumAllIncomeArray = $.merge($.merge([], dataResult.incomeExchangeWithPaymentName), dataResult.rentExchangeWithPaymentName);
+    let response = [];
+
+    const process = () =>
+        sumAllIncomeArray.forEach((r) => {
+            const found = response.find(
+                (a) =>
+                    a.paymentMethod == r.paymentMethod,
+                    
+            );
+            if (found) {
+                found.sum += r.sum;
+            } else {
+                response.push({ ...r });
+            }
+        });
+    process();
+
+    var raw = sumAllIncomeArray,
+        nameIndices = Object.create(null),
+        statusHash = Object.create(null),
+        data = { labels: [], datasets: [] };
+
+
+
+    raw.forEach(function (o) {
+        if (!(o.paymentMethod in nameIndices)) {
+            nameIndices[o.paymentMethod] = data.labels.push(o.paymentMethod) - 1;
+            data.datasets.forEach(function (a) { a.data.push(0); });
+        }
+        if (!statusHash[o.exchange]) {
+            statusHash[o.exchange] = { label: o.exchange, fillcolor: 'f00', data: data.labels.map(function () { return 0; }) };
+            data.datasets.push(statusHash[o.exchange]);
+        }
+        statusHash[o.exchange].data[nameIndices[o.paymentMethod]] = o.sum;
+    });
+
+
+    let euroArray = [];
+    let tlArray = [];
+    let dollarArray = [];
+    let sterlingArray = [];
+
+    $.each(data.datasets, function (i, obj) {
+        if (obj.label === 'Dollar') {
+            $.each(obj.data, function (k, item) {
+                dollarArray.push(item);
+            });
+        }
+        if (obj.label === 'Tl') {
+            $.each(obj.data, function (k, item) {
+                tlArray.push(item);
+            });
+        }
+        if (obj.label === 'Euro') {
+            $.each(obj.data, function (k, item) {
+                euroArray.push(item);
+            });
+        }
+        if (obj.label === 'Sterling') {
+            $.each(obj.data, function (k, item) {
+                sterlingArray.push(item);
+            });
+        }
+    });
+
+
+
+    var options = {
+        series: [{
+            name: 'Euro',
+            data: euroArray
+        }, {
+            name: 'Dollar',
+            data: dollarArray
+        }, {
+            name: 'Sterling',
+            data: sterlingArray
+        }, {
+            name: 'Tl',
+            data: tlArray
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: data.labels,
+        },
+        yaxis: {
+            title: {
+                text: 'All Income & Price (sum)'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val
+                }
+            }
+        }
+    };
+    var chart = new ApexCharts(document.querySelector("#allIncomeCurrencyWithPaymentNameChart"), options);
+    chart.render();
+}
+
+
+
+function drawChartRoomAllPaymentDetailWithPaymentName(dataResult) {
+
+ 
+
+    let response = [];
+
+    const process = () =>
+        dataResult.forEach((r) => {
+            const found = response.find(
+                (a) =>
+                    a.paymentMethod == r.paymentMethod,
+
+            );
+            if (found) {
+                found.sum += r.sum;
+            } else {
+                response.push({ ...r });
+            }
+        });
+    process();
+
+    var raw = dataResult,
+        nameIndices = Object.create(null),
+        statusHash = Object.create(null),
+        data = { labels: [], datasets: [] };
+
+
+
+    raw.forEach(function (o) {
+        if (!(o.paymentMethod in nameIndices)) {
+            nameIndices[o.paymentMethod] = data.labels.push(o.paymentMethod) - 1;
+            data.datasets.forEach(function (a) { a.data.push(0); });
+        }
+        if (!statusHash[o.exchange]) {
+            statusHash[o.exchange] = { label: o.exchange, fillcolor: 'f00', data: data.labels.map(function () { return 0; }) };
+            data.datasets.push(statusHash[o.exchange]);
+        }
+        statusHash[o.exchange].data[nameIndices[o.paymentMethod]] = o.sum;
+    });
+
+
+    let euroArray = [];
+    let tlArray = [];
+    let dollarArray = [];
+    let sterlingArray = [];
+
+    $.each(data.datasets, function (i, obj) {
+        if (obj.label === 'Dollar') {
+            $.each(obj.data, function (k, item) {
+                dollarArray.push(item);
+            });
+        }
+        if (obj.label === 'Tl') {
+            $.each(obj.data, function (k, item) {
+                tlArray.push(item);
+            });
+        }
+        if (obj.label === 'Euro') {
+            $.each(obj.data, function (k, item) {
+                euroArray.push(item);
+            });
+        }
+        if (obj.label === 'Sterling') {
+            $.each(obj.data, function (k, item) {
+                sterlingArray.push(item);
+            });
+        }
+    });
+
+
+
+    var options = {
+        series: [{
+            name: 'Euro',
+            data: euroArray
+        }, {
+            name: 'Dollar',
+            data: dollarArray
+        }, {
+            name: 'Sterling',
+            data: sterlingArray
+        }, {
+            name: 'Tl',
+            data: tlArray
+        }],
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            show: true,
+            width: 2,
+            colors: ['transparent']
+        },
+        xaxis: {
+            categories: data.labels,
+        },
+        yaxis: {
+            title: {
+                text: 'All Income & Price (sum)'
+            }
+        },
+        fill: {
+            opacity: 1
+        },
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val
+                }
+            }
+        }
+    };
+    var chart = new ApexCharts(document.querySelector("#allPaymentCurrencyWithPaymentNameChart"), options);
+    chart.render();
+
+
+        
+}
+
+
+
+
+
+
+
 
 
 function getTotalBalance(dataAllPayment) {
@@ -633,8 +913,6 @@ function getTotalBalance(dataAllPayment) {
 
 
 }
-
-
 function compare(allIncomesArray, allPaymentArray) {
 
     var helper = {};

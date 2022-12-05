@@ -44,12 +44,13 @@ namespace Project.WebUI.Controllers
 
             });
 
-
-
             return View(roomDetailsDto);
 
 		}
-		public IActionResult Create()
+
+    
+
+        public IActionResult Create()
 		{
 
             List<Room> rooms = _roomService.GetAll().ToList();

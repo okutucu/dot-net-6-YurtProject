@@ -200,6 +200,59 @@ namespace Project.WebUI.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<JsonResult> VisualizeAllPaymentWithPaymentMethodResult(string selectedDate)
+        {
+            List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
+                                    var incomeExchangeWithPaymentName = incomeWithRoomDtos.GroupBy(
+                            x => new { x.PaymentMethod, x.Exchange }
+                           ).Select(g => new
+                           {
+                               PaymentType = "Total Incomes",
+                               PaymentMethod = g.Key.PaymentMethod.ToString(),
+                               Exchange = g.Key.Exchange.ToString(),
+                               Sum = g.Sum(s => s.Price)
+                           }).ToList();
+
+
+
+            List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
+
+            var paymentExchangeWithPaymentName = paymentWithRoomDtos.GroupBy(
+             x => new { x.PaymentMethod, x.Exchange }
+            ).Select(g => new
+            {
+                PaymentType = "Total Payment",
+                PaymentMethod = g.Key.PaymentMethod.ToString(),
+                Exchange = g.Key.Exchange.ToString(),
+                Sum = g.Sum(s => s.Price)
+            }).ToList();
+
+
+            List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.DailyOrMonthly(selectedDate);
+
+            var rentExchangeWithPaymentName = roomIncomeWithRoomDtos.GroupBy(
+                x => new { x.PaymentMethod, x.Exchange }
+               ).Select(g => new
+               {
+                   PaymentType = "Total Incomes",
+                   PaymentMethod = g.Key.PaymentMethod.ToString(),
+                   Exchange = g.Key.Exchange.ToString(),
+                   Sum = g.Sum(s => s.Price)
+               }).ToList();
+
+
+            var allIncomesAndPaymentsWithPaymentName = new
+            {
+                incomeExchangeWithPaymentName,
+                paymentExchangeWithPaymentName,
+                rentExchangeWithPaymentName
+            };
+
+            return Json(allIncomesAndPaymentsWithPaymentName);
+        }
+
+
 
     }
 }
