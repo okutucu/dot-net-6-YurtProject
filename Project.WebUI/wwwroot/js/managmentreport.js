@@ -13,6 +13,7 @@ $(document).ready(function () {
         success: function (dataResult) {
             drawChartRoomAllPaymentWithPaymentName(dataResult);
             drawChartRoomAllPaymentDetailWithPaymentName(dataResult.paymentExchangeWithPaymentName);
+            getTotalBalanceWithPaymentName(dataResult);
         }
     });
     $.ajax({
@@ -142,26 +143,23 @@ function drawChartAllIncomes(dataAllPayment) {
 
 }
 function drawChartRoomAllPaymentWithPaymentName(dataResult) {
-
     var sumAllIncomeArray = $.merge($.merge([], dataResult.incomeExchangeWithPaymentName), dataResult.rentExchangeWithPaymentName);
-    let response = [];
 
-    const process = () =>
-        sumAllIncomeArray.forEach((r) => {
-            const found = response.find(
-                (a) =>
-                    a.paymentMethod == r.paymentMethod,
-                    
-            );
-            if (found) {
-                found.sum += r.sum;
-            } else {
-                response.push({ ...r });
-            }
-        });
-    process();
+    var helper = {};
+    var result = sumAllIncomeArray.reduce(function (r, o) {
+        var key = o.paymentMethod + '-' + o.exchange;
 
-    var raw = sumAllIncomeArray,
+        if (!helper[key]) {
+            helper[key] = Object.assign({}, o);
+            r.push(helper[key]);
+        } else {
+            helper[key].sum += o.sum;
+        }
+        return r;
+    }, []);
+
+
+    var raw = result,
         nameIndices = Object.create(null),
         statusHash = Object.create(null),
         data = { labels: [], datasets: [] };
@@ -266,6 +264,8 @@ function drawChartRoomAllPaymentWithPaymentName(dataResult) {
     var chart = new ApexCharts(document.querySelector("#allIncomeCurrencyWithPaymentNameChart"), options);
     chart.render();
 }
+
+
 function drawChartRoomAllPaymentDetailWithPaymentName(dataResult) {
 
  
@@ -397,13 +397,6 @@ function drawChartRoomAllPaymentDetailWithPaymentName(dataResult) {
 }
 
 
-
-
-
-
-
-
-
 function getTotalBalance(dataAllPayment) {
 
 
@@ -453,6 +446,78 @@ function getTotalBalance(dataAllPayment) {
 
 
 }
+
+function getTotalBalanceWithPaymentName(dataResult)
+{
+
+    var allIncomesArray = $.merge($.merge([], dataResult.incomeExchangeWithPaymentName), dataResult.rentExchangeWithPaymentName);
+    var allPaymentArray = $.merge([], dataResult.paymentExchangeWithPaymentName);
+
+    var helper = {};
+    var result = allIncomesArray.reduce(function (r, o) {
+        var key = o.paymentMethod + '-' + o.exchange;
+
+        if (!helper[key]) {
+            helper[key] = Object.assign({}, o);
+            r.push(helper[key]);
+        } else {
+            helper[key].sum += o.sum;
+        }
+        return r;
+    }, []);
+
+    result.sort(function (a, b) {
+        if (a.exchange > b.exchange) { return 1 }
+        if (a.exchange < b.exchange) { return -1 }
+        return 0;
+    });
+
+
+
+    $.each(result, function (i, obj) {
+        if (obj.paymentMethod === "Cash") 
+          $("#totalCash").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "Eft")
+          $("#totalEft").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "CreditCart")
+            $("#totalCreditKart").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+    });
+
+    var paymentHelper = {};
+    var paymentResult = allPaymentArray.reduce(function (r, o) {
+        var key = o.paymentMethod + '-' + o.exchange;
+
+        if (!paymentHelper[key]) {
+            paymentHelper[key] = Object.assign({}, o);
+            r.push(paymentHelper[key]);
+        } else {
+            paymentHelper[key].sum += o.sum;
+        }
+        return r;
+    }, []);
+
+
+
+    paymentResult.sort(function (a, b) {
+        if (a.exchange > b.exchange) { return 1 }
+        if (a.exchange < b.exchange) { return -1 }
+        return 0;
+    });
+
+    $.each(paymentResult, function (i, obj) {
+        if (obj.paymentMethod === "Cash")
+            $("#totalCashPayment").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "Eft")
+            $("#totalEftPayment").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "CreditCart")
+            $("#totalCreditKartPayment").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+    });
+
+    compareWithPaymentMethod(result, paymentResult);
+
+}
+
+
 function compare(allIncomesArray, allPaymentArray) {
 
     var helper = {};
@@ -469,22 +534,22 @@ function compare(allIncomesArray, allPaymentArray) {
     }, []);
 
 
+
     $.each(totalIncomeResult, function (i, obj) {
         delete obj['paymentType'];
-       
+
     });
     $.each(allPaymentArray, function (i, obj) {
         obj['sum'] = (obj.sum * -1);
         delete obj['paymentType'];
-        
+
     });
 
     var totalBalanceArray = $.merge($.merge([], totalIncomeResult), allPaymentArray);
 
- 
+
     var helper1 = {};
 
-    //todo mantýk hatasý var!
     var newResult = totalBalanceArray.reduce(function (r, o) {
         var key = o.exchange;
 
@@ -497,20 +562,70 @@ function compare(allIncomesArray, allPaymentArray) {
 
         return r;
     }, []);
- 
+
 
     newResult.sort(function (a, b) {
         if (a.exchange > b.exchange) { return 1 }
         if (a.exchange < b.exchange) { return -1 }
         return 0;
     });
- 
-  
+
+
 
     $.each(newResult, function (i, obj) {
         $("#totalBalance").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
     });
 
 
-   
+
+}
+
+
+
+
+function compareWithPaymentMethod(allIncomesWithPaymentMethod, allPaymentWithPaymentMethod) {
+
+    $.each(allIncomesWithPaymentMethod, function (i, obj) {
+        delete obj['paymentType'];
+
+    });
+    $.each(allPaymentWithPaymentMethod, function (i, obj) {
+        obj['sum'] = (obj.sum * -1);
+        delete obj['paymentType'];
+    });
+
+    var totalBalanceWithPaymentMethodArray = $.merge($.merge([], allIncomesWithPaymentMethod), allPaymentWithPaymentMethod);
+
+    var totalBalanceHelper = {};
+
+    var totalBalanceResult = totalBalanceWithPaymentMethodArray.reduce(function (r, o) {
+        var key = o.paymentMethod + '-' + o.exchange;
+
+        if (!totalBalanceHelper[key]) {
+            totalBalanceHelper[key] = Object.assign({}, o);
+            r.push(totalBalanceHelper[key]);
+        } else {
+            totalBalanceHelper[key].sum += o.sum;
+        }
+        return r;
+    }, []);
+
+
+    totalBalanceResult.sort(function (a, b) {
+        if (a.exchange > b.exchange) { return 1 }
+        if (a.exchange < b.exchange) { return -1 }
+        return 0;
+    });
+
+
+    $.each(totalBalanceResult, function (i, obj) {
+        if (obj.paymentMethod === "Cash")
+            $("#totalCashBalance").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "Eft")
+            $("#totalEftBalance").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "CreditCart")
+            $("#totalKreditKartBalance").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+    });
+
+
 }

@@ -32,20 +32,7 @@ namespace Project.WebUI.Controllers
         public async Task<IActionResult> GetBySelected(string selectedDate)
         {
             ViewBag.date = selectedDate;
-            List<IncomeWithRoomDto> incomeWithRoomDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
-            List<PaymentDetailWithRoomDto> paymentWithRoomDtos = await  _paymentDetailService.DailyOrMonthly(selectedDate);
-            List<RoomIncomeWithRoomDto> roomIncomeWithRoomDtos = await _roomIncomeService.DailyOrMonthly(selectedDate);
-
-
-
-            SingleRoomReports_VM singleRoomReports_VM = new SingleRoomReports_VM
-            {
-                IncomeWithRoomDtos = incomeWithRoomDtos,
-                PaymentDetailWithRoomDtos = paymentWithRoomDtos,
-                RoomIncomeWithRoomDtos = roomIncomeWithRoomDtos,
-            };
-
-            return View(singleRoomReports_VM);
+            return View();
         }
 
 

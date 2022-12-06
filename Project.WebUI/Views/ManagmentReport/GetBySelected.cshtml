@@ -1,24 +1,10 @@
-﻿@using Project.WebUI.ViewModel
-@model SingleRoomReports_VM
-
+﻿
 @{
     ViewData["Title"] = "GetBySelected";
 }
 
 
 
-@if (Model.IncomeWithRoomDtos.Count == 0 && Model.PaymentDetailWithRoomDtos.Count == 0 && Model.RoomIncomeWithRoomDtos.Count == 0)
-{
-
-	<div class="alert alert-info" role="alert">
-		No data found for the date you entered !   <br>
-		(<span class="text-bold">@ViewBag.date</span>)
-		<br>
-		<a asp-action="Index" class="alert-link">Click</a>  to go back.
-	</div>
-}
-else
-{
 	<div>
 		<h3  id="dateId">@ViewBag.date</h3>
 	</div>
@@ -37,7 +23,7 @@ else
 				<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
 				<div class="card-content ms-5">
-					<div class="card-header" >Total Rent Incomes</div>
+					<div class="card-header" >Total Incomes</div>
 					<hr class="my-0 ms-2">
 					<div class="card-body" id="totalIncome">
 					</div>
@@ -95,8 +81,9 @@ else
 			</div>
 
 			<h3>All Income and Payment with Payment Name</h3>
-			<div class="d-flex justify-content-start flex-wrap">
-				<div class="card bg-primary  m-2" style="width:290px">
+
+			<div class="row">
+				<div class="card bg-primary  m-2 col-4" style="width:290px">
 					<span class="card-icon">
 						<lord-icon src="https://cdn.lordicon.com/cjieiyzp.json"
 							   trigger="hover"
@@ -107,17 +94,52 @@ else
 					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
 					<div class="card-content ms-5">
-						<div class="card-header">Total Eft</div>
+						<div class="card-header">Total Eft Income</div>
 						<hr class="my-0 ms-2">
-						<div class="card-body">
-							<p>Total amount : 50 $</p>
-							<p>Total amount : 50 ₺</p>
-							<p>Total amount : 50 €</p>
-							<p>Total amount : 5 £</p>
+						<div class="card-body" id="totalEft">
+							
 						</div>
 					</div>
 				</div>
-				<div class="card bg-purple  m-2" style="width:290px">
+				<div class="card bg-danger  m-2  col-4" style="width:290px">
+					<span class="card-icon">
+						<lord-icon src="https://cdn.lordicon.com/cjieiyzp.json"
+							   trigger="hover"
+							   colors="primary:#fff,secondary:#fff"
+							   class="position-absolute">
+						</lord-icon>
+					</span>
+					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+					<div class="card-content ms-5">
+						<div class="card-header">Total Eft Payment</div>
+						<hr class="my-0 ms-2">
+						<div class="card-body" id="totalEftPayment">
+						</div>
+					</div>
+				</div>
+				<div class="card bg-success m-2  col-4" style="width:290px">
+					<span class="card-icon">
+						<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+						<lord-icon src="https://cdn.lordicon.com/huwchbks.json"
+							   trigger="hover"
+							   colors="primary:#fff,secondary:#fff"
+							   class="position-absolute">
+							>
+						</lord-icon>
+					</span>
+					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+					<div class="card-content ms-5">
+						<div class="card-header">Total Eft Balance</div>
+						<hr class="my-0 ms-2">
+						<div class="card-body" id="totalEftBalance">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card bg-primary  m-2" style="width:290px">
 					<span class="card-icon">
 						<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 						<lord-icon src="https://cdn.lordicon.com/yeallgsa.json"
@@ -130,17 +152,53 @@ else
 					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
 					<div class="card-content ms-5">
-						<div class="card-header">Total Cash</div>
+						<div class="card-header">Total Cash Income</div>
 						<hr class="my-0 ms-2">
-						<div class="card-body">
-							<p>Total amount : 50 $</p>
-							<p>Total amount : 50 ₺</p>
-							<p>Total amount : 50 €</p>
-							<p>Total amount : 5 £</p>
+						<div class="card-body" id="totalCash">
 						</div>
 					</div>
 				</div>
-				<div class="card bg-success  m-2" style="width:290px">
+				<div class="card bg-danger  m-2" style="width:290px">
+					<span class="card-icon">
+						<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+						<lord-icon src="https://cdn.lordicon.com/yeallgsa.json"
+							   trigger="hover"
+							   colors="primary:#fff,secondary:#fff"
+							   class="position-absolute">
+							>
+						</lord-icon>
+					</span>
+					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+					<div class="card-content ms-5">
+						<div class="card-header">Total Cash Payment</div>
+						<hr class="my-0 ms-2">
+						<div class="card-body" id="totalCashPayment">
+						</div>
+					</div>
+				</div>
+				<div class="card bg-success m-2  col-4" style="width:290px">
+					<span class="card-icon">
+						<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+						<lord-icon src="https://cdn.lordicon.com/huwchbks.json"
+							   trigger="hover"
+							   colors="primary:#fff,secondary:#fff"
+							   class="position-absolute">
+							>
+						</lord-icon>
+					</span>
+					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+					<div class="card-content ms-5">
+						<div class="card-header">Total Cash Balance</div>
+						<hr class="my-0 ms-2">
+						<div class="card-body" id="totalCashBalance">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card bg-primary  m-2" style="width:290px">
 					<span class="card-icon">
 						<lord-icon src="https://cdn.lordicon.com/rgyftmhc.json"
 							   trigger="hover"
@@ -151,17 +209,34 @@ else
 					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
 					<div class="card-content ms-5">
-						<div class="card-header">Total Credit Kart</div>
+						<div class="card-header">Total Credit Kart Income</div>
 						<hr class="my-0 ms-2">
-						<div class="card-body">
-							<p>Total amount : 50 $</p>
-							<p>Total amount : 50 ₺</p>
-							<p>Total amount : 50 €</p>
-							<p>Total amount : 5 £</p>
+						<div class="card-body" id="totalCreditKart">
 						</div>
 					</div>
 				</div>
-				<div class="card bg-b-pink  m-2" style="width:290px">
+
+
+				<div class="card bg-danger  m-2" style="width:290px">
+					<span class="card-icon">
+						<lord-icon src="https://cdn.lordicon.com/rgyftmhc.json"
+							   trigger="hover"
+							   colors="primary:#fff,secondary:#fff"
+							   class="position-absolute">
+						</lord-icon>
+					</span>
+					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+					<div class="card-content ms-5">
+						<div class="card-header">Total Credit Kart Payment</div>
+						<hr class="my-0 ms-2">
+						<div class="card-body" id="totalCreditKartPayment">
+						</div>
+					</div>
+				</div>
+
+
+				<div class="card bg-success m-2  col-4" style="width:290px">
 					<span class="card-icon">
 						<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 						<lord-icon src="https://cdn.lordicon.com/huwchbks.json"
@@ -174,60 +249,36 @@ else
 					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
 					<div class="card-content ms-5">
-						<div class="card-header">Total Payment</div>
+						<div class="card-header">Total Credit Cart Balance</div>
 						<hr class="my-0 ms-2">
-						<div class="card-body">
-							<p>Total amount : 50 $</p>
-							<p>Total amount : 50 ₺</p>
-							<p>Total amount : 50 €</p>
-							<p>Total amount : 5 £</p>
+						<div class="card-body" id="totalKreditKartBalance">
 						</div>
 					</div>
 				</div>
-				<div class="card bg-orange m-2" style="width:290px">
-					<span class="card-icon">
-						<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
-						<lord-icon src="https://cdn.lordicon.com/huwchbks.json"
-							   trigger="hover"
-							   colors="primary:#fff,secondary:#fff"
-							   class="position-absolute">
-							>
-						</lord-icon>
-					</span>
-					<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
 
-					<div class="card-content ms-5">
-						<div class="card-header">Total Balance</div>
-						<hr class="my-0 ms-2">
-						<div class="card-body">
-							<p>Total amount : 50 $</p>
-							<p>Total amount : 50 ₺</p>
-							<p>Total amount : 50 €</p>
-							<p>Total amount : 5 £</p>
-						</div>
+			</div>
+
+
+
+			<div class="col-12" style="background:white">
+					<div class="row">
+						<div class="col-6 mt-3" style="background:white">
+							<h3 class="my-2">
+								All Income (Payment  Method)  & Price Chart
+							</h3>
+							<div id="allIncomeCurrencyWithPaymentNameChart"></div>
 					</div>
-				</div>
-			</div>
-		<div class="col-12" style="background:white">
-			<div class="row">
-				<div class="col-6 mt-3" style="background:white">
-				<h3 class="my-2">
-					All Income (Payment  Method)  & Price Chart
-				</h3>
-				<div id="allIncomeCurrencyWithPaymentNameChart"></div>
-			</div>
-			<div class="col-6 mt-3" style="background:white">
-				<h3 class="my-2">
-						All Payment (Payment  Method)  & Price Chart
-				</h3>
-				<div id="allPaymentCurrencyWithPaymentNameChart"></div>
-			</div>
+					<div class="col-6 mt-3" style="background:white">
+							<h3 class="my-2">
+								All Payment (Payment  Method)  & Price Chart
+							</h3>
+							<div id="allPaymentCurrencyWithPaymentNameChart"></div>
+						</div>
+					</div>	
 			</div>
 
+
 		</div>
-		</div>
-		
-	
 		</div>
 
 
@@ -240,5 +291,5 @@ else
      <script src="~/js/managmentreport.js"></script>
     }
 
-}
+
 
