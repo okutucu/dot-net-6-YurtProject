@@ -2,9 +2,6 @@
 
 @{
 	ViewData["Title"] = "Get By Selected";
-
-	string color = "";
-
 }
 
 @if(Model.Count ==0)
@@ -20,8 +17,19 @@ else
 
 	<h3  id="dateId">@ViewBag.date</h3>
 
+	<div class="d-flex justify-content-start">
+
+		@foreach (var item in @ViewBag.allPaymentsDatas)
+		{
+			<ul>
+				<li>Total @item.Exchange  Payment</li>
+				<li>Price : @item.Sum</li>
+			</ul>
+
+		}
+	</div>
+
 	<div class="row">
-		<h3>All Payment Chart</h3>
 		<div class="col-6" style="background:white">
 			<h3 class="my-2">
 				Currency & Price Chart
@@ -41,52 +49,20 @@ else
 
 
 
-	<div class="row mt-5">
-		@foreach (var item in @ViewBag.allPaymentsDatas)
-		{
-									switch (item.Exchange.ToString())
-									{
-										case "Tl":
-										color = "red";
-										break;
-
-										case "Dollar":
-											color = "purple";
-											break;
-
-										case "Euro":
-										color = "blue";
-										break;
-
-										case "Sterling":
-										color = "yellow";
-										break;
-									}
-
-								<ul style="background-color:@color">
-									<li>Exchange = @item.Exchange</li>
-									<li>Total Price = @item.Sum</li>
-								</ul>
-						
-		}
-
-	</div>
+		
 
 <div class="row">
 		<h3>Detailed Payments Table</h3>
 
 		@foreach (var item in @ViewBag.detailPaymentsDatas)
 		{
-			<div class="col-md-3" >
-			<h4>@item.PaymentName </h4>
-			           @foreach (var paymentDetail in @item.PaymentDetail)
-					   {
-					<p class="info-box-number">Total amount : <span style="font-size:20px"> @paymentDetail.Sum  </span>  <span style="font-size:14px"> @paymentDetail.Exchange.ToString()</span>  </p>
-				}
-
-
-		</div>
-			
+				<div class="col-md-3" >
+					<h4>@item.PaymentName </h4>
+							   @foreach (var paymentDetail in @item.PaymentDetail)
+							   {
+							<p class="info-box-number">Total amount : <span style="font-size:20px"> @paymentDetail.Sum  </span>  <span style="font-size:14px"> @paymentDetail.Exchange.ToString()</span>  </p>
+						}
+				</div>
 		}
 
 	</div>
