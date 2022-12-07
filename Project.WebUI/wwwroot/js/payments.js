@@ -9,10 +9,11 @@ $(document).ready(function () {
         contentType: "application/json",
         url: serviceUrl + date,
         success: function (result) {
+            getTotalExchange(result.allDataWithExchange);
+            getTotalPaymentMethod(result.allDataWithPaymentMethod);
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 drawChartWithCurrencyChart(result.allDataWithExchange);
-                console.log(result) 
             });
             drawChartWithCurrencyChartByPaymentName(result.allDataWithPaymentMethod);
         }
@@ -156,3 +157,45 @@ function drawChartWithCurrencyChartByPaymentName(result) {
 
 }
 
+
+function getTotalExchange(dataExchange) {
+
+    var allExhange = $.merge([], dataExchange);
+    allExhange.sort(function (a, b) {
+        if (a.exchange > b.exchange) { return 1 }
+        if (a.exchange < b.exchange) { return -1 }
+        return 0;
+    });
+        if (allExhange.length == 0) 
+            $("#totalExhange").append(` <p> Veri Yok</p> `);
+        else{
+            $.each(allExhange, function (i, obj) {
+                $("#totalExhange").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `);
+            });
+        }
+}
+
+
+
+function getTotalPaymentMethod(dataPaymentMethod) {
+
+    var allPaymentMethod = $.merge([], dataPaymentMethod);
+
+    allPaymentMethod.sort(function (a, b) {
+        if (a.exchange > b.exchange) { return 1 }
+        if (a.exchange < b.exchange) { return -1 }
+        return 0;
+    });
+
+    console.log(allPaymentMethod)
+
+
+    $.each(allPaymentMethod, function (i, obj) {
+        if (obj.paymentMethod === "Cash")
+            $("#totalCash").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "Eft")
+            $("#totalEft").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+        else if (obj.paymentMethod === "CreditCart")
+            $("#totalCreditKart").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
+    });
+}
