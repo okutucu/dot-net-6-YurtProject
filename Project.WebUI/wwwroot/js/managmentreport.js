@@ -580,9 +580,6 @@ function compare(allIncomesArray, allPaymentArray) {
 
 }
 
-
-
-
 function compareWithPaymentMethod(allIncomesWithPaymentMethod, allPaymentWithPaymentMethod) {
 
     $.each(allIncomesWithPaymentMethod, function (i, obj) {

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Project.Core.DTOs;
 using Project.Core.Models;
 using Project.Core.Services;
-using Project.Service.Services;
 
 namespace Project.WebUI.Controllers
 {
@@ -69,13 +68,6 @@ namespace Project.WebUI.Controllers
 			List<PaymentDetailWithRoomDto> paymentDetailDtos = await _paymentDetailService.DailyOrMonthly(selectedDate);
             ViewBag.url = "/PaymentDetail/VisualizePaymentResult?selectedDate=";
             ViewBag.date = selectedDate;
-
-            ViewBag.allPaymentsDatas = paymentDetailDtos.GroupBy(p => p.Exchange).Select(group => new
-            {
-                Exchange = group.Key,
-                Sum = group.Sum(s => s.Price)
-
-            });
             ViewBag.detailPaymentsDatas = from payment in paymentDetailDtos
                                           group payment by payment.PaymentName.Name into payments
                                           select new

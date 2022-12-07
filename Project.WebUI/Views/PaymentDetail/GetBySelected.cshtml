@@ -2,9 +2,6 @@
 
 @{
 	ViewData["Title"] = "Get By Selected";
-
-	string color = "";
-
 }
 
 @if(Model.Count ==0)
@@ -18,10 +15,174 @@
 else
 {
 
-	<h3  id="dateId">@ViewBag.date</h3>
+	
+
+	    <div class="d-flex align-items-center justify-content-center">
+                <div class="page-bar w-100">
+                        <div class="card">
+                            <div class="card-header text-center bg-mail">
+					Payment Reports (
+								<h4 style="display:inline-block" id="dateId">@ViewBag.date</h4>
+					)
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-5">
+                                    <aside class="col-lg-3 border-end">
+                                        <div class="d-flex align-items-start">
+                                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+													<a class="nav-link active" id="v-pills-paymentDetail-tab" data-bs-toggle="pill" data-bs-target="#v-pills-paymentDetail" type="button" role="tab" aria-controls="v-pills-paymentDetail" aria-selected="true">Payment Detail <i class="material-icons">attach_money</i></a>
+													<a class="nav-link" id="v-pills-paymentMethod-tab" data-bs-toggle="pill" data-bs-target="#v-pills-paymentMethod" type="button" role="tab" aria-controls="v-pills-paymentMethod" aria-selected="false">Payment Method<i class="material-icons">attach_money</i></a>
+													<a class="nav-link" id="v-pills-exchange-tab" data-bs-toggle="pill" data-bs-target="#v-pills-exchange" type="button" role="tab" aria-controls="v-pills-exchange" aria-selected="false">Exchange<i class="material-icons">attach_money</i></a>
+									
+                                            </div>
+                                        </div>
+
+                                    </aside>
+                                    <div class="col-lg-9">
+                                        <section class="content-body p-xl-4">
+                                            <div class="tab-content" id="v-pills-tabContent">
+											<div class="tab-pane fade show active" id="v-pills-paymentDetail" role="tabpanel" aria-labelledby="v-pills-paymentDetail-tab">
+								
+										<div class="d-flex justify-content-start flex-wrap">
+
+											@foreach (var item in @ViewBag.detailPaymentsDatas)
+											{
+
+												<div class="card bg-primary m-2" style="width:310px">
+													<span class="card-icon">
+														<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+														<lord-icon src="https://cdn.lordicon.com/yeallgsa.json"
+														   trigger="hover"
+														   colors="primary:#fff,secondary:#fff"
+														   class="position-absolute">
+															>
+														</lord-icon>
+													</span>
+													<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+													<div class="card-content ms-5 ">
+														<div class="card-header">@item.PaymentName</div>
+														<hr class="my-0 ms-2">
+														<div class="card-body">
+															@foreach (var paymentDetail in @item.PaymentDetail)
+															{
+																<p class="info-box-number">Total amount : <span style="font-size:20px"> @paymentDetail.Sum  </span>  <span style="font-size:14px"> @paymentDetail.Exchange.ToString()</span>  </p>
+															}
+														</div>
+													</div>
+												</div>
+
+											}
+										</div>
+									</div>
+														<div class="tab-pane fade" id="v-pills-paymentMethod" role="tabpanel" aria-labelledby="v-pills-paymentMethod-tab">
+																<div class="row">
+														<div class="card bg-primary m-2 col-4" style="width:290px">
+														<span class="card-icon">
+															<lord-icon src="https://cdn.lordicon.com/cjieiyzp.json"
+																   trigger="hover"
+																   colors="primary:#fff,secondary:#fff"
+																   class="position-absolute">
+															</lord-icon>
+														</span>
+														<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+														<div class="card-content ms-5">
+															<div class="card-header">Total Eft</div>
+															<hr class="my-0 ms-2">
+															<div class="card-body" id="totalEft">
+															</div>
+														</div>
+													</div>
+													<div class="card bg-danger  m-2  col-4" style="width:290px">
+														<span class="card-icon">
+															<lord-icon src="https://cdn.lordicon.com/cjieiyzp.json"
+																   trigger="hover"
+																   colors="primary:#fff,secondary:#fff"
+																   class="position-absolute">
+															</lord-icon>
+														</span>
+														<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+														<div class="card-content ms-5">
+															<div class="card-header">Total Cash </div>
+															<hr class="my-0 ms-2">
+													<div class="card-body" id="totalCash">
+															</div>
+														</div>
+													</div>
+													<div class="card bg-success m-2  col-4" style="width:290px">
+														<span class="card-icon">
+															<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+															<lord-icon src="https://cdn.lordicon.com/huwchbks.json"
+																   trigger="hover"
+																   colors="primary:#fff,secondary:#fff"
+																   class="position-absolute">
+																>
+															</lord-icon>
+														</span>
+														<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+														<div class="card-content ms-5">
+															<div class="card-header">Total Credit Kart</div>
+															<hr class="my-0 ms-2">
+															<div class="card-body" id="totalCreditKart">
+															</div>
+														</div>
+													</div>
+												</div>
+														</div>
+														<div class="tab-pane fade " id="v-pills-exchange" role="tabpanel" aria-labelledby="v-pills-exchange-tab">
+															<div class="row">
+											<div class="card bg-primary  m-2 " style="width:290px">
+												<span class="card-icon">
+													<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+													<lord-icon src="https://cdn.lordicon.com/yeallgsa.json"
+														   trigger="hover"
+														   colors="primary:#fff,secondary:#fff"
+														   class="position-absolute">
+														>
+													</lord-icon>
+												</span>
+												<script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+
+												<div class="card-content ms-5 ">
+													<div class="card-header">Exchange</div>
+													<hr class="my-0 ms-2">
+													<div class="card-body" id="totalExhange">
+													</div>
+												</div>
+											</div>
+
+										</div>
+														</div>	
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+		
+
+			
+
+
+
+
+
 
 	<div class="row">
-		<h3>All Payment Chart</h3>
 		<div class="col-6" style="background:white">
 			<h3 class="my-2">
 				Currency & Price Chart
@@ -37,60 +198,6 @@ else
 
 		</div>
 	</div>
-
-
-
-
-	<div class="row mt-5">
-		@foreach (var item in @ViewBag.allPaymentsDatas)
-		{
-									switch (item.Exchange.ToString())
-									{
-										case "Tl":
-										color = "red";
-										break;
-
-										case "Dollar":
-											color = "purple";
-											break;
-
-										case "Euro":
-										color = "blue";
-										break;
-
-										case "Sterling":
-										color = "yellow";
-										break;
-									}
-
-								<ul style="background-color:@color">
-									<li>Exchange = @item.Exchange</li>
-									<li>Total Price = @item.Sum</li>
-								</ul>
-						
-		}
-
-	</div>
-
-<div class="row">
-		<h3>Detailed Payments Table</h3>
-
-		@foreach (var item in @ViewBag.detailPaymentsDatas)
-		{
-			<div class="col-md-3" >
-			<h4>@item.PaymentName </h4>
-			           @foreach (var paymentDetail in @item.PaymentDetail)
-					   {
-					<p class="info-box-number">Total amount : <span style="font-size:20px"> @paymentDetail.Sum  </span>  <span style="font-size:14px"> @paymentDetail.Exchange.ToString()</span>  </p>
-				}
-
-
-		</div>
-			
-		}
-
-	</div>
-	
 
 
 
