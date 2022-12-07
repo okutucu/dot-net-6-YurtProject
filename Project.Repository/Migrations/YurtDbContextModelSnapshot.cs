@@ -34,7 +34,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("CustomersId");
 
-                    b.ToTable("CustomerCustomerImageFile");
+                    b.ToTable("CustomerCustomerImageFile", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.AppUser", b =>
@@ -135,7 +135,7 @@ namespace Project.Repository.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("AppUserDetail");
+                    b.ToTable("AppUserDetail", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Customer", b =>
@@ -236,7 +236,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExchangeRates");
+                    b.ToTable("ExchangeRates", (string)null);
 
                     b.HasData(
                         new
@@ -292,7 +292,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("File");
                 });
@@ -347,7 +347,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("IncomeDetails");
+                    b.ToTable("IncomeDetails", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.PaymentDetail", b =>
@@ -400,7 +400,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("PaymentDetails");
+                    b.ToTable("PaymentDetails", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.PaymentName", b =>
@@ -423,7 +423,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentNames");
+                    b.ToTable("PaymentNames", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Record", b =>
@@ -479,7 +479,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Records");
+                    b.ToTable("Records", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.Room", b =>
@@ -525,7 +525,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomTypeId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.RoomIncome", b =>
@@ -573,7 +573,7 @@ namespace Project.Repository.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomIncomes");
+                    b.ToTable("RoomIncomes", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.RoomType", b =>
@@ -603,7 +603,7 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoomType");
+                    b.ToTable("RoomType", (string)null);
                 });
 
             modelBuilder.Entity("Project.Core.Models.CustomerImageFile", b =>
