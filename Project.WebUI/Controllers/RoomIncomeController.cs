@@ -38,12 +38,6 @@ namespace Project.WebUI.Controllers
 
             ViewBag.url = "/RoomIncome/VisualizeRoomRentResult?selectedDate=";
             ViewBag.date = selectedDate;
-            ViewBag.allPaymentsDatas = roomDetailsDto.GroupBy(p => p.Exchange).Select(group => new
-            {
-                Exchange = group.Key,
-                Sum = group.Sum(s => s.Price)
-
-            });
 
             return View(roomDetailsDto);
 

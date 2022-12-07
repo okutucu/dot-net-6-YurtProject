@@ -41,12 +41,6 @@ namespace Project.WebUI.Controllers
             ViewBag.date = selectedDate;
 			List<IncomeWithRoomDto> incomeDetailDtos = await _incomeDetailService.DailyOrMonthly(selectedDate);
 
-            ViewBag.allPaymentsDatas = incomeDetailDtos.GroupBy(p => p.Exchange).Select(group => new
-            {
-                Exchange = group.Key,
-                Sum = group.Sum(s => s.Price)
-
-            });
             ViewBag.detailPaymentsDatas = from payment in incomeDetailDtos
                                           group payment by payment.PaymentName.Name into payments
                                       select new
