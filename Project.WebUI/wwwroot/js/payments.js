@@ -9,10 +9,10 @@ $(document).ready(function () {
         contentType: "application/json",
         url: serviceUrl + date,
         success: function (result) {
+            console.log(result)
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 drawChartWithCurrencyChart(result.allDataWithExchange);
-                console.log(result) 
             });
             drawChartWithCurrencyChartByPaymentName(result.allDataWithPaymentMethod);
         }
