@@ -118,41 +118,6 @@
                                 <select id="roomName" asp-for="RoomId" asp-items="ViewBag.rooms" class="form-control" aria-label="Default select example"> </select>
                                 <span asp-validation-for="RoomId" class="text-danger"></span>
                             </div>
-                        </div>
-                    @*    <div class="col-6">
-                            <div class="form-group">
-                                <label class="form-label" for="upload"> Image </label>
-                                <input asp-for="Files" type="file" class="form-control" id="upload" multiple />
-                                <span asp-validation-for="Files" class="text-danger"></span>
-
-                            </div>
-                        </div>
-                        <div class="col-6">
-                                                @foreach (CustomerImage item in Model.CustomerImages)
-                                                {
-                                                      <img style="width:100px" height="100px" src="~/img/CustomerImages/@item.FileName" />
-                                                 }
-                        </div>*@
-                       
-
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="discountId" asp-for="Discount" />
-                                <label class="form-check-label" for="discountId">
-                                    Discount
-                                </label>
-                            </div>
-                            <div class="form-group col-6">
-                                <div class="d-none" id="discountPriceId">
-                                    <label asp-for="DiscountPrice"></label>
-                                    <input id="discoundPriceInput" type="number" asp-for="DiscountPrice" class="form-control" />
-                                    <span asp-validation-for="DiscountPrice" class="text-danger"></span>
-
-                                </div>
-                            </div>
-
-
-                        </div>
 
                         <div class="col-12">
                             <div class="form-check">
@@ -199,21 +164,11 @@
     <script>
         $(document).ready(function () {
 
-            let discountPrice = $('#discountPriceId');
+
             let downPaymentPrice = $('#downPaymentPriceId');
-            $('#discoundPriceInput').val('0');
+
             $('#downPaymentPriceInput').val('0');
 
-
-
-            $("#discountId").on('change', function () {
-                if ($(this).is(':checked')) {
-                    discountPrice.addClass('d-block').removeClass('d-none');
-                } else {
-                    discountPrice.addClass('d-none').removeClass('d-block');
-                    $('#discoundPriceInput').val('0');
-                }
-            });
             $("#downPaymentId").on('change', function () {
                 if ($(this).is(':checked')) {
                     downPaymentPrice.addClass('d-block').removeClass('d-none');

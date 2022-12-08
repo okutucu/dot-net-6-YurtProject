@@ -14,8 +14,9 @@ namespace Project.Repository.Configurations
 			builder.Property(r => r.Capacity).IsRequired().HasMaxLength(2);
 			builder.Property(r => r.Debt).IsRequired().HasColumnType("decimal(18,2)");
 			builder.Property(r => r.LackDetail).HasMaxLength(150);
+            builder.Property(e => e.DiscountPrice).HasColumnType("decimal(18,2)");
 
 
-		}
+        }
 	}
 }

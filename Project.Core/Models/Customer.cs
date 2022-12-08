@@ -17,8 +17,6 @@ namespace Project.Core.Models
 		public bool DownPayment { get; set; }
         public decimal DownPaymentPrice { get; set; }
         public decimal MonthlyRisingPrice { get; set; }
-        public bool Discount { get; set; }
-        public decimal DiscountPrice { get; set; }
         public int? RoomId { get; set; }
 
         //Relational Properties

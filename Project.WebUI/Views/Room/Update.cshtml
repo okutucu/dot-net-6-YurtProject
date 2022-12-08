@@ -65,6 +65,24 @@
 
 
                         </div>
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="discountId" asp-for="Discount" />
+                                <label class="form-check-label" for="discountId">
+                                    Discount
+                                </label>
+                            </div>
+                            <div class="form-group col-6">
+                                <div class="d-none" id="discountPriceId">
+                                    <label asp-for="DiscountPrice"></label>
+                                    <input id="discoundPriceInput" type="number" asp-for="DiscountPrice" class="form-control" />
+                                    <span asp-validation-for="DiscountPrice" class="text-danger"></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit"><i class="material-icons f-left material-css">thumb_up</i>  Submit </button>
                             <a asp-action="Index" class="btn btn-danger">
@@ -91,7 +109,23 @@
     <script>
         $(document).ready(function () {
 
+            //$('#discountId').prop('checked', true);
             let lackDetail = $('#lackDetailId');
+            let discountPrice = $('#discountPriceId');
+            let discountPriceInput = $('#discoundPriceInput').val();
+            console.log(discountPriceInput)
+
+          
+           
+
+            $("#discountId").on('change', function () {
+                if ($(this).is(':checked')) {
+                    discountPrice.addClass('d-block').removeClass('d-none');
+                } else {
+                    discountPrice.addClass('d-none').removeClass('d-block');
+                    $('#discoundPriceInput').val('0');
+                }
+            });
 
             $("#checkId").on('change', function () {
                 if ($(this).is(':checked')) {

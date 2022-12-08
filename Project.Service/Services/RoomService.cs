@@ -116,26 +116,25 @@ namespace Project.Service.Services
 		}
 
 
-		public async Task ReducingRoomCapacityAsync(int roomId)
+		public async Task ReducingRoomCapacityAsync(CustomerDto customerDto)
 		{
-			RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
+			RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(customerDto.RoomId);
 
-			RoomTypeWithRoomDto roomTypeWithRoom = await GetSingleRoomByIdWithRoomTypeAsync(roomId);
+			RoomTypeWithRoomDto roomTypeWithRoom = await GetSingleRoomByIdWithRoomTypeAsync(customerDto.RoomId);
 
 
-			Room room = await _roomRepository.ReducingRoomCapacity(roomId);
+			Room room = await _roomRepository.ReducingRoomCapacity(customerDto.RoomId);
 			int customerCount = roomAndCustomerDto.Customers.Count();
 
 			if (customerCount == 0)
 			{
-				room.Debt = roomTypeWithRoom.RoomType.Price;
+                room.Debt += roomTypeWithRoom.RoomType.Price;
 				room.CurrentCapacity--;
 				await _unitOfWok.CommitAsync();
 				return;
 			}
 			else if (customerCount > 0)
 			{
-				room.Debt = roomTypeWithRoom.RoomType.Price;
 				room.Debt += roomTypeWithRoom.RoomType.IncreasedPrice;
 				room.CurrentCapacity--;
 				await _unitOfWok.CommitAsync();

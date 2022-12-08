@@ -24,7 +24,7 @@ namespace Project.Repository.Configurations
 			builder.Property(c => c.Description).HasMaxLength(150);
 			builder.Property(c => c.CreatedDate).IsRequired().HasColumnType("date");
             builder.Property(e => e.DownPaymentPrice).HasColumnType("decimal(18,2)");
-            builder.Property(e => e.DiscountPrice).HasColumnType("decimal(18,2)");
+ 
 
 
             builder.ToTable("Customers");
