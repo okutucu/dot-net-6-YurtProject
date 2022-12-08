@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Reflection;
 
 namespace Project.Core.Models
 {
@@ -16,15 +15,14 @@ namespace Project.Core.Models
 		public string UniversityName { get; set; }
 		public string Description { get; set; }
 		public bool DownPayment { get; set; }
-		// kapora ve discount hangi şartlar altında tutulacak
         public decimal DownPaymentPrice { get; set; }
+        public decimal MonthlyRisingPrice { get; set; }
         public bool Discount { get; set; }
         public decimal DiscountPrice { get; set; }
         public int? RoomId { get; set; }
 
         //Relational Properties
         public virtual Room Room { get; set; }
-		public IList<CustomerImageFile> CustomerImageFiles { get; set; }
 
 	}
 }

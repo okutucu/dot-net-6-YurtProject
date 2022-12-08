@@ -19,7 +19,6 @@ namespace Project.Core.DTOs
         public decimal DownPaymentPrice { get; set; }
         public bool Discount { get; set; }
         public decimal DiscountPrice { get; set; }
-        public IFormFile[] Files { get; set; }
         public int RoomId { get; set; }
 
     }

@@ -26,10 +26,5 @@ namespace Project.Service.Services
 			return customersDto;
 		}
 
-		public async Task<Customer> GetSingleCustomerWithImageAsync(int id)
-		{
-            Customer customer = await _customerRepository.GetSingleCustomerWithImageAsync(id);
-			return customer;
-        }
     }
 }

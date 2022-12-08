@@ -17,16 +17,14 @@ namespace Project.WebUI.Controllers
 		private readonly IRoomService _roomService;
 		private readonly IMapper _mapper;
 		private readonly IRecordService _recordService;
-		private readonly ICustomerImageFileService _customerImageFileService;
 		private readonly IFileService _fileService;
 
-		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, ICustomerImageFileService customerImageFileService, IFileService fileService)
+		public CustomerController(ICustomerService customerService, IMapper mapper, IRoomService roomService, IRecordService recordService, IFileService fileService)
 		{
 			_customerService = customerService;
 			_mapper = mapper;
 			_roomService = roomService;
 			_recordService = recordService;
-			_customerImageFileService = customerImageFileService;
 			_fileService = fileService;
 		}
 		public async Task<IActionResult> Index()
@@ -37,15 +35,10 @@ namespace Project.WebUI.Controllers
         public async Task<IActionResult> Detail(int id)
         {
 
-            Customer customer = await _customerService.GetSingleCustomerWithImageAsync(id);
+            Customer customer = await _customerService.GetByIdAsync(id);
 
-            CustomerWithImage_VM customerWithImage_VM = new()
-            {
-                Customer = customer,
-                CustomerImageFile = customer.CustomerImageFiles
-            };
-
-            return View(customerWithImage_VM);
+    
+            return View(_mapper.Map<CustomerDto>(customer));
         } 
         public async Task<IActionResult> Create()
 		{
@@ -79,38 +72,6 @@ namespace Project.WebUI.Controllers
 			return View(customerDto);
 		}
 
-		[HttpGet]
-		public async Task<IActionResult> Upload(int id)
-		{
-			Customer customer = await _customerService.GetSingleCustomerWithImageAsync(id);
-
-			CustomerWithImage_VM customerWithImage_VM = new()
-			{
-				Customer = customer,
-				CustomerImageFile = customer.CustomerImageFiles
-			};
-
-			return PartialView("_CustomerImagePartialView", customerWithImage_VM);
-		}
-
-
-		[HttpPost]
-		public async Task<JsonResult> Upload(string id)
-		{
-			List<(string fileName , string path)> datas = await _fileService.UploadAsync("resource/customer-images", Request.Form.Files);
-
-			Customer customer = await _customerService.GetByNoTrackIdAsync(int.Parse(id));
-
-			await _customerImageFileService.AddRangeAsync(datas.Select(d => new CustomerImageFile()
-			{
-				FileName = d.fileName,
-				Path = d.path, 
-				Customers = new List<Customer>() { customer}
-			}).ToList());
-
-			
-			return Json("Your transaction has been completed successfully");
-		}
 
 
 

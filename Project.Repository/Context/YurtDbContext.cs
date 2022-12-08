@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.Models;
-using File = Project.Core.Models.File;
 
 namespace Project.Repository.Context
 {
@@ -19,11 +18,6 @@ namespace Project.Repository.Context
 		public DbSet<Room> Rooms { get; set; }
 		public DbSet<RoomIncome> RoomIncomes { get; set; }
 		public DbSet<AppUser> Users { get; set; }
-		public DbSet<File> Files { get; set; }
-		public DbSet<CustomerImageFile> CustomerImageFiles { get; set; }
-		public DbSet<RoomIncomesImageFile> RoomIncomesFiles { get; set; }
-		public DbSet<OtherIncomeImageFile> OtherIncomeFiles { get; set; }
-		public DbSet<PaymentImageFile> PaymentFiles { get; set; }
 		public DbSet<PaymentName> PaymentNames { get; set; }
 
 

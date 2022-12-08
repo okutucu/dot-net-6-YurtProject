@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Repository.Context;
 
@@ -11,9 +12,10 @@ using Project.Repository.Context;
 namespace Project.Repository.Migrations
 {
     [DbContext(typeof(YurtDbContext))]
-    partial class YurtDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208125011_mig_3")]
+    partial class mig_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,28 +59,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 12, 8, 15, 6, 24, 255, DateTimeKind.Local).AddTicks(9480),
-                            Password = "$2a$11$yihShfbBWp6DI954/vOVNO.qrRwCMf5cQzB9EszThjQeYRDIuKaTC",
+                            CreatedDate = new DateTime(2022, 12, 8, 14, 50, 9, 805, DateTimeKind.Local).AddTicks(1603),
+                            Password = "$2a$11$MzV5/ISIe1z4ChaIpifU1ek6hqwK9Av.OONCutlNNfEVe8uteLPou",
                             Role = 1,
-                            UpdatedDate = new DateTime(2022, 12, 8, 15, 6, 24, 255, DateTimeKind.Local).AddTicks(9542),
+                            UpdatedDate = new DateTime(2022, 12, 8, 14, 50, 9, 805, DateTimeKind.Local).AddTicks(1688),
                             UserName = "superadmin"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 12, 8, 15, 6, 24, 255, DateTimeKind.Local).AddTicks(9554),
-                            Password = "$2a$11$ez6Upb923A7z.fzZKgh8xumeVwFi.ChRALv8O7VteO6z.qx8ZVRSW",
+                            CreatedDate = new DateTime(2022, 12, 8, 14, 50, 9, 805, DateTimeKind.Local).AddTicks(1706),
+                            Password = "$2a$11$hQzQY8CY9QwhGgH.YwYlBOVtGlGAK0LjFCjOTizr.qhq1nOoDKFui",
                             Role = 2,
-                            UpdatedDate = new DateTime(2022, 12, 8, 15, 6, 24, 255, DateTimeKind.Local).AddTicks(9557),
+                            UpdatedDate = new DateTime(2022, 12, 8, 14, 50, 9, 805, DateTimeKind.Local).AddTicks(1712),
                             UserName = "admin"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 12, 8, 15, 6, 24, 255, DateTimeKind.Local).AddTicks(9561),
-                            Password = "$2a$11$8cBnwPRuZcIQz/aK28QFrOZjqgW3SjDH5VzskIsAyTI9q4AcQ.G8K",
+                            CreatedDate = new DateTime(2022, 12, 8, 14, 50, 9, 805, DateTimeKind.Local).AddTicks(1719),
+                            Password = "$2a$11$bT.enlnvoZ3Vb5vICpnTHOc.DV9k5XMWcH0iaRYVvqx4Yy52iDwLy",
                             Role = 3,
-                            UpdatedDate = new DateTime(2022, 12, 8, 15, 6, 24, 255, DateTimeKind.Local).AddTicks(9620),
+                            UpdatedDate = new DateTime(2022, 12, 8, 14, 50, 9, 805, DateTimeKind.Local).AddTicks(2085),
                             UserName = "user"
                         });
                 });
@@ -169,9 +171,6 @@ namespace Project.Repository.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<decimal>("MonthlyRisingPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("Phone")
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
@@ -230,28 +229,28 @@ namespace Project.Repository.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDate = new DateTime(2022, 12, 8, 15, 6, 23, 612, DateTimeKind.Local).AddTicks(4984),
+                            CreatedDate = new DateTime(2022, 12, 8, 14, 50, 8, 335, DateTimeKind.Local).AddTicks(7643),
                             ExchangeName = "Dollar",
                             Price = 10m
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDate = new DateTime(2022, 12, 8, 15, 6, 23, 612, DateTimeKind.Local).AddTicks(5037),
+                            CreatedDate = new DateTime(2022, 12, 8, 14, 50, 8, 335, DateTimeKind.Local).AddTicks(7701),
                             ExchangeName = "Euro",
                             Price = 10m
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDate = new DateTime(2022, 12, 8, 15, 6, 23, 612, DateTimeKind.Local).AddTicks(5051),
+                            CreatedDate = new DateTime(2022, 12, 8, 14, 50, 8, 335, DateTimeKind.Local).AddTicks(7720),
                             ExchangeName = "Sterling",
                             Price = 10m
                         },
                         new
                         {
                             Id = 4,
-                            CreatedDate = new DateTime(2022, 12, 8, 15, 6, 23, 612, DateTimeKind.Local).AddTicks(5057),
+                            CreatedDate = new DateTime(2022, 12, 8, 14, 50, 8, 335, DateTimeKind.Local).AddTicks(7728),
                             ExchangeName = "Tl",
                             Price = 1m
                         });

@@ -17,9 +17,5 @@ namespace Project.Repository.Repositories
 
         }
 
-        public async  Task<Customer> GetSingleCustomerWithImageAsync(int id)
-        {
-            return await _context.Customers.Include(x => x.CustomerImageFiles).Where(x => x.Id == id).AsNoTracking().SingleOrDefaultAsync();
-        }
     }
 }

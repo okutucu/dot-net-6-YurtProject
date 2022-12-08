@@ -114,6 +114,8 @@ namespace Project.Service.Services
 			_roomRepository.Update(room);
 
 		}
+
+
 		public async Task ReducingRoomCapacityAsync(int roomId)
 		{
 			RoomWithCustomerDto roomAndCustomerDto = await GetSingleRoomByIdWithCustomerAsync(roomId);
@@ -140,6 +142,8 @@ namespace Project.Service.Services
 				return;
 			}
 		}
+
+
 		public async Task<RoomUpdateDto> RoomCapacityAccuracyAsync(RoomUpdateDto roomUpdateDto)
 		{
 
