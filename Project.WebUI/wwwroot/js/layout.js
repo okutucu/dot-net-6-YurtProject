@@ -1,9 +1,3 @@
-/**
- *  Document   : layout.js
- *  Author     : redstar
- *  Description: Core script to handle the entire theme and core functions
- *
- **/
 var Layout = (function () {
     var layoutImgPath = "img/";
 
@@ -115,7 +109,7 @@ var Layout = (function () {
                 }
 
                 $(this).removeClass("open");
-                $(this).find("> a > .arrow.open").removeClass("open");
+                $(this).find("> a > .arrow-down.open").removeClass("open");
                 $(this).find("> .sub-menu").slideUp();
             });
         } else {
@@ -128,7 +122,9 @@ var Layout = (function () {
 
         el.parents("li").each(function () {
             $(this).addClass("active");
-            $(this).find("> a > span.arrow").addClass("open");
+            $(this).find("> a > .arrow-down").addClass("open");
+            $(this).find("> a > .arrow-down > .material-icons").text('keyboard_arrow_down');
+
 
             if ($(this).parent("ul.sidemenu").length === 1) {
                 $(this).find("> a").append('<span class="selected"></span>');
@@ -160,6 +156,7 @@ var Layout = (function () {
             "li > a.nav-toggle, li > a > span.nav-toggle",
             function (e) {
                 var that = $(this).closest(".nav-item").children(".nav-link");
+                // console.log(that.children().text());
 
                 if (
                     App.getViewPort().width >= resBreakpointMd &&
@@ -196,7 +193,6 @@ var Layout = (function () {
                 var menu = $(".sidemenu");
                 var sub = that.next();
 
-                var autoScroll = menu.data("auto-scroll");
                 var slideSpeed = parseInt(menu.data("slide-speed"), 10);
                 var keepExpand = menu.data("keep-expanded");
 
@@ -204,7 +200,7 @@ var Layout = (function () {
                     parent
                         .children("li.open")
                         .children("a")
-                        .children(".arrow")
+                        .children(".arrow-down")
                         .removeClass("open");
                     parent
                         .children("li.open")
@@ -216,47 +212,43 @@ var Layout = (function () {
                 var slideOffeset = -200;
 
                 if (sub.is(":visible")) {
-                    $(".arrow", the).removeClass("open");
+                    $(".arrow-down", the).removeClass("open");
                     the.parent().removeClass("open");
+                    // the.children().text("keyboard_arrow_right");
                     sub.slideUp(slideSpeed, function () {
-                        if (
-                            autoScroll === true &&
-                            $("body").hasClass("sidemenu-closed") === false
-                        ) {
-                            if ($("body").hasClass("sidemenu-container-fixed")) {
-                                menu.slimScroll({
-                                    scrollTo: the.position().top,
-                                });
-                            } else {
-                                App.scrollTo(the, slideOffeset);
-                            }
-                        }
-                        handleSidebarAndContentHeight();
+                        if ($("body").hasClass("sidemenu-closed") === false)
+                            handleSidebarAndContentHeight();
                     });
                 } else if (hasSubMenu) {
-                    $(".arrow", the).addClass("open");
+                    $(".arrow-down", the).addClass("open");
                     the.parent().addClass("open");
+                    if ($('li', the).className === 'active') {
+                        $('.arrow-down').children().text('keyboard_arrow_down');
+                    }
                     sub.slideDown(slideSpeed, function () {
-                        if (
-                            autoScroll === true &&
-                            $("body").hasClass("sidemenu-closed") === false
-                        ) {
-                            if ($("body").hasClass("sidemenu-container-fixed")) {
-                                menu.slimScroll({
-                                    scrollTo: the.position().top,
-                                });
-                            } else {
-                                App.scrollTo(the, slideOffeset);
-                            }
-                        }
-                        handleSidebarAndContentHeight();
+                        if ($("body").hasClass("sidemenu-closed") === false)
+                            handleSidebarAndContentHeight();
                     });
                 }
 
                 e.preventDefault();
             }
         );
+        $('ul.sidemenu > .nav-item > .sub-menu').each(() => {
+            $(this).on("click", function () {
+                $('.arrow-down').children().html(
+                    function (e, oldText) {
+                        let isOpen = $('.arrow-down').parent().parent();
+                        if (isOpen.hasClass('open')) {
+                            $('.open .arrow-down').children().html('keyboard_arrow_down')
+                        } else if (isOpen.hasClass('open') === false) {
+                            oldText = 'keyboard_arrow_right'
+                        }
 
+                        return oldText;
+                    });
+            });
+        })
         // handle scrolling to top on responsive menu toggler click when header is fixed for mobile view
         $(document).on(
             "click",
@@ -668,6 +660,27 @@ var Layout = (function () {
     };
 })();
 
+// ################# BLOCK F12 ##################
+// $(document).keydown(function (event) {
+//     if (event.keyCode == 123) { // Prevent F12
+//         alert("Don't dare.")
+//         return false;
+//     } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I
+//         return false;
+//     }
+// });
+// $(document).on("contextmenu", function (e) {
+//     e.preventDefault();
+// });
+// ###########################################
+
+
 jQuery(document).ready(function () {
     Layout.init(); // init core componets
 });
+
+
+const rejectDevToolFirstWarn = (msg, color) => {
+    console.log("%c" + msg, "color:" + color + ";font-weight:bold;" + ';font-size:60px;');
+}
+// rejectDevToolFirstWarn('Close This DevTool. This is my LAST WARN!', 'red');

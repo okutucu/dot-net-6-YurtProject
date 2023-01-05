@@ -188,14 +188,19 @@ function getTotalPaymentMethod(dataPaymentMethod) {
     });
 
     console.log(allPaymentMethod)
-
-
+    $('cashArray') = [];
+    $('creditCardArray') = [];
+    $('eftArray') = []; 
     $.each(allPaymentMethod, function (i, obj) {
-        if (obj.paymentMethod === "Cash")
-            $("#totalCash").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
-        else if (obj.paymentMethod === "Eft")
+        if (obj.paymentMethod.includes("Cash") === false) {
+            $("#totalCash").parent().parent().addClass('d-none')
+            console.log('Cash')
+            console.log('Eft')
+        }
+        
+        if (obj.paymentMethod === "Eft")
             $("#totalEft").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
-        else if (obj.paymentMethod === "CreditCart")
+       if (obj.paymentMethod === "CreditCart")
             $("#totalCreditKart").append(` <p>${obj.exchange}  :   ${obj.sum}</p> `)
     });
 }
