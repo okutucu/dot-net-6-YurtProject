@@ -1,9 +1,3 @@
-/**
- *  Document   : app.js
- *  Author     : redstar
- *  Description: Core script to handle the entire theme and core functions
- *
- **/
 var App = (function () {
     // IE mode
     var isIE8 = false;
@@ -396,20 +390,20 @@ jQuery(document).ready(function () {
         },
         1000
     );
-    $('#normalChecked').attr('checked',true);
-    $('#monthly').attr('disabled','disabled');
+    $('#monthlyChecked').attr('checked', true);
+    $('#yearly').attr('disabled', 'disabled');
     $('#paymentSection').change((e) => {
-        if(e.target.name === 'checkedPayment') {
-            if ($('#monthlyChecked').is(':checked')) $('#monthly').removeAttr('disabled') && ($('#normalDate').attr('disabled', 'true') && $('#normalDate').val('')) && (console.log(e.target.parentElement.previousElementSibling.id));
-            if ($('#normalChecked').is(':checked')) $('#normalDate').removeAttr('disabled') && ($('#monthly').attr('disabled', 'true') && $('#monthly').val('')) && (console.log(e.target.parentElement.previousElementSibling.id));
-
+        if (e.target.name === 'checkedPayment') {
+            if ($('#monthlyChecked').is(':checked')) $('#monthly').removeAttr('disabled') && ($('#normalDate').attr('disabled', 'true') && $('#normalDate').val('')) && ($('#yearly').attr('disabled', 'true') && $('#yearly').val(''))
+            if ($('#normalChecked').is(':checked')) $('#normalDate').removeAttr('disabled') && ($('#monthly').attr('disabled', 'true') && $('#monthly').val('')) && ($('#yearly').attr('disabled', 'true') && $('#yearly').val(''))
+            if ($('#yearlyChecked').is(':checked')) $('#yearly').removeAttr('disabled') && ($('#monthly').attr('disabled', 'true') && $('#monthly').val('')) && ($('#normalDate').attr('disabled', 'true') && $('#normalDate').val(''))
         }
     });
-    $("#monthly").on("change", function() {
+    $("#monthly").on("change", function () {
         this.setAttribute(
             "data-date",
             moment(this.value, "YYYY-MM")
-                .format( this.getAttribute("data-date-format") )
+                .format(this.getAttribute("data-date-format"))
         )
     }).trigger("change")
 });

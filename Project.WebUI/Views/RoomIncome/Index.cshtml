@@ -3,58 +3,50 @@
 }
 
 @model List<IncomeDetailDto>
+<div class="card">
+    <div class="card-header bg-sin text-center">Income Page</div>
+    <div class="card-body">
+        <form class="mt-2" asp-controller="RoomIncome" asp-action="GetBySelected" method="get">
+            <div class="card mb-2">
+                <div class="card-body pb-0">
+                    <div class="row" id="paymentSection">
+                        <div class="col-4">
+                            <input type="datetime-local" name="selectedDate" class="form-control" id="normalDate">
+                            <div class="form-check">
+                                <input id="normalChecked" type="radio" name="checkedPayment"
+                                       class="form-check-input">
+                                <label for="normalChecked" class="form-check-label">Daily</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <input id="monthly" type="month" name="selectedDate" class="form-control">
+                            <div class="form-check">
+                                <input id="monthlyChecked" name="checkedPayment" type="radio"
+                                       class="form-check-input">
+                                <label for="monthlyChecked" class="form-check-label">Monthly</label>
+                            </div>
+                        </div>
 
-<div class="text-center">
-    <h1 class="display-4">Income  Page</h1>
-</div>
-
-<div class="my-2">
-    <a class="btn btn-primary mr-2" asp-action="Create" asp-controller="RoomIncome">Add New +</a>
-</div>
-
-<form class="mt-2" asp-controller="RoomIncome" asp-action="GetBySelected" method="get">
-
-    
-    <div class="card">
-        <div class="card-body">
-            <div class="row" id="paymentSection">
-                <div class="col-4">
-                    <input type="datetime-local" name="selectedDate" class="form-control" id="normalDate">
-                    <div class="form-check">
-                        <input id="normalChecked" type="radio" name="checkedPayment"
-                               class="form-check-input">
-                        <label for="normalChecked" class="form-check-label">Daily</label>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <input id="monthly" type="month" name="selectedDate" class="form-control">
-                    <div class="form-check">
-                        <input id="monthlyChecked" name="checkedPayment" type="radio"
-                               class="form-check-input">
-                        <label for="monthlyChecked" class="form-check-label">Monthly</label>
-                    </div>
-                </div>
-                
-                <div class="col-4">
-                    <input type="text" class="form-control" name="selectedDate" disabled id="yearly" placeholder="----">
-                    <div class="form-check">
-                        <input id="yearlyChecked" type="radio" name="checkedPayment"
-                               class="form-check-input">
-                        <label for="yearlyChecked" class="form-check-label">Yearly</label>
+                        <div class="col-4">
+                            <input type="text" class="form-control" name="selectedDate" disabled id="yearly" autocomplete="off" placeholder="----">
+                            <div class="form-check">
+                                <input id="yearlyChecked" type="radio" name="checkedPayment"
+                                       class="form-check-input">
+                                <label for="yearlyChecked" class="form-check-label">Yearly</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="text-center mt-3">
+                <a class="btn btn-outline-primary" asp-action="Create" asp-controller="RoomIncome">Add New +</a>
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </form>
+
     </div>
+</div>
 
-
-
-    <div class="form-group">
-        <input type="submit" value="Submit" class="btn btn-primary" />
-    </div>
-
-
-</form>
 
 @section ExtraCss{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
