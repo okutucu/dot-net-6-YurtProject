@@ -4922,7 +4922,7 @@ tr:hover {
             color: #fff;
         }
 #summary-section .card .card-body {
-    padding: 0.5rem 1rem 1rem 1rem;
+    padding: 0.5rem;
 }
 #summary-section, #rooms-section, #exchange-rate-section, #change-exchange-rate-section {
     border-bottom: 3px dotted rgba(0,0,0,0.2);
@@ -4931,6 +4931,9 @@ tr:hover {
     #available-rooms{
         padding: 15px;
     }
+#summary-section .page-header, #rooms-section .page-header, #available-rooms .page-header {
+    font-size: 20px;
+}
 
     #summary-section .card, #all-person-table-section .card, #exchange-rate-section .card {
         border-radius: 1.25rem;
@@ -5044,7 +5047,8 @@ tr:hover {
 
     #rooms-section .card-body .price {
         z-index: 2;
-        font-weight: 800;
+        font-weight: 750;
+        font-size: 18px !importan t;
     }
 
     #rooms-section .card i {
@@ -5074,6 +5078,9 @@ tr:hover {
         #rooms-section .card .card-body .btn-outline-primary:hover {
             background-color: #20638f;
             color: #fff;
+        }
+        #rooms-section .card .card-body .card-title {
+            font-size: 16px !important;
         }
 
     #exchange-rate-section .exchange-box {
@@ -5392,6 +5399,7 @@ select:-webkit-autofill {
 #available-rooms .card {
     transition: all 0.5s ease 0s;
     border-radius: 50px;
+    width: 211px;
 }
 
     #available-rooms .card:hover {
