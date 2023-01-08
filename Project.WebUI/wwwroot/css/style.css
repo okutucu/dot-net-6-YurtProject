@@ -677,6 +677,15 @@ body {
 .time {
     background: #e4e4e4;
 }
+li.dropdown-notification .material-icons {
+    font-size: 15px;
+    position: relative;
+    left: 3px;
+}
+li.dropdown-notification .notification-icon {
+    font-size: 20px;
+    margin-right: 5px;
+}
 
 .page-header.navbar
 .top-menu
